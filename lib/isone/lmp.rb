@@ -1,4 +1,7 @@
+# encoding: utf-8
 module Isone
+  # Fetches the Five Minute Locational Marginal Pricing for a particular date
+  # and node.
   class Lmp
     attr_accessor :lmps
 
@@ -8,7 +11,7 @@ module Isone
       data = fetch_data(date, location_id)
       return unless data
 
-      @lmps = data.map { |data| FiveMinLmp.new(data) }
+      @lmps = data.map { |attrs| FiveMinLmp.new(attrs) }
     end
 
     private

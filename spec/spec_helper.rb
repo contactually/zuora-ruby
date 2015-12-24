@@ -1,3 +1,4 @@
+# encoding: utf-8
 if ENV['CIRCLECI']
   require 'rspec_junit_formatter'
   require 'codeclimate-test-reporter'

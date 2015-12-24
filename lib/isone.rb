@@ -1,3 +1,4 @@
+# encoding: utf-8
 # TODO: Only load development dependencies in development
 require 'byebug'
 require 'pp'
@@ -15,6 +16,7 @@ require 'isone/lmp'
 require 'isone/location'
 require 'isone/five_min_lmp'
 
+# Top level module to house Isone related classes.
 module Isone
   API_URL = 'https://webservices.iso-ne.com/api/v1.1/'
 

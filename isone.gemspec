@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors = ['John Gerhardt']
   spec.email = ['john.gerhardt@icloud.com']
 
-  spec.summary = %q{A ruby wrapper for ISO NE API.}
-  spec.description = %q{A ruby wrapper for ISO NE API.}
+  spec.summary = 'A ruby wrapper for ISO NE API.'
+  spec.description = 'A ruby wrapper for ISO NE API.'
   spec.homepage = 'N/A'
   spec.license = 'MIT'
 
@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   if spec.respond_to?(:metadata)
     spec.metadata['allowed_push_host'] = 'https://rubygems.org'
   else
-    raise 'RubyGems 2.0 or newer is required to protect against public gem pushes.'
+    fail 'RubyGems 2.0 or newer is required to prevent public gem pushes.'
   end
 
   spec.files = `git ls-files -z`.split("\x0").reject do |f|
@@ -45,4 +45,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'dotenv'
   spec.add_development_dependency 'codeclimate-test-reporter'
   spec.add_development_dependency 'rspec_junit_formatter', '0.2.2'
+  spec.add_development_dependency 'rubocop'
 end

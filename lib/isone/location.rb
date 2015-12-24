@@ -1,4 +1,7 @@
+# encoding: utf-8
 module Isone
+  # Houses logic related to a particular location within the ISO NE node
+  # network.
   class Location
     attr_accessor :id, :type, :name
 

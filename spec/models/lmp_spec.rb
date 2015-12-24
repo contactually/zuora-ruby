@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'spec_helper'
 
 describe Isone::FiveMinLmp do
@@ -5,7 +6,7 @@ describe Isone::FiveMinLmp do
   let(:location) { 4475 }
 
   subject do
-    VCR.use_cassette('cassettes/lmp', :match_requests_on => [:path]) do
+    VCR.use_cassette('cassettes/lmp', match_requests_on: [:path]) do
       Isone::Lmp.new(date, location)
     end
   end
