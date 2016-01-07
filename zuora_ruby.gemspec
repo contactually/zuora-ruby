@@ -1,16 +1,16 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'isone/version'
+require 'zuora/version'
 
 Gem::Specification.new do |spec|
-  spec.name = 'isone-ruby'
-  spec.version = Isone::VERSION
-  spec.authors = ['John Gerhardt']
-  spec.email = ['john.gerhardt@icloud.com']
+  spec.name = 'zuora-ruby'
+  spec.version = Zuora::VERSION
+  spec.authors = ['Contactually Engineering']
+  spec.email = ['engineering@contactually.com']
 
-  spec.summary = 'A ruby wrapper for ISO NE API.'
-  spec.description = 'A ruby wrapper for ISO NE API.'
+  spec.summary = 'A ruby wrapper for Zuora API.'
+  spec.description = 'A ruby wrapper for Zuora API.'
   spec.homepage = 'N/A'
   spec.license = 'MIT'
 
@@ -31,7 +31,8 @@ Gem::Specification.new do |spec|
 
   # Runtime
   spec.add_runtime_dependency 'faraday'
-  spec.add_runtime_dependency 'activemodel'
+  spec.add_runtime_dependency 'faraday_middleware', '~> 0.10'
+  spec.add_runtime_dependency 'activemodel', '~> 4.2'
   spec.add_runtime_dependency 'activesupport'
 
   # Development
