@@ -4,7 +4,8 @@
 require 'faraday'
 require 'json'
 require 'active_model'
-require 'active_support/all'
+require 'active_model_serializers'
+require 'active_support'
 
 # Zuora classes
 require_relative 'zuora/version'
@@ -27,3 +28,4 @@ require_relative 'zuora/card_holder'
 require_relative 'zuora/contact'
 require_relative 'zuora/payment_method'
 
+require_relative 'zuora/serializers/account'

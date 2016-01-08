@@ -33,6 +33,8 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'faraday'
   spec.add_runtime_dependency 'faraday_middleware', '~> 0.10'
   spec.add_runtime_dependency 'activemodel', '~> 4.2'
+
+  spec.add_runtime_dependency 'active_model_serializers', '~> 0.8'
   spec.add_runtime_dependency 'activesupport'
 
   # Development

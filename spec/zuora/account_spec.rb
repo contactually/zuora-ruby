@@ -29,10 +29,23 @@ describe Zuora::Account do
                            :bill_to_contact => bill_to_contact
       end
 
-      it 'should be invalid with no data' do
+      it 'should be valid with no data' do
         is_expected.to be_valid
       end
 
+    end
+
+    context 'without a bill_to_contact' do
+      subject do
+        Zuora::Account.new :name => 'Name',
+                           :currency => 'USD',
+                           :sold_to_contact => 3,
+                           :bill_to_contact => 3
+      end
+
+      it 'should be invalid' do
+        is_expected.to be_invalid
+      end
     end
   end
 end

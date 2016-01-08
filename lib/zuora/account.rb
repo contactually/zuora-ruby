@@ -4,7 +4,7 @@ module Zuora
   class Account
     include ActiveModel::Model
 
-    attr_accessor :account_number,
+    ATTRIBUTES = [:account_number,
                   :auto_pay,
                   :bill_to_contact,
                   :bill_cycle_day,
@@ -19,7 +19,9 @@ module Zuora
                   :payment_gateway,
                   :payment_term,
                   :sold_to_contact,
-                  :subscription
+                  :subscription]
+
+    attr_accessor *ATTRIBUTES
 
     validates :bill_to_contact,
               :currency,
@@ -30,13 +32,15 @@ module Zuora
     validates :currency,
               :length => { :is => 3 }
 
+    # Todo abstract into a base calss
     validates_each :bill_to_contact, :sold_to_contact do |record, attr, value|
-      unless value && value.respond_to?(:valid?) && value.valid?
+      if !value.respond_to?(:valid?) && !value.respond_to?(:errors)
         record.errors.add attr, 'invalid contact'
+      elsif value.invalid?
+        record.errors.add attr, value.errors.join(',')
       end
     end
 
     private
-
   end
 end
