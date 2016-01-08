@@ -3,38 +3,40 @@
 module Zuora
   class Account
     include ActiveModel::Model
-    include ActiveModel::Serializers::JSON
-
-    define_attribute_methods :name
 
     attr_accessor :account_number,
                   :auto_pay,
                   :bill_to_contact,
                   :bill_cycle_day,
+                  :crm_id,
                   :currency,
                   :credit_card,
                   :name,
-                  :crm_id,
+                  :hpm_credit_card_payment_method_id,
                   :notes,
                   :invoice_template_id,
                   :communication_profile_id,
                   :payment_gateway,
                   :payment_term,
                   :sold_to_contact,
-                  :hpm_credit_card_payment_method_id,
                   :subscription
 
-    validates_presence_of :bill_to_contact,
-                          :currency,
-                          :sold_to_contact,
-                          :name
+    validates :bill_to_contact,
+              :currency,
+              :sold_to_contact,
+              :name,
+              :presence => true
 
+    validates :currency,
+              :length => { :is => 3 }
 
-    def attributes
-      { 'name' => name,
-        'batch' => batch }
-      # remove keys with nil values
+    validates_each :bill_to_contact, :sold_to_contact do |record, attr, value|
+      unless value && value.respond_to?(:valid?) && value.valid?
+        record.errors.add attr, 'invalid contact'
+      end
     end
+
+    private
 
   end
 end
