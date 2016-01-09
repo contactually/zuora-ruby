@@ -1,4 +1,18 @@
-# Zuora Ruby Client
+# Zuora REST API: Ruby Client
+
+This library implements a Ruby client
+- Validations (via `activemodel`)
+- HTTP (via `faraday`)
+- JSON serialization (via `faraday_middleware`)
+
+## Features and Usage
+1. ***Client*** Create a client using username and password.
+This authenticates and stores the returned session cookie 
+used in subsequent requests.
+2. ***HTTP***
+Use `client.<get|post>(url, params)` to make HTTP requests via the authenticated client. 
+3. ***Models***  Ruby interface, validations & serialization.
+
 ## Example: creating an account
 
 ```ruby
