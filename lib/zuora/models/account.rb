@@ -33,7 +33,11 @@ module Zuora
       validates :currency,
                 :length => { :is => 3 }
 
-      # Todo: Factor out and supply this via a mixin to form a nice dsl
+      def attributes
+        Zuora::Util.attr_hash self, ATTRIBUTES
+      end
+
+      # TODO: Factor out and supply this via a mixin to form a nice dsl
       # e.g. validates :bill_to_contact, :as => :contact
       validates_each :bill_to_contact, :sold_to_contact do |record, attr, value|
         if !value.respond_to?(:valid?) || !value.respond_to?(:errors)

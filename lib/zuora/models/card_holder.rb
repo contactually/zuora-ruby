@@ -4,16 +4,19 @@ module Zuora
   module Models
     class CardHolder
       include ActiveModel::Model
+      include ActiveModel::Serialization
 
-      attr_accessor :card_holder_name,
-                    :address_line_1,
-                    :address_line_2,
-                    :city,
-                    :state,
-                    :zip_code,
-                    :country,
-                    :phone,
-                    :email
+      ATTRIBUTES = :card_holder_name,
+                   :address_line_1,
+                   :address_line_2,
+                   :city,
+                   :state,
+                   :zip_code,
+                   :country,
+                   :phone,
+                   :email
+
+      attr_accessor *ATTRIBUTES
 
       validates :card_holder_name,
                 :address_line_1,

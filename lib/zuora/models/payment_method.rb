@@ -2,15 +2,18 @@ module Zuora
   module Models
     class PaymentMethod
       include ActiveModel::Model
+      include ActiveModel::Serialization
 
-      attr_accessor :account_key,
-                    :credit_card_type,
-                    :credit_card_number,
-                    :expiration_month,
-                    :expiration_year,
-                    :security_code,
-                    :default_payment_method,
-                    :card_holder_info
+      ATTRIBUTES = :account_key,
+                   :credit_card_type,
+                   :credit_card_number,
+                   :expiration_month,
+                   :expiration_year,
+                   :security_code,
+                   :default_payment_method,
+                   :card_holder_info
+
+      attr_accessor *ATTRIBUTES
 
       validates :account_key,
                 :credit_card_type,
@@ -21,10 +24,10 @@ module Zuora
                 :presence => true
 
       validates :credit_card_type,
-                :inclusion => { :in => %w(Visa MasterCard Amex Discover) }
+                :inclusion => { :in => Zuora::CREDIT_CARD_TYPES }
 
       validates :expiration_month,
-                :inclusion => { :in => %w(01 02 03 04 05 06 07 08 09 10 11 12)}
+                :inclusion => { :in => Zuora::MONTHS}
 
       validates :expiration_year,
                 :length => { :is => 4 }
