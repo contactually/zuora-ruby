@@ -1,10 +1,11 @@
-# Todo
+# Zuora Ruby Client
+## Example: creating an account
 
 ```ruby
 username = 'your@username.com'
 password = 'super_secure_password'
 
-client = Zuora::Client.new(username, password, true)
+client = Zuora::Client.new(username, password, true) # true for sandbox
 
 account = Zuora::Models::Account.new(
   :name => 'Abc',
@@ -37,11 +38,11 @@ account = Zuora::Models::Account.new(
 
 # Create an account
 
-client.post '/rest/v1/accounts', a.attributes
-
-=> 
+response = client.post '/rest/v1/accounts', account.attributes
 
 # Le response
+
+pp response
 
 #<Faraday::Response:0x007f8033b05f08
  @env=

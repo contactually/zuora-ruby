@@ -30,6 +30,7 @@ module Zuora
 
       validates :first_name,
                 :last_name,
+                :country,
                 :presence => true
 
       validates :first_name,

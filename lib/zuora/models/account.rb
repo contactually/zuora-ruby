@@ -24,14 +24,20 @@ module Zuora
 
       attr_accessor *ATTRIBUTES
 
-      validates :bill_to_contact,
+      validates :auto_pay,
+                :bill_to_contact,
+                :credit_card,
                 :currency,
-                :sold_to_contact,
                 :name,
+                :payment_term,
+                :sold_to_contact,
                 :presence => true
 
       validates :currency,
                 :length => { :is => 3 }
+
+      validates :payment_term,
+                :inclusion => { :in => Zuora::PAYMENT_TERMS }
 
       def attributes
         Zuora::Util.attr_hash self, ATTRIBUTES

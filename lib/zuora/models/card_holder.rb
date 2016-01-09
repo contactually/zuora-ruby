@@ -52,6 +52,10 @@ module Zuora
       validates :email,
                 :length => { :maximum => 80 },
                 :allow_nil => true
+
+      def attributes
+        Zuora::Util.attr_hash self, ATTRIBUTES
+      end
     end
   end
 end
