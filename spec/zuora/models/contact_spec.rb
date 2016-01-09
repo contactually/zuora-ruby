@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe Zuora::Contact do
+describe Zuora::Models::Contact do
   describe '#valid?' do
     context 'with invalid data' do
-      subject { Zuora::Contact.new }
+      subject { Zuora::Models::Contact.new }
 
       it { is_expected.to_not be_valid }
 
@@ -11,8 +11,10 @@ describe Zuora::Contact do
 
     context 'with valid data' do
       subject do
-        Zuora::Contact.new :first_name => 'First',
-                           :last_name => 'Last'
+        Zuora::Models::Contact.new(
+          :first_name => 'First',
+          :last_name => 'Last'
+        )
       end
 
       it { is_expected.to be_valid }

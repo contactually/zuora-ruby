@@ -23,9 +23,5 @@ module Zuora
 end
 
 # Models for Validations and Serialization
-require_relative 'zuora/account'
-require_relative 'zuora/card_holder'
-require_relative 'zuora/contact'
-require_relative 'zuora/payment_method'
-
-require_relative 'zuora/serializers/account'
+require_relative 'zuora/models'
+require_relative 'zuora/serializers'
