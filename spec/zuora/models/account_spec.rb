@@ -12,63 +12,39 @@ describe Zuora::Models::Account do
     end
 
     context 'with valid data' do
-      let(:sold_to_contact) do
-        Zuora::Models::Contact.new(
-          :first_name => 'First',
-          :last_name => 'Last'
-        )
-      end
-
-      let(:bill_to_contact) do
-        Zuora::Models::Contact.new(
-          :first_name => 'First',
-          :last_name => 'Last'
-        )
-      end
-
       subject do
         Zuora::Models::Account.new(
-          :name => 'Name',
+          :name => 'Abc',
+          :auto_pay => true,
           :currency => 'USD',
-          :sold_to_contact => sold_to_contact,
-          :bill_to_contact => bill_to_contact
-        )
-      end
-
-      it 'should be valid with no data' do
-        is_expected.to be_valid
-      end
-
-    end
-
-    context 'without a bill_to_contact' do
-      subject do
-        Zuora::Models::Account.new(
-          :name => 'Name',
-          :currency => 'USD',
-          :sold_to_contact => 3,
-          :bill_to_contact => 3
-        )
-      end
-
-      it 'should be invalid' do
-        is_expected.to be_invalid
-      end
-    end
-
-    context '' do
-      subject do
-        Zuora::Models::Account.new(
-          :name => 'Name',
-          :currency => 'USD',
-          :sold_to_contact => Zuora::Models::Contact.new(
-            :first_name => 'First', :last_name => 'Last'
-          ),
+          :bill_cycle_day => '0',
+          :payment_term => 'Net 30',
           :bill_to_contact => Zuora::Models::Contact.new(
-            :first_name => 'First', :last_name => 'Last'
+            :first_name => 'Abc',
+            :last_name => 'Def',
+            :address_1 => '123 Main St',
+            :city => 'Palm Springs',
+            :state => 'FL',
+            :zip_code => '90210',
+            :country => 'US'
+          ),
+          :sold_to_contact => Zuora::Models::Contact.new(
+            :first_name => 'Abc',
+            :last_name => 'Def',
+            :country => 'US'
+          ),
+          :credit_card => Zuora::Models::PaymentMethod.new(
+            :card_type => 'Visa',
+            :card_number => '4111111111111111',
+            :expiration_month => '03',
+            :expiration_year => '2017',
+            :security_code => '122',
           )
         )
       end
+
+      it { is_expected.to be_valid }
+
     end
   end
 end
