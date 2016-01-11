@@ -1,17 +1,17 @@
 # Zuora REST API: Ruby Client
 
-This library implements a Ruby client
+This library implements a Ruby client wrapping Zuora's REST API.
 - Validations (via `activemodel`)
 - HTTP (via `faraday`)
-- JSON serialization (via `faraday_middleware`)
+- Serialization: To/from Ruby / JSON
 
-## Concepts and Features
+## Key Features & Concepts 
 1. ***Client:*** Create a client using username and password.
 This authenticates and stores the returned session cookie 
-used in subsequent requests.
+used in subsequent requests. 
 
 2. ***HTTP:***
-Use `client.<get|post>(url, params)` to make HTTP requests via the authenticated client. 
+Use `client.<get|post>(url, params)` to make HTTP requests via the authenticated client. Request and response body will be converted to/from Ruby via `farraday_middleware`. 
 
 3. ***Models:***  Ruby interface for constructing valid Zuora objects.
   - `account = Zuora::Models::Account.new(:attribute => 'name')`
@@ -19,16 +19,37 @@ Use `client.<get|post>(url, params)` to make HTTP requests via the authenticated
   - `account.errors` # a hash of error message(s)
   - `account.attributes` # an array of attribute names
 
-4. **Serializers:** Recursive data transformations for mapping between formats, for example, from Ruby to JSON and back.
+4. **Serializers:** Recursive data transformations for mapping between formats, for example, from Ruby to JSON and back. Used to turn Ruby `snake_case` into JSON `lowerCamelCase`
   - ex. `Zuora::Serializers::Attribute.serialize account` 
   
-5. **Resources:** Wrap Zuora API endpoints. Hand models and (optionally) serializer to a Resource to trigger a request. Request will be made for valid models, or an exception will be raised. A Response object will be returned (with `.status` and `.body`).
+5. **Resources:** Wrap Zuora API endpoints. Hand a valid models and (optionally) serializer to a Resource to trigger a request. Request will be made for valid models only, else an exception will be raised. A `Farraday::Response` object will be returned (habing `.status` and `.body`).
 
 6. **Factories:** Factories for easily constructing Zuora requests in development (via `factory_girl`) 
 
-7. **Test coverage:** (Near) Full spec coverage via `rspec`. Coming soon, integration specs (using `VCR`)
+7. **Test coverage:** Unit and integration specs coverage via `rspec`. Coming soon, integration specs (using `VCR`)
 
-## Example: creating an account
+## Models
+Models implement (recursive, nested) Zuora validations
+* Account
+* CardHolder
+* Contact
+* PaymentMethod::CreditCard
+* RatePlan
+* RatePlanCharge
+* Subscription
+* Tier
+
+## Resources 
+In module  `Zuora::Resources::` 
+* `Account.create!` **[working]**
+* `Account.update!` [in progress]
+* `Subscription.create!` [in progress]
+* `Subscription.update!` [in progress]
+* `Subscription.cancel!` [in progress]
+* `PaymentMethod.update!` [in progress]
+ 
+## Examples
+### Creating an Account
 
 ```ruby
 username = 'your@username.com'
