@@ -3,7 +3,7 @@ require 'byebug'
 require 'factory_girl'
 require 'rspec/mocks'
 
-require_relative 'zuora/factories/accounts'
+require_relative 'zuora/factories'
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods

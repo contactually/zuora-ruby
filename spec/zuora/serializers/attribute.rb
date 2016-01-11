@@ -28,7 +28,5 @@ describe Zuora::Serializers::Attribute do
 
   subject { Zuora::Serializers::Attribute.serialize obj }
 
-  it do
-    is_expected.to eq expected_result
-  end
+  it { is_expected.to eq expected_result }
 end

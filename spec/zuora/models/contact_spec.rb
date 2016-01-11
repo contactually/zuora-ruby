@@ -6,17 +6,10 @@ describe Zuora::Models::Contact do
       subject { Zuora::Models::Contact.new }
 
       it { is_expected.to_not be_valid }
-
     end
 
     context 'with valid data' do
-      subject do
-        Zuora::Models::Contact.new(
-          :first_name => 'First',
-          :last_name => 'Last',
-          :country => 'US'
-        )
-      end
+      subject { build :contact }
 
       it { is_expected.to be_valid }
     end

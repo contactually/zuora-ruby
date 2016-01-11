@@ -13,34 +13,10 @@ describe Zuora::Models::Account do
 
     context 'with valid data' do
       subject do
-        Zuora::Models::Account.new(
-          :name => 'Abc',
-          :auto_pay => true,
-          :currency => 'USD',
-          :bill_cycle_day => '0',
-          :payment_term => 'Net 30',
-          :bill_to_contact => Zuora::Models::Contact.new(
-            :first_name => 'Abc',
-            :last_name => 'Def',
-            :address_1 => '123 Main St',
-            :city => 'Palm Springs',
-            :state => 'FL',
-            :zip_code => '90210',
-            :country => 'US'
-          ),
-          :sold_to_contact => Zuora::Models::Contact.new(
-            :first_name => 'Abc',
-            :last_name => 'Def',
-            :country => 'US'
-          ),
-          :credit_card => Zuora::Models::PaymentMethod.new(
-            :card_type => 'Visa',
-            :card_number => '4111111111111111',
-            :expiration_month => '03',
-            :expiration_year => '2017',
-            :security_code => '122',
-          )
-        )
+        build :account,
+          :bill_to_contact => build(:contact),
+          :sold_to_contact => build(:contact),
+          :credit_card => build(:credit_card)
       end
 
       it { is_expected.to be_valid }
