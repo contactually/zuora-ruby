@@ -61,6 +61,22 @@ module Zuora
       #end
     end
 
+    def put(url, params)
+      response = @connection.put do |req|
+        req.url url
+        req.headers['Content-Type'] = 'application/json'
+        req.headers['Cookie'] = @auth_cookie
+        req.body = JSON.generate params
+      end
+
+      response
+      #if response.body['success']
+      #  return response
+      #else
+      #  raise ErrorResponse.new(response)
+      #end
+    end
+
     private
 
     def api_url(sandbox)
