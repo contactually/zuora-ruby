@@ -23,13 +23,11 @@ module Zuora
 
   PAYMENT_TERMS = ['Due Upon Receipt', 'Net 30', 'Net 60', 'Net 90']
 
-  def self.sample_account
-
-
-  end
+  SUBSCRIPTION_TERM_TYPES = %w(TERMED EVERGREEN)
 end
 
 require_relative 'zuora/version'
 require_relative 'zuora/client'
 require_relative 'zuora/models'
+require_relative 'zuora/serializers'
 require_relative 'zuora/util'
