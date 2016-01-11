@@ -3,6 +3,9 @@ require 'byebug'
 require 'factory_girl'
 require 'rspec/mocks'
 
+FactoryGirl.definition_file_paths = ['spec/zuora/factories']
+FactoryGirl.find_definitions
+
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.expect_with :rspec do |expectations|
