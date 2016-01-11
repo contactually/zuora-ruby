@@ -1,6 +1,6 @@
 module Zuora
   module Models
-    class Tier
+    class RatePlanChargeTier
       include ActiveModel::Model
 
       ATTRIBUTES = :tier,

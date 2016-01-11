@@ -44,7 +44,7 @@ module Zuora
         ATTRIBUTES
       end
 
-      validates :product_rate_plan_id,
+      validates :product_rate_plan_charge_id,
                 :presence => true
 
       validates :number,
