@@ -1,1 +1,1 @@
-require_relative 'payment_methods/credit_cards'
+require_relative 'payment_methods/credit_card'

@@ -13,4 +13,3 @@ FactoryGirl.define do
     notes 'Test POST subscription from zuora-ruby'
   end
 end
-
