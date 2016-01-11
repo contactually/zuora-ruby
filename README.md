@@ -5,13 +5,28 @@ This library implements a Ruby client
 - HTTP (via `faraday`)
 - JSON serialization (via `faraday_middleware`)
 
-## Features and Usage
-1. ***Client*** Create a client using username and password.
+## Concepts and Features
+1. ***Client:*** Create a client using username and password.
 This authenticates and stores the returned session cookie 
 used in subsequent requests.
-2. ***HTTP***
+
+2. ***HTTP:***
 Use `client.<get|post>(url, params)` to make HTTP requests via the authenticated client. 
-3. ***Models***  Ruby interface, validations & serialization.
+
+3. ***Models:***  Ruby interface for constructing valid Zuora objects.
+  - `account = Zuora::Models::Account.new(:attribute => 'name')`
+  - `account.valid?` # a boolean indicating validity
+  - `account.errors` # a hash of error message(s)
+  - `account.attributes` # an array of attribute names
+
+4. **Serializers:** Recursive data transformations for mapping between formats, for example, from Ruby to JSON and back.
+  - ex. `Zuora::Serializers::Attribute.serialize account` 
+  
+5. **Resources:** Wrap Zuora API endpoints. Hand models and (optionally) serializer to a Resource to trigger a request. Request will be made for valid models, or an exception will be raised. A Response object will be returned (with `.status` and `.body`).
+
+6. **Factories:** Factories for easily constructing Zuora requests in development (via `factory_girl`) 
+
+7. **Test coverage:** (Near) Full spec coverage via `rspec`. Coming soon, integration specs (using `VCR`)
 
 ## Example: creating an account
 
@@ -50,9 +65,15 @@ account = Zuora::Models::Account.new(
   )
 )
 
-# Create an account
+# Create an account in one of two ways:
 
-response = client.post '/rest/v1/accounts', account.attributes
+serializer = Zuora::Serializers::Attribute
+
+# Using the low-level API exposed by `Client`
+response = client.post('/rest/v1/accounts', serializer.serialize accont)
+
+# or using the higher-level resource API
+response = Zuora::Resources::Accounts.create!(client, account, serializer)
 
 # Le response
 
