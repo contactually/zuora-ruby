@@ -5,14 +5,25 @@ require 'json'
 
 module Zuora
 
-  ConnectionError = Class.new(StandardError)
-  ErrorResponse = Class.new(StandardError)
+  # Unable to connect. Check username / password
+  ConnectionError = Class.new StandardError
+
+  # Non-success response
+  ErrorResponse = Class.new StandardError
 
   class Client
     attr_accessor :connection
 
+    # Creates a connection instance.
+    # Makes an initial HTTP request to fetch session token.
+    # Subsequent requests made with .get, .post, and .put
+    # contain the authenticated session id in their headers.
+    # @param [String] Zuora username
+    # @param [String] Zuora Password
+    # @param [Boolean] Use sandbox api?
+    # @return [Zuora::Client] with .connection, .put, .post,
     def initialize(username, password, sandbox=false)
-      url = api_url(sandbox)
+      url = api_url sandbox
 
       connection = Faraday.new(url, :ssl => {:verify => false }) do |conn|
         conn.request :json
@@ -22,7 +33,6 @@ module Zuora
       end
 
       response = connection.post do |req|
-        # Todo: URL prefix should be in base
         req.url '/rest/v1/connections'
         req.headers['apiAccessKeyId'] = username
         req.headers['apiSecretAccessKey'] = password
@@ -37,6 +47,8 @@ module Zuora
       end
     end
 
+    # @param [String] URL of request
+    # @return [Faraday::Response] A response, with .headers, .status & .body
     def get(url)
       @connection.get do |req|
         req.url url
@@ -45,6 +57,9 @@ module Zuora
       end
     end
 
+    # @param [String] URL for HTTP POST request
+    # @param [Params] Data to be sent in request body
+    # @return [Faraday::Response] A response, with .headers, .status & .body
     def post(url, params)
       response = @connection.post do |req|
         req.url url
@@ -61,6 +76,9 @@ module Zuora
       #end
     end
 
+    # @param [String] URL for HTTP PUT request
+    # @param [Params] Data to be sent in request body
+    # @return [Faraday::Response] A response, with .headers, .status & .body
     def put(url, params)
       response = @connection.put do |req|
         req.url url
@@ -79,6 +97,8 @@ module Zuora
 
     private
 
+    # @param [Boolean] Use the sandbox url?
+    # @return [String] the API url
     def api_url(sandbox)
       if sandbox
         Zuora::SANDBOX_URL

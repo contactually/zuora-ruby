@@ -23,12 +23,16 @@ module Zuora
                    :sold_to_contact,
                    :subscription
 
-
       attr_accessor *ATTRIBUTES
 
       def attributes
         ATTRIBUTES
       end
+
+      Zuora::Models::Utils.validate_children self,
+                                             'contact',
+                                             :bill_to_contact,
+                                             :sold_to_contact
 
       validates :auto_pay,
                 :bill_to_contact,
@@ -45,18 +49,6 @@ module Zuora
       validates :payment_term,
                 :inclusion => { :in => Zuora::PAYMENT_TERMS }
 
-
-      # TODO: Factor out and supply this via a mixin to form a nice dsl
-      # e.g. validates :bill_to_contact, :as => :contact
-      validates_each :bill_to_contact, :sold_to_contact do |record, attr, value|
-        if !value.respond_to?(:valid?) || !value.respond_to?(:errors)
-          record.errors.add attr, 'invalid contact'
-        elsif value.invalid?
-          record.errors.add attr, value.errors.join(',')
-        end
-      end
-
-      private
     end
   end
 end

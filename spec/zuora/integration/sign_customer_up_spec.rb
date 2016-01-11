@@ -15,18 +15,18 @@ describe 'Sign up a customer' do
           :credit_card => credit_card
   end
 
-
   it { expect(account).to be_valid }
 
   let(:username) { ENV['ZUORA_SANDBOX_USERNAME'] }
   let(:password) { ENV['ZUORA_SANDBOX_PASSWORD'] }
   let(:client) { Zuora::Client.new username, password, true }
   let(:serializer) { Zuora::Serializers::Attribute }
-  let(:account_response) { Zuora::Resources::Accounts.create! client, account, serializer }
+
+  let(:account_response) do
+    Zuora::Resources::Accounts.create! client, account, serializer
+  end
 
   it { expect(account_response.status).to eq 200 }
-
-  ##
 
   ## Todo, Subscribe to a ProductRatePlan
 end

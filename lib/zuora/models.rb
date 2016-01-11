@@ -1,3 +1,5 @@
+require_relative 'models/utils'
+
 require_relative 'models/account'
 require_relative 'models/card_holder'
 require_relative 'models/contact'
