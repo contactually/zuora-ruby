@@ -13,7 +13,8 @@ describe Zuora::Models::Contact do
       subject do
         Zuora::Models::Contact.new(
           :first_name => 'First',
-          :last_name => 'Last'
+          :last_name => 'Last',
+          :country => 'US'
         )
       end
 
