@@ -4,7 +4,6 @@ module Zuora
   module Models
     class CardHolder
       include ActiveModel::Model
-      include ActiveModel::Serialization
 
       ATTRIBUTES = :card_holder_name,
                    :address_line_1,
@@ -17,6 +16,10 @@ module Zuora
                    :email
 
       attr_accessor *ATTRIBUTES
+
+      def attributes
+        ATTRIBUTES
+      end
 
       validates :card_holder_name,
                 :address_line_1,
@@ -53,9 +56,6 @@ module Zuora
                 :length => { :maximum => 80 },
                 :allow_nil => true
 
-      def attributes
-        Zuora::Util.attr_hash self, ATTRIBUTES
-      end
     end
   end
 end

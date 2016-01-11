@@ -2,7 +2,6 @@ module Zuora
   module Models
     class PaymentMethod
       include ActiveModel::Model
-      include ActiveModel::Serialization
 
       ATTRIBUTES = :card_type,
                    :card_number,
@@ -10,8 +9,11 @@ module Zuora
                    :expiration_year,
                    :security_code
 
-
       attr_accessor *ATTRIBUTES
+
+      def attributes
+        ATTRIBUTES
+      end
 
       validates :card_type,
                 :card_number,
@@ -29,9 +31,6 @@ module Zuora
       validates :expiration_year,
                 :length => { :is => 4 }
 
-      def attributes
-        Zuora::Util.attr_hash self, ATTRIBUTES
-      end
     end
   end
 end

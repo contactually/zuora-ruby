@@ -4,7 +4,6 @@ module Zuora
   module Models
     class Contact
       include ActiveModel::Model
-      include ActiveModel::Serialization
 
       ATTRIBUTES = :address_1,
                    :address_2,
@@ -28,6 +27,10 @@ module Zuora
 
       attr_accessor *ATTRIBUTES
 
+      def attributes
+        ATTRIBUTES
+      end
+
       validates :first_name,
                 :last_name,
                 :country,
@@ -37,9 +40,6 @@ module Zuora
                 :last_name,
                 :length => { :maximum => 100 }
 
-      def attributes
-        Zuora::Util.attr_hash self, ATTRIBUTES
-      end
     end
   end
 end
