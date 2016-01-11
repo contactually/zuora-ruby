@@ -1,6 +1,6 @@
 module Zuora
   module Serializers
-    class Attribute
+    module Attribute
       def self.serialize(model)
         attrs = model.attributes
         attr_pairs =  attrs.map { |attr| self.serialize_attr model, attr }
@@ -11,6 +11,13 @@ module Zuora
 
       def self.serialize_attr(object, attr)
         # Camelize the stringified attribute name
+
+        # Todo: this specific transformation could be passed in as
+        # a lambda. This would allow any arbitrary function
+        # of the attr/value to be passed in. It would also
+        # effectively decouple the movement along the structure
+        # (recursion, method check) from the end key/value
+        # transformation for nodes.
         key = attr.to_s.camelize(:lower)
 
         # Get current attribute's property
