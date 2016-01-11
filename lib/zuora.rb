@@ -8,8 +8,8 @@ require 'active_model_serializers'
 require 'active_support'
 
 module Zuora
-  API_URL = 'https://webservices.iso-ne.com/api/v1.1'
-  SANDBOX_URL = 'https://apisandbox-api.zuora.com/rest/v1'
+  API_URL = 'https://api.zuora.com/rest/v1/'
+  SANDBOX_URL = 'https://apisandbox-api.zuora.com/rest/v1/'
 
   STATE_ABBREVIATIONS = %w(AA AE AP AK AL AR AZ CA CO CT DC DE FL
                            GA GU HI IA ID IL IN KS KY LA MA MD ME
