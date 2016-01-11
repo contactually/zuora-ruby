@@ -3,6 +3,9 @@ require 'byebug'
 require 'factory_girl'
 require 'rspec/mocks'
 
+require 'dotenv'
+Dotenv.load
+
 FactoryGirl.definition_file_paths = ['spec/zuora/factories']
 FactoryGirl.find_definitions
 
