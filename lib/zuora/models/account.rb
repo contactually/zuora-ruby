@@ -4,25 +4,31 @@ module Zuora
   module Models
     class Account
       include ActiveModel::Model
+      # See http://api.rubyonrails.org/classes/ActiveModel/Dirty.html
 
-      ATTRIBUTES = [:account_number,
-                    :auto_pay,
-                    :bill_to_contact,
-                    :bill_cycle_day,
-                    :crm_id,
-                    :currency,
-                    :credit_card,
-                    :name,
-                    :hpm_credit_card_payment_method_id,
-                    :notes,
-                    :invoice_template_id,
-                    :communication_profile_id,
-                    :payment_gateway,
-                    :payment_term,
-                    :sold_to_contact,
-                    :subscription]
+      ATTRIBUTES = :account_number,
+                   :auto_pay,
+                   :bill_to_contact,
+                   :bill_cycle_day,
+                   :crm_id,
+                   :currency,
+                   :credit_card,
+                   :name,
+                   :hpm_credit_card_payment_method_id,
+                   :notes,
+                   :invoice_template_id,
+                   :communication_profile_id,
+                   :payment_gateway,
+                   :payment_term,
+                   :sold_to_contact,
+                   :subscription
+
 
       attr_accessor *ATTRIBUTES
+
+      def attributes
+        ATTRIBUTES
+      end
 
       validates :auto_pay,
                 :bill_to_contact,
@@ -39,9 +45,6 @@ module Zuora
       validates :payment_term,
                 :inclusion => { :in => Zuora::PAYMENT_TERMS }
 
-      def attributes
-        Zuora::Util.attr_hash self, ATTRIBUTES
-      end
 
       # TODO: Factor out and supply this via a mixin to form a nice dsl
       # e.g. validates :bill_to_contact, :as => :contact
