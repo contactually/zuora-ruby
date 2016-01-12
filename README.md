@@ -1,35 +1,57 @@
 # Zuora REST API: Ruby Client
 
 This library implements a Ruby client wrapping Zuora's REST API.
-- Validations (via `activemodel`)
-- HTTP (via `faraday`)
-- Serialization: To/from Ruby / JSON
+- **Validations** (via `activemodel`)
+- **HTTP** (via `faraday`)
+- **Serialization**: To/from Ruby / JSON
 
+## Quickstart
+```ruby
+# Connect
+client = Zuora::Client.new(username, password) 
+# Create a model
+account = Zuora::Models::Account.new(...)
+# Validate
+account.valid? # true or false, check account.errors if false
+# Select a serializer (snake_case -> lowerCamelCase)
+serializer = Zuora::Serializers::Attribute
+# Low level HTTP API
+client.get('/rest/v1/accounts', serializer.serialze account)
+# High Level Resource API 
+Zuora::Resources::Account.create! client, account, serializer
+```
 ## Key Features & Concepts 
-1. ***Client:*** Create a client using username and password.
+1. ***Client:*** Create a client by providing username and password.
 This authenticates and stores the returned session cookie 
-used in subsequent requests. 
+used in subsequent requests. An optional third, truthy value enables Sandbox instead of production mode.
 
 2. ***HTTP:***
-Use `client.<get|post>(url, params)` to make HTTP requests via the authenticated client. Request and response body will be converted to/from Ruby via `farraday_middleware`. 
+Use `client.<get|post|put>(url, params)` to make HTTP requests via the authenticated client. Request and response body will be converted to/from Ruby via `farraday_middleware`. 
 
 3. ***Models:***  Ruby interface for constructing valid Zuora objects.
   - `account = Zuora::Models::Account.new(:attribute => 'name')`
-  - `account.valid?` # a boolean indicating validity
-  - `account.errors` # a hash of error message(s)
-  - `account.attributes` # an array of attribute names
+  - `account.valid?`  a boolean indicating validity
+  - `account.errors`  a hash of error message(s)
+  - `account.attributes` an array of attribute names
 
-4. **Serializers:** Recursive data transformations for mapping between formats, for example, from Ruby to JSON and back. Used to turn Ruby `snake_case` into JSON `lowerCamelCase`
+4. **Serializers:** Recursive data transformations for mapping between formats; a Ruby -> JSON serializer is included; `snake_case` attributes are transformed into JSON `lowerCamelCase` recursively in a nested structure.
   - ex. `Zuora::Serializers::Attribute.serialize account` 
   
-5. **Resources:** Wrap Zuora API endpoints. Hand a valid models and (optionally) serializer to a Resource to trigger a request. Request will be made for valid models only, else an exception will be raised. A `Farraday::Response` object will be returned (having `.status` and `.body`).
 
-6. **Factories:** Factories for easily constructing Zuora requests in development (via `factory_girl`) 
+5. **Resources:** Wraps Zuora REST API endpoints. Hand a valid model and (optionally) a serializer to a Resource to trigger a request. Request will be made for valid models only. An exception will be raised if the model is invalid. Otherwise, a `Farraday::Response` object will be returned (responding to `.status`, `.headers`, and `.body`).
 
-7. **Test coverage:** Unit and integration specs coverage via `rspec`. Coming soon, integration specs (using `VCR`)
+6. **Factories:** Factories are set up for easily constructing Zuora requests in development (via `factory_girl`) 
+```ruby
+account = create :account, :credit_card => create(:credit_card),
+                           :sold_to_contact => create(:contact),
+                           :bill_to_contact => create(:contact)
+                           
+account.valid? # => true
+```
+7. **Test coverage:** Unit and integration specs coverage via `rspec`. Coming soon: HTTP response caching (using `VCR`)
 
 ## Models
-Models implement (recursive, nested) Zuora validations
+Models implement (recursive, nested) Zuora validations using `ActiveModel::Model` and soon, dirty attribute tracking via `ActiveModel::Dirty`
 * Account
 * CardHolder
 * Contact
@@ -47,7 +69,7 @@ In module  `Zuora::Resources::`
 * `Subscription.update!` [in progress]
 * `Subscription.cancel!` [in progress]
 * `PaymentMethod.update!` [in progress]
- 
+
 ## Examples
 ### Creating an Account
 
@@ -154,3 +176,19 @@ pp response
    status=200>,
  @on_complete_callbacks=[]>
 ```
+# Changelog
+* **[0.1.0] Initial release** 
+# Roadmap
+* **[0.1.1] Additional resources** See Resource list above
+* **[0.2.0] Add VCR** Fast, deterministic HTTP requests and responses
+* **[0.3.0] Dirty attribute tracking:** only serialize attributes that have been explicitly set. Currently, unset attributes are sent as `nil` which might override Zuora defaults.
+
+# Commit rights
+Anyone who has a patch accepted may request commit rights. Please do so inside the pull request post-merge.
+
+# Contributors
+* [John Gerhardt](https://github.com/jws2g)
+* [Shaun Robinson](https://github.com/env)
+
+# License
+MIT License. Copyright 2016 Contactually, Inc. http://contactually.com
