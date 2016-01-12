@@ -191,7 +191,7 @@ pp response
 Anyone who has a patch accepted may request commit rights. Please do so inside the pull request post-merge.
 
 # Contributors
-* [John Gerhardt](https://github.com/jws2g)
+* [John Gerhardt](https://github.com/jwg2s)
 * [Shaun Robinson](https://github.com/env)
 
 # License
