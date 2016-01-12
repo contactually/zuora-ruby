@@ -24,14 +24,7 @@ module Zuora
     def initialize(username, password, sandbox = false)
       url = api_url sandbox
 
-      connection = Faraday.new(url, ssl: { verify: false }) do |conn|
-        conn.request :json
-        conn.response :json, content_type: /\bjson$/
-        conn.use :instrumentation
-        conn.adapter Faraday.default_adapter
-      end
-
-      response = connection.post do |req|
+      response = connection(url).post do |req|
         req.url '/rest/v1/connections'
         req.headers['apiAccessKeyId'] = username
         req.headers['apiSecretAccessKey'] = password
@@ -40,13 +33,13 @@ module Zuora
 
       if response.status == 200
         @auth_cookie = response.headers['set-cookie'].split(' ')[0]
-        @connection = connection
+        @connection = connection(url)
       else
         fail ConnectionError, response.body['reasons']
       end
     end
 
-    # @param [String] URL of request
+    # @param [String] url - URL of request
     # @return [Faraday::Response] A response, with .headers, .status & .body
     def get(url)
       @connection.get do |req|
@@ -56,8 +49,8 @@ module Zuora
       end
     end
 
-    # @param [String] URL for HTTP POST request
-    # @param [Params] Data to be sent in request body
+    # @param [String] url - URL for HTTP POST request
+    # @param [Params] params - Data to be sent in request body
     # @return [Faraday::Response] A response, with .headers, .status & .body
     def post(url, params)
       response = @connection.post do |req|
@@ -75,8 +68,8 @@ module Zuora
       # end
     end
 
-    # @param [String] URL for HTTP PUT request
-    # @param [Params] Data to be sent in request body
+    # @param [String] url - URL for HTTP PUT request
+    # @param [Params] params - Data to be sent in request body
     # @return [Faraday::Response] A response, with .headers, .status & .body
     def put(url, params)
       response = @connection.put do |req|
@@ -96,7 +89,18 @@ module Zuora
 
     private
 
-    # @param [Boolean] Use the sandbox url?
+    # @param [String] url
+    # @return [Faraday::Client]
+    def connection(url)
+      Faraday.new(url, ssl: { verify: false }) do |conn|
+        conn.request :json
+        conn.response :json, content_type: /\bjson$/
+        conn.use :instrumentation
+        conn.adapter Faraday.default_adapter
+      end
+    end
+
+    # @param [Boolean] sandbox - Use the sandbox url?
     # @return [String] the API url
     def api_url(sandbox)
       if sandbox
