@@ -1,3 +1,9 @@
+if ENV['CIRCLECI']
+  require 'rspec_junit_formatter'
+  require 'codeclimate-test-reporter'
+  CodeClimate::TestReporter.start
+end
+
 require_relative '../lib/zuora'
 require 'byebug'
 require 'factory_girl'
