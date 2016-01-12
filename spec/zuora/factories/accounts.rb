@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :account, :class => Zuora::Models::Account do
+  factory :account, class: Zuora::Models::Account do
     name 'Abc'
     auto_pay true
     currency 'USD'

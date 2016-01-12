@@ -27,7 +27,7 @@ module Zuora
                    :invoice_target_date,
                    :subscribe_to_rate_plans
 
-      attr_accessor *ATTRIBUTES
+      attr_accessor(*ATTRIBUTES)
 
       def attributes
         ATTRIBUTES
@@ -37,14 +37,14 @@ module Zuora
                 :term_type,
                 :contract_effective_date,
                 :subscribe_to_rate_plans,
-                :presence => true
+                presence: true
 
       validates :term_type,
-                :inclusion => { :in => Zuora::SUBSCRIPTION_TERM_TYPES }
+                inclusion: { in: Zuora::SUBSCRIPTION_TERM_TYPES }
 
       validates :initial_term,
-                :presence => true,
-                :if => Proc.new { |sub| sub.term_type == 'EVERGREEN' }
+                presence: true,
+                if: proc { |sub| sub.term_type == 'EVERGREEN' }
     end
   end
 end

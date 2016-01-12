@@ -23,7 +23,7 @@ module Zuora
                    :sold_to_contact,
                    :subscription
 
-      attr_accessor *ATTRIBUTES
+      attr_accessor(*ATTRIBUTES)
 
       def attributes
         ATTRIBUTES
@@ -41,14 +41,13 @@ module Zuora
                 :name,
                 :payment_term,
                 :sold_to_contact,
-                :presence => true
+                presence: true
 
       validates :currency,
-                :length => { :is => 3 }
+                length: { is: 3 }
 
       validates :payment_term,
-                :inclusion => { :in => Zuora::PAYMENT_TERMS }
-
+                inclusion: { in: Zuora::PAYMENT_TERMS }
     end
   end
 end

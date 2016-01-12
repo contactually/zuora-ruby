@@ -7,7 +7,7 @@ module Zuora
       #                 [Any]: value }
       def self.serialize(model)
         attrs = model.attributes
-        attr_pairs =  attrs.map { |attr| self.serialize_attr model, attr }
+        attr_pairs =  attrs.map { |attr| serialize_attr model, attr }
         Hash[attr_pairs]
       end
 
@@ -26,9 +26,7 @@ module Zuora
 
         # Recursively serialize this attribute's
         # attributes, if they are defined
-        if val.respond_to?(:attributes)
-          val = self.serialize val
-        end
+        val = serialize val if val.respond_to?(:attributes)
 
         [key, val]
       end

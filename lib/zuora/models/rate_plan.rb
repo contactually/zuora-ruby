@@ -8,15 +8,14 @@ module Zuora
       ATTRIBUTES = :product_rate_plan_id,
                    :charge_overrides
 
-      attr_accessor *ATTRIBUTES
+      attr_accessor(*ATTRIBUTES)
 
       def attributes
         ATTRIBUTES
       end
 
       validates :product_rate_plan_id,
-                :presence => true
-
+                presence: true
     end
   end
 end

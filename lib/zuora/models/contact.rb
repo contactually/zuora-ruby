@@ -25,7 +25,7 @@ module Zuora
                    :work_email,
                    :work_phone
 
-      attr_accessor *ATTRIBUTES
+      attr_accessor(*ATTRIBUTES)
 
       def attributes
         ATTRIBUTES
@@ -34,12 +34,11 @@ module Zuora
       validates :first_name,
                 :last_name,
                 :country,
-                :presence => true
+                presence: true
 
       validates :first_name,
                 :last_name,
-                :length => { :maximum => 100 }
-
+                length: { maximum: 100 }
     end
   end
 end

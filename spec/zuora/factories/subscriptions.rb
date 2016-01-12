@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :subscription, :class => Zuora::Models::Subscription do
+  factory :subscription, class: Zuora::Models::Subscription do
     renewal_term 3
     renewal_term_period_type 'week'
     term_type 'TERMED'

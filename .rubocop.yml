@@ -1,3 +1,22 @@
-# This is the configuration used to check the rubocop source code.
+AllCops:
+  Exclude:
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'vendor/**/*'
+
 Style/Encoding:
   Enabled: true
+
+Style/Documentation:
+  Description: 'Document classes and non-namespace modules.'
+  Enabled: false
+
+Style/Encoding:
+  Enabled: false
+
+AbcSize:
+  Enabled: false
+
+MethodLength:
+  Enabled: true
+  Max: 25

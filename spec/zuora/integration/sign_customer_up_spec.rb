@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-if !ENV || ENV['ZUORA_SANDBOX_USERNAME'].nil? || ENV['ZUORA_SANDBOX_PASSWORD'].nil?
-  raise 'Please set ZUORA_SANDBOX_USERNAME and ZUORA_SANDBOX_PASSWORD in .env'
+if ENV['ZUORA_SANDBOX_USERNAME'].nil? || ENV['ZUORA_SANDBOX_PASSWORD'].nil?
+  fail 'Please set ZUORA_SANDBOX_USERNAME and ZUORA_SANDBOX_PASSWORD in .env'
 end
 
 describe 'Sign up a customer' do
@@ -10,9 +10,9 @@ describe 'Sign up a customer' do
 
   let(:account) do
     build :account,
-          :sold_to_contact => customer,
-          :bill_to_contact => customer,
-          :credit_card => credit_card
+          sold_to_contact: customer,
+          bill_to_contact: customer,
+          credit_card: credit_card
   end
 
   it { expect(account).to be_valid }
