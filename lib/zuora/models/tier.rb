@@ -4,12 +4,12 @@ module Zuora
       include ActiveModel::Model
 
       ATTRIBUTES = :tier,
-        :starting_unit,
-        :ending_unit,
-        :price,
-        :price_format
+                   :starting_unit,
+                   :ending_unit,
+                   :price,
+                   :price_format
 
-      attr_accessor *ATTRIBUTES
+      attr_accessor(*ATTRIBUTES)
 
       def attributes
         ATTRIBUTES
@@ -17,11 +17,11 @@ module Zuora
 
       validates :tier,
                 :price,
-                :presence => true
+                presence: true
 
       validates :price_format,
-                :inclusion => { :in => %w(FlatFee PerUnit)},
-                :allow_nil => true
+                inclusion: { in: %w(FlatFee PerUnit) },
+                allow_nil: true
     end
   end
 end

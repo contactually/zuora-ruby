@@ -4,14 +4,14 @@ require 'ostruct'
 describe Zuora::Serializers::Attribute do
   let(:obj) do
     OpenStruct.new(
-      :a_b => 1,
-      :b_c => 2,
-      :c_d => OpenStruct.new(
-        :attributes => [:e_f, :f_g],
-        :e_f => 3,
-        :f_g => 4
+      a_b: 1,
+      b_c: 2,
+      c_d: OpenStruct.new(
+        attributes: [:e_f, :f_g],
+        e_f: 3,
+        f_g: 4
       ),
-      :attributes => [:a_b, :b_c, :c_d]
+      attributes: [:a_b, :b_c, :c_d]
     )
   end
 

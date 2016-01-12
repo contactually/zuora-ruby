@@ -6,7 +6,7 @@ module Zuora
       if model.valid?
         block.call model
       else
-        raise InvalidModel.new(model)
+        fail InvalidModel, model
       end
     end
   end

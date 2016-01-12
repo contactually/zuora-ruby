@@ -3,7 +3,7 @@ module Zuora
     module Noop
       def self.serialize(model)
         attrs = model.attributes
-        attr_pairs =  attrs.map { |attr| self.serialize_attr model, attr }
+        attr_pairs =  attrs.map { |attr| serialize_attr model, attr }
         Hash[attr_pairs]
       end
 

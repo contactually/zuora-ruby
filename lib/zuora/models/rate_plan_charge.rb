@@ -38,21 +38,20 @@ module Zuora
                    :price_increase_percentage,
                    :weekly_bill_cycle_day
 
-      attr_accessor *ATTRIBUTES
+      attr_accessor(*ATTRIBUTES)
 
       def attributes
         ATTRIBUTES
       end
 
       validates :product_rate_plan_charge_id,
-                :presence => true
+                presence: true
 
       validates :number,
-                :length => { :maximum => 50 }
+                length: { maximum: 50 }
 
       validates :description,
-                :length => { :maximum => 500 }
-
+                length: { maximum: 500 }
     end
   end
 end

@@ -15,7 +15,7 @@ module Zuora
                    :phone,
                    :email
 
-      attr_accessor *ATTRIBUTES
+      attr_accessor(*ATTRIBUTES)
 
       def attributes
         ATTRIBUTES
@@ -27,35 +27,34 @@ module Zuora
                 :state,
                 :zip_code,
                 :country,
-                :presence => true
+                presence: true
 
       validates :card_holder_name,
-                :length => { :maximum => 50 }
+                length: { maximum: 50 }
 
       validates :address_line_1,
-                :length => { :maximum => 255 }
+                length: { maximum: 255 }
 
       validates :address_line_2,
-                :length => { :maximum => 255 },
-                :allow_nil => true
+                length: { maximum: 255 },
+                allow_nil: true
 
       validates :city,
-                :length => { :maximum => 40 }
+                length: { maximum: 40 }
 
       validates :state,
-                :inclusion => { :in => Zuora::STATE_ABBREVIATIONS }
+                inclusion: { in: Zuora::STATE_ABBREVIATIONS }
 
       validates :zip_code,
-                :length => { :maximum => 20 }
+                length: { maximum: 20 }
 
       validates :phone,
-                :length => { :maximum => 20 },
-                :allow_nil => true
+                length: { maximum: 20 },
+                allow_nil: true
 
       validates :email,
-                :length => { :maximum => 80 },
-                :allow_nil => true
-
+                length: { maximum: 80 },
+                allow_nil: true
     end
   end
 end

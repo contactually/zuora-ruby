@@ -4,7 +4,6 @@ require 'faraday_middleware'
 require 'json'
 
 module Zuora
-
   # Unable to connect. Check username / password
   ConnectionError = Class.new StandardError
 
@@ -18,16 +17,16 @@ module Zuora
     # Makes an initial HTTP request to fetch session token.
     # Subsequent requests made with .get, .post, and .put
     # contain the authenticated session id in their headers.
-    # @param [String] Zuora username
-    # @param [String] Zuora Password
-    # @param [Boolean] Use sandbox api?
-    # @return [Zuora::Client] with .connection, .put, .post,
-    def initialize(username, password, sandbox=false)
+    # @param [String] username
+    # @param [String] password
+    # @param [Boolean] sandbox
+    # @return [Zuora::Client] with .connection, .put, .post
+    def initialize(username, password, sandbox = false)
       url = api_url sandbox
 
-      connection = Faraday.new(url, :ssl => {:verify => false }) do |conn|
+      connection = Faraday.new(url, ssl: { verify: false }) do |conn|
         conn.request :json
-        conn.response :json, :content_type => /\bjson$/
+        conn.response :json, content_type: /\bjson$/
         conn.use :instrumentation
         conn.adapter Faraday.default_adapter
       end
@@ -40,10 +39,10 @@ module Zuora
       end
 
       if response.status == 200
-        @auth_cookie =  response.headers['set-cookie'].split(' ')[0]
+        @auth_cookie = response.headers['set-cookie'].split(' ')[0]
         @connection = connection
       else
-        raise ConnectionError.new(response)
+        fail ConnectionError, response.body['reasons']
       end
     end
 
@@ -69,11 +68,11 @@ module Zuora
       end
 
       response
-      #if response.body['success']
+      # if response.body['success']
       #  return response
-      #else
+      # else
       #  raise ErrorResponse.new(response)
-      #end
+      # end
     end
 
     # @param [String] URL for HTTP PUT request
@@ -88,11 +87,11 @@ module Zuora
       end
 
       response
-      #if response.body['success']
+      # if response.body['success']
       #  return response
-      #else
+      # else
       #  raise ErrorResponse.new(response)
-      #end
+      # end
     end
 
     private

@@ -6,7 +6,6 @@ describe Zuora::Models::CardHolder do
       subject { Zuora::Models::CardHolder.new }
 
       it { is_expected.to_not be_valid }
-
     end
 
     context 'with valid data' do

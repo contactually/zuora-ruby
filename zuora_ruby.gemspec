@@ -49,6 +49,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'codeclimate-test-reporter'
   spec.add_development_dependency 'rspec_junit_formatter', '0.2.2'
   spec.add_development_dependency 'rubocop'
-  spec.add_development_dependency 'factory_girl','~> 4.0'
+  spec.add_development_dependency 'factory_girl', '~> 4.0'
   spec.add_development_dependency 'faker'
 end
