@@ -82,8 +82,8 @@ module Zuora
     private
 
     # @param [Faraday::Request] req - Faraday::Request builder
-    # @param [String] username -
-    # @param [String] password -
+    # @param [String] username - Zuora username
+    # @param [String] password - Zuora password
     def set_auth_request_headers!(req, username, password)
       req.url '/rest/v1/connections'
       req.headers['apiAccessKeyId'] = username
@@ -92,12 +92,12 @@ module Zuora
     end
 
     # @param [Faraday::Request] request - Faraday Request builder
-    # @param [String] url - Relative URL for HTTP requst
+    # @param [String] url - Relative URL for HTTP request
     # @return [Nil]
-    def set_request_headers!(request, url)
-      request.url url
-      request.headers['Content-Type'] = 'application/json'
-      request.headers['Cookie'] = @auth_cookie
+    def set_request_headers!(req, url)
+      req.url url
+      req.headers['Content-Type'] = 'application/json'
+      req.headers['Cookie'] = @auth_cookie
     end
 
     # @param [String] url
