@@ -181,11 +181,12 @@ pp response
  @on_complete_callbacks=[]>
 ```
 # Changelog
-* **[0.1.0] Initial release** 
+* **[0.1.0 - 2016-01-12]** Initial release 
+* **[0.1.1 - 2016-01-12]** Refactorings, test coverage, additional resources
+ -  
 
 # Roadmap
-* **[0.1.1] Additional resources** See Resource list above
-* **[0.2.0] Add VCR** Fast, deterministic HTTP requests and responses
+* **[0.2.0] Add VCR:** Fast, deterministic HTTP requests and responses
 * **[0.3.0] Dirty attribute tracking:** only serialize attributes that have been explicitly set. Currently, unset attributes are sent as `nil` which might override Zuora defaults.
 
 # Commit rights

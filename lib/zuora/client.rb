@@ -11,7 +11,7 @@ module Zuora
   ErrorResponse = Class.new StandardError
 
   class Client
-    attr_accessor :connection
+    attr_reader :connection
 
     # Creates a connection instance.
     # Makes an initial HTTP request to fetch session token.
@@ -22,18 +22,16 @@ module Zuora
     # @param [Boolean] sandbox
     # @return [Zuora::Client] with .connection, .put, .post
     def initialize(username, password, sandbox = false)
-      url = api_url sandbox
+      base_url = api_url sandbox
+      conn = connection base_url
 
-      response = connection(url).post do |req|
-        req.url '/rest/v1/connections'
-        req.headers['apiAccessKeyId'] = username
-        req.headers['apiSecretAccessKey'] = password
-        req.headers['Content-Type'] = 'application/json'
+      response = conn.post do |req|
+        set_auth_request_headers! req, username, password
       end
 
       if response.status == 200
         @auth_cookie = response.headers['set-cookie'].split(' ')[0]
-        @connection = connection(url)
+        @connection = conn
       else
         fail ConnectionError, response.body['reasons']
       end
@@ -43,9 +41,7 @@ module Zuora
     # @return [Faraday::Response] A response, with .headers, .status & .body
     def get(url)
       @connection.get do |req|
-        req.url url
-        req.headers['Content-Type'] = 'application/json'
-        req.headers['Cookie'] = @auth_cookie
+        set_request_headers! req, url
       end
     end
 
@@ -54,9 +50,7 @@ module Zuora
     # @return [Faraday::Response] A response, with .headers, .status & .body
     def post(url, params)
       response = @connection.post do |req|
-        req.url url
-        req.headers['Content-Type'] = 'application/json'
-        req.headers['Cookie'] = @auth_cookie
+        set_request_headers! req, url
         req.body = JSON.generate params
       end
 
@@ -73,9 +67,7 @@ module Zuora
     # @return [Faraday::Response] A response, with .headers, .status & .body
     def put(url, params)
       response = @connection.put do |req|
-        req.url url
-        req.headers['Content-Type'] = 'application/json'
-        req.headers['Cookie'] = @auth_cookie
+        set_request_headers! req, url
         req.body = JSON.generate params
       end
 
@@ -88,6 +80,25 @@ module Zuora
     end
 
     private
+
+    # @param [Faraday::Request] req - Faraday::Request builder
+    # @param [String] username -
+    # @param [String] password -
+    def set_auth_request_headers!(req, username, password)
+      req.url '/rest/v1/connections'
+      req.headers['apiAccessKeyId'] = username
+      req.headers['apiSecretAccessKey'] = password
+      req.headers['Content-Type'] = 'application/json'
+    end
+
+    # @param [Faraday::Request] request - Faraday Request builder
+    # @param [String] url - Relative URL for HTTP requst
+    # @return [Nil]
+    def set_request_headers!(request, url)
+      request.url url
+      request.headers['Content-Type'] = 'application/json'
+      request.headers['Cookie'] = @auth_cookie
+    end
 
     # @param [String] url
     # @return [Faraday::Client]
