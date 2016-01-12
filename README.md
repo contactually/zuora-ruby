@@ -182,6 +182,7 @@ pp response
 ```
 # Changelog
 * **[0.1.0] Initial release** 
+
 # Roadmap
 * **[0.1.1] Additional resources** See Resource list above
 * **[0.2.0] Add VCR** Fast, deterministic HTTP requests and responses
