@@ -182,12 +182,12 @@ pp response
 ```
 # Changelog
 * **[0.1.0 - 2016-01-12]** Initial release 
-* **[0.1.1 - 2016-01-12]** Refactorings, test coverage, additional resources
- -  
+* **[0.1.1 - 2016-01-14]** Dirty Attribute Tracking
+     - Refactored client
+     - Adds VCR for mocking out HTTP requests
 
 # Roadmap
-* **[0.2.0] Add VCR:** Fast, deterministic HTTP requests and responses
-* **[0.3.0] Dirty attribute tracking:** only serialize attributes that have been explicitly set. Currently, unset attributes are sent as `nil` which might override Zuora defaults.
+* **[0.1.3 - 2016-01-14] ** Adds additional resources
 
 # Commit rights
 Anyone who has a patch accepted may request commit rights. Please do so inside the pull request post-merge.
