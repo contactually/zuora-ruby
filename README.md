@@ -1,3 +1,5 @@
+[![Circle CI](https://circleci.com/gh/contactually/zuora-ruby.svg?style=svg)](https://circleci.com/gh/contactually/zuora-ruby)
+
 # Zuora REST API: Ruby Client
 
 This library implements a Ruby client wrapping Zuora's REST API.
