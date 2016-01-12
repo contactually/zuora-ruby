@@ -22,7 +22,7 @@ Use `client.<get|post>(url, params)` to make HTTP requests via the authenticated
 4. **Serializers:** Recursive data transformations for mapping between formats, for example, from Ruby to JSON and back. Used to turn Ruby `snake_case` into JSON `lowerCamelCase`
   - ex. `Zuora::Serializers::Attribute.serialize account` 
   
-5. **Resources:** Wrap Zuora API endpoints. Hand a valid models and (optionally) serializer to a Resource to trigger a request. Request will be made for valid models only, else an exception will be raised. A `Farraday::Response` object will be returned (habing `.status` and `.body`).
+5. **Resources:** Wrap Zuora API endpoints. Hand a valid models and (optionally) serializer to a Resource to trigger a request. Request will be made for valid models only, else an exception will be raised. A `Farraday::Response` object will be returned (having `.status` and `.body`).
 
 6. **Factories:** Factories for easily constructing Zuora requests in development (via `factory_girl`) 
 
