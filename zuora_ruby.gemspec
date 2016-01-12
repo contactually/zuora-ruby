@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors = ['Contactually Engineering']
   spec.email = ['engineering@contactually.com']
 
-  spec.summary = 'A ruby wrapper for Zuora API.'
-  spec.description = 'A ruby wrapper for Zuora API.'
-  spec.homepage = 'N/A'
+  spec.summary = 'A Ruby wrapper for Zuora API.'
+  spec.description = 'A Ruby wrapper for Zuora API.'
+  spec.homepage = 'https://github.com'
   spec.license = 'MIT'
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
