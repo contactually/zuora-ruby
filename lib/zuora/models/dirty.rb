@@ -2,19 +2,23 @@
 
 # Rationale:
 
-# Create classes of objects with a self-enforcing schemas,
-# and the ability to track which fields have changed. Highly useful
-# in modeling, validating, and serializing remote API endpoints,
-# especially for PATCH updates.
+# Create classes of objects with a self-enforcing schemas, and the ability to
+# track which fields have changed.
+
+# Useful in modeling, validating, and serializing remote API endpoints,
+# especially for PATCH updates where sending ambiguous nil values could
+# override invisible defaults.
 
 # Features:
 
 #  - attr_accessor like getter and setters, plus...
-#  - dirty attribute tracking: what changed?
+#  - constructor checks required fields with support for multi-field
+#       validation predicates
 #  - per attribute coercion
-#  - per attribute type check
-#  - per attribute validation
-#      (checks  are all optional, and are applied in the above order)
+#  -               type check
+#  -               validation
+#  - dirty attribute tracking: what changed?
+#  (checks  are all optional, and are applied in the above order)
 
 require 'set'
 
@@ -22,8 +26,9 @@ require 'set'
 module Boolean; end
 class TrueClass; include Boolean; end
 class FalseClass; include Boolean; end
-
-# true.is_a? Boolean => true
+# All roads lead to TrueClass
+# true.is_a? Boolean => true (.is_a? Boolean => true ... )
+# false.is_a? Boolean => true (.is_a? Boolean => true ... )
 
 module DirtyValidAttr
   def self.included(base)
@@ -59,15 +64,19 @@ module DirtyValidAttr
       end
     end
   end
-
+  require 'byebug'
   module ClassMethods
-    #
-    # @param [symbol] attr - attribtue name
+    attr_accessor :attr_definitions
+
+    # @param [symbol] attr - attribute name
     # @param [Hash] options - {[Class] type - checked using .is_a?, optional
     #                          [Proc] valid? - predicate fn, optional
     #                          [Proc] coerce - coercion fn, optional
+    #                          [Boolean] required? - default: nil (falsy)
     def dirty_valid_attr(attr, options = {})
       type, validation, coerce = options.values_at(:type, :valid?, :coerce)
+
+      upsert_attr_definition! attr, options
 
       define_method("#{attr}=") do |value|
         self.changed_attributes ||= Set.new
@@ -82,13 +91,49 @@ module DirtyValidAttr
 
       attr_reader attr
     end
+
+    private
+
+    # Upsert to class-level hash of {attr => options}
+    # @param [Sym] attr - attribtue name
+    # @param [Hash] options - see structure in dirty_valid_attr
+    # @sfx Updates class-level method
+    def upsert_attr_definition!(attr, options)
+      self.attr_definitions ||= {}
+      self.attr_definitions[attr] = options
+    end
   end
 
   # @param [Hash] attrs - initial attribute keys and values
   # @return [Nil]
-  def set_attributes!(attrs)
+  def set_attributes!(attrs = {})
+    missing = missing_attrs(attrs)
+    raise "Missing required attrs: #{missing} " unless missing.empty?
     attrs.each do |attr, v|
       send("#{attr}=", v)
+    end
+  end
+
+  private
+
+  # @param [Hash] attrs - [Symbol] attr
+  #                       [String] value
+  # @return [Hash] -      [String] attr
+  #                       [Hash] options (:required?, :valid?, :coerce)
+  def missing_attrs(attrs = {})
+    # An attribute is determined to be 'missing' using the :required? key.
+    # if provided present in the attribute's definition.
+    #
+    # If :required? is callable, call it on attrs.
+    #  This allows for expression logic like:
+    #  require attr A if attr B == 3
+    # Else
+    #  Use the boolean value true, or nil/false
+    #  Defaults to :required? nil(false)
+    #
+    self.class.attr_definitions.select do |_attr, definition|
+      required = definition[:required?]
+      required.respond_to?(:call) ? required.call(attrs) : required
     end
   end
 end
