@@ -1,3 +1,4 @@
+require_relative 'models/dirty'
 require_relative 'models/utils'
 
 require_relative 'models/account'
