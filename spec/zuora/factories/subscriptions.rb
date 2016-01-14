@@ -1,5 +1,7 @@
 FactoryGirl.define do
   factory :subscription, class: Zuora::Models::Subscription do
+    initialize_with { new(attributes) }
+
     renewal_term 3
     renewal_term_period_type 'week'
     term_type 'TERMED'

@@ -1,5 +1,7 @@
 FactoryGirl.define do
   factory :contact, class: Zuora::Models::Contact do
+    initialize_with { new(attributes) }
+
     first_name 'Abc'
     last_name 'Def'
     address_1 '123 Main St'

@@ -1,5 +1,7 @@
 FactoryGirl.define do
   factory :card_holder, class: Zuora::Models::CardHolder do
+    initialize_with { new(attributes) }
+
     card_holder_name 'First Last'
     address_line_1 '123 Main St'
     city 'Dayton'

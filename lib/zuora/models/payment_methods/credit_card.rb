@@ -21,6 +21,10 @@ module Zuora
 
         dirty_valid_attr :security_code,
                          required: true
+
+        def initialize(attrs)
+          set_attributes! attrs
+        end
       end
     end
   end

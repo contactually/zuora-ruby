@@ -41,9 +41,7 @@ module Zuora
       dirty_valid_attr :up_to_periods, type: String, required?: -> (model) { model.end_date_condition == 'Fixed_Period' }
       dirty_valid_attr :weekly_bill_cycle_day, type: String
 
-      def initialize(attrs = {})
-        set_attributes!(attrs)
-      end
+      alias_method :initialize, :set_attributes!
     end
   end
 end

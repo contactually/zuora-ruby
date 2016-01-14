@@ -65,9 +65,7 @@ module Zuora
       dirty_valid_attr :zip_code,
                        type: String
 
-      def initialize(attrs = {})
-        set_attributes!(attrs)
-      end
+      alias_method :initialize, :set_attributes!
     end
   end
 end

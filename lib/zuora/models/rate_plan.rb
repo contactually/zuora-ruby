@@ -8,10 +8,7 @@ module Zuora
       dirty_valid_attr :product_rate_plan_id, type: String, required?: true
       dirty_valid_attr :charge_overrides
 
+      alias_method :initialize, :set_attributes!
     end
-  end
-
-  def initialize(attrs = {})
-    set_attributes!(attrs)
   end
 end

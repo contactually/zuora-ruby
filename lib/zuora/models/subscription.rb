@@ -32,9 +32,7 @@ module Zuora
                        required?: false
       dirty_valid_attr :term_start_date, type: Date
 
-      def initialize(attrs = {})
-        set_attributes!(attrs)
-      end
+      alias_method :initialize, :set_attributes!
     end
   end
 end
