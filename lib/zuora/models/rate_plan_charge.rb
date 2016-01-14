@@ -3,55 +3,47 @@
 module Zuora
   module Models
     class RatePlanCharge
-      include ActiveModel::Model
+      include DirtyValidAttr
 
-      ATTRIBUTES = :product_rate_plan_charge_id,
-                   :number,
-                   :description,
-                   :price,
-                   :tiers,
-                   :included_units,
-                   :overage_price,
-                   :list_price_base,
-                   :quantity,
-                   :discounted_amount,
-                   :discount_percentage,
-                   :apply_discount_to,
-                   :discount_level,
-                   :trigger_event,
-                   :trigger_date,
-                   :end_date_condition,
-                   :up_to_periods_type,
-                   :up_to_periods,
-                   :specific_end_date,
-                   :billing_period,
-                   :specific_billing_period,
-                   :billing_period_alignment,
-                   :billing_timing,
-                   :rating_group,
-                   :bill_cycle_type,
-                   :bill_cycle_day,
-                   :number_of_periods,
-                   :overage_unused_units_credit_option,
-                   :unused_units_credit_rates,
-                   :price_change_option,
-                   :price_increase_percentage,
-                   :weekly_bill_cycle_day
+      dirty_valid_attr :apply_discount_to,
+                       type: String,
+                       valid?: ->(s) { Zuora::DISCOUNT_TYPES.include? s }
 
-      attr_accessor(*ATTRIBUTES)
+      dirty_valid_attr :billing_period, type: String
+      dirty_valid_attr :billing_period_alignment, type: String
+      dirty_valid_attr :billing_timing, type: String
+      dirty_valid_attr :bill_cycle_type, type: String
+      dirty_valid_attr :bill_cycle_day, type: String
+      dirty_valid_attr :description, type: String, valid?: ->(s) { s.length <= 500 }
+      dirty_valid_attr :discount_amount, type: Numeric
+      dirty_valid_attr :discount_percentage, type: Numeric
+      dirty_valid_attr :discount_level, type: String, valid?: ->(s) { ZUORA::DISCOUNT_LEVELS.include? s }
+      dirty_valid_attr :end_date_condition, type: String, valid?: -> (s) { ZUORA::END_DATE_CONDITIONS.include? s}
+      dirty_valid_attr :included_units, type: Numeric
+      dirty_valid_attr :list_price_base, type: String, valid?: ->(s) { ZUORA::LIST_PRICE_BASES.include? s }
+      dirty_valid_attr :number, type: String, valid?: ->(s) { s.length <= 50 }
+      dirty_valid_attr :number_of_periods, type: Numeric
+      dirty_valid_attr :price, type: Numeric
+      dirty_valid_attr :product_rate_plan_charge_id, type: String
+      dirty_valid_attr :overage_price, type: Numeric
+      dirty_valid_attr :overage_unused_units_credit_option, type: String
+      dirty_valid_attr :price_change_option, type: String, valid?: ->(s) { ZUORA::PRICE_CHANGE_OPTIONS.include? s }
+      dirty_valid_attr :price_increase_percentage, type: String
+      dirty_valid_attr :rating_group, type: String
+      dirty_valid_attr :quantity, type: Numeric, required?: true, valid?: ->(q) { q >= 0 }
+      dirty_valid_attr :specific_billing_period, type: String
+      dirty_valid_attr :specific_end_date, type: String
+      dirty_valid_attr :tiers
+      dirty_valid_attr :trigger_event, type: String, valid?: ->(t) { TRIGGER_EVENTS.include? t }
+      dirty_valid_attr :trigger_date, type: Date
+      dirty_valid_attr :unused_units_credit_rates, type: String
+      dirty_valid_attr :up_to_periods_type, type: String, valid?: ->(u) { UP_TO_PERIODS.include? u }
+      dirty_valid_attr :up_to_periods, type: String, required?: -> (model) { model.end_date_condition == 'Fixed_Period' }
+      dirty_valid_attr :weekly_bill_cycle_day, type: String
 
-      def attributes
-        ATTRIBUTES
+      def initialize(attrs = {})
+        set_attributes!(attrs)
       end
-
-      validates :product_rate_plan_charge_id,
-                presence: true
-
-      validates :number,
-                length: { maximum: 50 }
-
-      validates :description,
-                length: { maximum: 500 }
     end
   end
 end

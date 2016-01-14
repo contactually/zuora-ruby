@@ -18,12 +18,23 @@
 
 require 'set'
 
+## Composite Types
+module Boolean; end
+class TrueClass; include Boolean; end
+class FalseClass; include Boolean; end
+
+# true.is_a? Boolean => true
+
 module DirtyValidAttr
   def self.included(base)
     base.extend ClassMethods
     base.class_eval do
       attr_accessor :changed_attributes
       attr_accessor :attributes
+
+      def valid?
+        true
+      end
 
       def validate!(attr, value, validation)
         unless validation.call(value)
@@ -82,26 +93,26 @@ module DirtyValidAttr
   end
 end
 
-class Account
-  include DirtyValidAttr
-
-  dirty_valid_attr :fuz,
-                   :type => String,
-                   :valid? => ->(attr) { attr == 'fuzz' },
-                   :coerce => ->(attr) { attr.to_str }
-
-  dirty_valid_attr :bizz,
-                   :type => Fixnum,
-                   :valid? => ->(attr) { attr > 3 },
-                   :coerce => ->(attr){ attr.to_i }
-
-  dirty_valid_attr :gaz,
-                   :type => Fixnum
-
-  def initialize(attrs)
-    set_attributes!(attrs)
-  end
-end
+# class Account
+#   include DirtyValidAttr
+#
+#   dirty_valid_attr :fuz,
+#                    type: String,
+#                    valid: ->(attr) { attr == 'fuzz' },
+#                    :coerce => ->(attr) { attr.to_str }
+#
+#   dirty_valid_attr :bizz,
+#                    type: Fixnum,
+#                    valid: ->(attr) { attr > 3 },
+#                    :coerce => ->(attr){ attr.to_i }
+#
+#   dirty_valid_attr :gaz,
+#                    type: Fixnum
+#
+#   def initialize(attrs)
+#     set_attributes!(attrs)
+#   end
+# end
 
 # Usage:
 

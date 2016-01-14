@@ -2,35 +2,25 @@ module Zuora
   module Models
     module PaymentMethods
       class CreditCard
-        include ActiveModel::Model
+        include DirtyValidAttr
 
-        ATTRIBUTES = :card_type,
-                     :card_number,
-                     :expiration_month,
-                     :expiration_year,
-                     :security_code
+        dirty_valid_attr :card_type,
+                         required?: true,
+                         valid?: ->(c) { Zuora::CREDIT_CARD_TYPES.include? c }
 
-        attr_accessor(*ATTRIBUTES)
+        dirty_valid_attr :card_number,
+                         required?: true
 
-        def attributes
-          ATTRIBUTES
-        end
+        dirty_valid_attr :expiration_month,
+                         required?: true,
+                         valid?: ->(m) { Zuora::MONTHS.include? m }
 
-        validates :card_type,
-                  :card_number,
-                  :expiration_month,
-                  :expiration_year,
-                  :security_code,
-                  presence: true
+        dirty_valid_attr :expiration_year,
+                         required?: true,
+                         valid?: ->(y) { (y.length == 4) and (y > DateTime.now.year - 1) }
 
-        validates :card_type,
-                  inclusion: { in: Zuora::CREDIT_CARD_TYPES }
-
-        validates :expiration_month,
-                  inclusion: { in: Zuora::MONTHS }
-
-        validates :expiration_year,
-                  length: { is: 4 }
+        dirty_valid_attr :security_code,
+                         required: true
       end
     end
   end

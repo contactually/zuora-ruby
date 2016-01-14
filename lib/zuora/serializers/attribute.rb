@@ -6,7 +6,7 @@ module Zuora
       # @param [Hash] { [String]: lowerCamelCased key =>
       #                 [Any]: value }
       def self.serialize(model)
-        attrs = model.attributes
+        attrs = model.changed_attributes
         attr_pairs =  attrs.map { |attr| serialize_attr model, attr }
         Hash[attr_pairs]
       end
@@ -26,7 +26,7 @@ module Zuora
 
         # Recursively serialize this attribute's
         # attributes, if they are defined
-        val = serialize val if val.respond_to?(:attributes)
+        val = serialize val if val.respond_to?(:changed_attributes)
 
         [key, val]
       end

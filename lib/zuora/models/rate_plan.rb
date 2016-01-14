@@ -3,19 +3,15 @@
 module Zuora
   module Models
     class RatePlan
-      include ActiveModel::Model
+      include DirtyValidAttr
 
-      ATTRIBUTES = :product_rate_plan_id,
-                   :charge_overrides
+      dirty_valid_attr :product_rate_plan_id, type: String, required?: true
+      dirty_valid_attr :charge_overrides
 
-      attr_accessor(*ATTRIBUTES)
-
-      def attributes
-        ATTRIBUTES
-      end
-
-      validates :product_rate_plan_id,
-                presence: true
     end
+  end
+
+  def initialize(attrs = {})
+    set_attributes!(attrs)
   end
 end

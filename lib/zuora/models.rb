@@ -1,9 +1,8 @@
 require_relative 'models/dirty'
-require_relative 'models/utils'
 
+require_relative 'models/contact'
 require_relative 'models/account'
 require_relative 'models/card_holder'
-require_relative 'models/contact'
 require_relative 'models/payment_method'
 require_relative 'models/rate_plan'
 require_relative 'models/rate_plan_charge'

@@ -1,46 +1,73 @@
-require_relative '../models/utils/dirty'
-require 'active_support'
-
 module Zuora
   module Models
     class Contact
-      include ActiveModel::Validations
-      include ActiveModel::Dirty
-      include DirtyAttrAccessor
+      include DirtyValidAttr
 
-      dirty_attr_accessor :address_1,
-                          :address_2,
-                          :city,
-                          :country,
-                          :county,
-                          :fax,
-                          :first_name,
-                          :home_phone,
-                          :last_name,
-                          :mobile_phone,
-                          :nickname,
-                          :other_phone,
-                          :other_phone_type,
-                          :personal_email,
-                          :zip_code,
-                          :state,
-                          :tax_region,
-                          :work_email,
-                          :work_phone
+      dirty_valid_attr :address_1,
+                       type: String,
+                       required?: true
 
-      validates :first_name,
-                :last_name,
-                :country,
-                presence: true
+      dirty_valid_attr :address_2,
+                       type: String
 
-      validates :first_name,
-                :last_name,
-                length: { maximum: 100 }
+      dirty_valid_attr :city,
+                       type: String
+
+      dirty_valid_attr :country,
+                       type: String
+
+      dirty_valid_attr :county,
+                       type: String
+
+      dirty_valid_attr :fax,
+                       type: String
+
+      dirty_valid_attr :home_phone,
+                       type: String
+
+      dirty_valid_attr :first_name,
+                       type: String,
+                       required?: true,
+                       valid: ->(s){ s.length < 100 }
+
+      dirty_valid_attr :last_name,
+                       type: String,
+                       required?: true,
+                       valid: ->(s){ s.length < 100 }
+
+      dirty_valid_attr :mobile_phone,
+                       type: String
+
+      dirty_valid_attr :nickname,
+                       type: String
+
+      dirty_valid_attr :other_phone,
+                       type: String
+
+      dirty_valid_attr :other_phone_type,
+                       type: String
+
+      dirty_valid_attr :personal_email,
+                       type: String
+
+      dirty_valid_attr :state,
+                       type: String
+
+      dirty_valid_attr :tax_region,
+                       type: String
+
+      dirty_valid_attr :work_email,
+                       type: String
+
+      dirty_valid_attr :work_phone,
+                       type: String
+
+      dirty_valid_attr :zip_code,
+                       type: String
+
 
       def initialize(attrs = {})
-        attrs.each do |attr, val|
-          instance_variable_set "@#{attr}", val
-        end
+        set_attributes!(attrs)
       end
     end
   end
