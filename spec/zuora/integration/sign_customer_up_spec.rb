@@ -26,7 +26,11 @@ describe 'Sign up a customer' do
     Zuora::Resources::Accounts.create! client, account, serializer
   end
 
-  it { expect(account_response.status).to eq 200 }
+  it do
+    VCR.use_cassette('account_create!') do
+      expect(account_response.status).to eq 200
+    end
+  end
 
   ## Todo, Subscribe to a ProductRatePlan
 end

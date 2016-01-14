@@ -9,12 +9,29 @@ require 'byebug'
 require 'factory_girl'
 require 'rspec/mocks'
 
+## Dotenv load environment from .env
 require 'dotenv'
 Dotenv.load
 
+## VCR: Memoized HTTP request
+require 'vcr'
+
+VCR.configure do |c|
+  c.cassette_library_dir = 'zuora/fixtures/vcr_cassettes'
+  c.hook_into :webmock # or :fakeweb
+  c.filter_sensitive_data('<ZUORA_SANDBOX_USERNAME>') do
+    ENV['ZUORA_SANDBOX_USERNAME']
+  end
+  c.filter_sensitive_data('<ZUORA_SANDBOX_PASSWORD>') do
+    ENV['ZUORA_SANDBOX_PASSWORD']
+  end
+end
+
+# FactoryGirl
 FactoryGirl.definition_file_paths = ['spec/zuora/factories']
 FactoryGirl.find_definitions
 
+# RSpec configuration
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.expect_with :rspec do |expectations|

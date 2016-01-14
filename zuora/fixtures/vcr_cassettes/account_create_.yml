@@ -1,0 +1,111 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://apisandbox-api.zuora.com/rest/v1/connections
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Apiaccesskeyid:
+      - <ZUORA_SANDBOX_USERNAME>
+      Apisecretaccesskey:
+      - <ZUORA_SANDBOX_PASSWORD>
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '0'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - Zuora App
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '22'
+      Expires:
+      - Tue, 12 Jan 2016 16:24:48 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Tue, 12 Jan 2016 16:24:48 GMT
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - ZSession=dyulKCwYntJ2Ts8BHJqKuC2YTwR_ib4dNlxPXITUPpGrDQwRFQW3ZmRfgYAVfxz7_p3QQMyMSH0lULznTeiwNd2nOD7nEHTOQ-XM2nHnEKijEdsMQG303M31q_ZZqLkEISXQQlw2ynD4-ASPL6Ntihr84WUrgfCdT4-J1crQCofOWZDMpisz7v3iHfXSGEQF1mYh8voS_Xm1xSDbFqrlxYbz3n4iSZIpVPCfx-T-qWRJARzBVyqTZFiAzYd-NQ48;
+        Path=/; Secure; HttpOnly
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "success" : true
+        }
+    http_version: 
+  recorded_at: Tue, 12 Jan 2016 16:24:48 GMT
+- request:
+    method: post
+    uri: https://apisandbox-api.zuora.com/rest/v1/accounts
+    body:
+      encoding: UTF-8
+      string: '{"accountNumber":null,"autoPay":true,"billToContact":{"address1":"123
+        Main St","address2":null,"city":"Palm Springs","country":"US","county":null,"fax":null,"firstName":"Abc","homePhone":null,"lastName":"Def","mobilePhone":null,"nickname":null,"otherPhone":null,"otherPhoneType":null,"personalEmail":null,"zipCode":"90210","state":"FL","taxRegion":null,"workEmail":null,"workPhone":null},"billCycleDay":"0","crmId":null,"currency":"USD","creditCard":{"cardType":"Visa","cardNumber":"4111111111111111","expirationMonth":"03","expirationYear":"2017","securityCode":"122"},"name":"Abc","hpmCreditCardPaymentMethodId":null,"notes":null,"invoiceTemplateId":null,"communicationProfileId":null,"paymentGateway":null,"paymentTerm":"Net
+        30","soldToContact":{"address1":"123 Main St","address2":null,"city":"Palm
+        Springs","country":"US","county":null,"fax":null,"firstName":"Abc","homePhone":null,"lastName":"Def","mobilePhone":null,"nickname":null,"otherPhone":null,"otherPhoneType":null,"personalEmail":null,"zipCode":"90210","state":"FL","taxRegion":null,"workEmail":null,"workPhone":null},"subscription":null}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/json
+      Cookie:
+      - ZSession=dyulKCwYntJ2Ts8BHJqKuC2YTwR_ib4dNlxPXITUPpGrDQwRFQW3ZmRfgYAVfxz7_p3QQMyMSH0lULznTeiwNd2nOD7nEHTOQ-XM2nHnEKijEdsMQG303M31q_ZZqLkEISXQQlw2ynD4-ASPL6Ntihr84WUrgfCdT4-J1crQCofOWZDMpisz7v3iHfXSGEQF1mYh8voS_Xm1xSDbFqrlxYbz3n4iSZIpVPCfx-T-qWRJARzBVyqTZFiAzYd-NQ48;
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - Zuora App
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '165'
+      Expires:
+      - Tue, 12 Jan 2016 16:24:50 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Tue, 12 Jan 2016 16:24:50 GMT
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - ZSession=5MN3TBgZNC_DFsjjvc40Qdpud3-X9T7nuEFW-s5EawYiiS_bCE5_HTHzWy3ZA_XAYnP8Ug5ZBFMtIN4qdUJKJ5Zhs5YjMHux4o01CSwY8aghqxWiJ5UrpBX1fJiQRoLbGyeVnmaQ3laH4L0N9U5GEmgrFjb9xHwwd-8DSTPNwhifF1TBeEhBm8ZFVd-uGl3P3EikMO7eT8zeOgG9RIAzjQ271sY6DMs9smE-iSxfAo8nJdHZ-e7bcfngyCFGUlLA;
+        Path=/; Secure; HttpOnly
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "success" : true,
+          "accountId" : "2c92c0fb523018ef015236a76e9c4fdd",
+          "accountNumber" : "A00000075",
+          "paymentMethodId" : "2c92c0fb523018ef015236a7773c4fe3"
+        }
+    http_version: 
+  recorded_at: Tue, 12 Jan 2016 16:24:50 GMT
+recorded_with: VCR 3.0.1
