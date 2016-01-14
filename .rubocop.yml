@@ -20,6 +20,5 @@ Style/NestedMethodDefinition:
 AbcSize:
   Enabled: false
 
-MethodLength:
-  Enabled: true
-  Max: 25
+Rails/TimeZone:
+  Enabled: false

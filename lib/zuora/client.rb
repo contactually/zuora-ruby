@@ -25,16 +25,9 @@ module Zuora
       base_url = api_url sandbox
       conn = connection base_url
 
-      response = conn.post do |req|
-        set_auth_request_headers! req, username, password
-      end
+      response = auth_request conn, username, password
 
-      if response.status == 200
-        @auth_cookie = response.headers['set-cookie'].split(' ')[0]
-        @connection = conn
-      else
-        fail ConnectionError, response.body['reasons']
-      end
+      handle_response response, conn
     end
 
     # @param [String] url - URL of request
@@ -80,6 +73,26 @@ module Zuora
     end
 
     private
+
+    # Make connection attempt
+    # @param [Faraday::Connection] connection
+    # @param [String] username
+    # @param [String] password
+    def auth_request(conn, username, password)
+      conn.post { |req| set_auth_request_headers! req, username, password }
+    end
+
+    # Sets instance variables or throws Connection error
+    # @param [Faraday::Response] username
+    # @param [Faraday::Connection] password
+    def handle_response(response, conn)
+      if response.status == 200
+        @auth_cookie = response.headers['set-cookie'].split(' ')[0]
+        @connection = conn
+      else
+        fail ConnectionError, response.body['reasons']
+      end
+    end
 
     # @param [Faraday::Request] req - Faraday::Request builder
     # @param [String] username - Zuora username

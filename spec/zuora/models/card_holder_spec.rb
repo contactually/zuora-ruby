@@ -15,5 +15,3 @@ describe Zuora::Models::CardHolder do
     end
   end
 end
-
-

@@ -8,41 +8,41 @@ module Zuora
       dirty_valid_attr :card_holder_name,
                        type: String,
                        required?: true,
-                       valid?: ->(s) { s.length <= 50 }
+                       valid?: max_length(50)
 
       dirty_valid_attr :address_line_1,
                        type: String,
                        required?: true,
-                       valid?: ->(s) { s.length <= 255 }
+                       valid?: max_length(255)
 
       dirty_valid_attr :address_line_2,
                        type: String,
-                       valid?: ->(s) { s.length <= 255 }
+                       valid?: max_length(255)
 
       dirty_valid_attr :city,
                        type: String,
                        required?: true,
-                       valid?: ->(s) { s.length <= 40 }
+                       valid?: max_length(40)
 
       dirty_valid_attr :state,
                        type: String,
                        required?: true,
-                       valid?: ->(s) { Zuora::STATE_ABBREVIATIONS.include? s }
+                       valid?: one_of(Zuora::STATE_ABBREVIATIONS)
 
       dirty_valid_attr :zip_code,
                        type: String,
                        required?: true,
-                       valid?: ->(s) { s.length <= 20 }
+                       valid?: max_length(20)
 
       dirty_valid_attr :country,
                        type: String,
                        required?: true,
-                       valid?: ->(s) { s.length <= 50 }
+                       valid?: max_length(50)
 
       dirty_valid_attr :phone,
                        type: String,
                        required?: true,
-                       valid?: ->(s) { s.length <= 20 }
+                       valid?: max_length(20)
 
       dirty_valid_attr :email,
                        type: String,

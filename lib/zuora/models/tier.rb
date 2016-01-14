@@ -19,7 +19,7 @@ module Zuora
 
       dirty_valid_attr :price_format,
                        type: String,
-                       valid?: ->(s) { %w(FlatFee PerUnit).include? s }
+                       valid?: one_of(%w(FlatFee PerUnit))
 
       alias_method :initialize, :initialize_attributes!
     end

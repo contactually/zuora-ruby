@@ -15,8 +15,6 @@ describe 'Sign up a customer' do
           credit_card: credit_card
   end
 
-  it { expect(account).to be_valid }
-
   let(:username) { ENV['ZUORA_SANDBOX_USERNAME'] }
   let(:password) { ENV['ZUORA_SANDBOX_PASSWORD'] }
   let(:client) { Zuora::Client.new username, password, true }

@@ -7,7 +7,7 @@ module Zuora
         dirty_valid_attr :card_type,
                          type: String,
                          required?: true,
-                         valid?: ->(c) { Zuora::CREDIT_CARD_TYPES.include? c }
+                         valid?: one_of(Zuora::CREDIT_CARD_TYPES)
 
         dirty_valid_attr :card_number,
                          type: String,
@@ -16,12 +16,12 @@ module Zuora
         dirty_valid_attr :expiration_month,
                          type: String,
                          required?: true,
-                         valid?: ->(m) { Zuora::MONTHS.include? m }
+                         valid?: one_of(Zuora::MONTHS)
 
         dirty_valid_attr :expiration_year,
                          type: String,
                          required?: true,
-                         valid?: ->(y) (y.to_s.length == 4) && (y.to_i > Time.zone.now.year - 1) }
+                         valid?: valid_year
 
         dirty_valid_attr :security_code,
                          type: String,

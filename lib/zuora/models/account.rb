@@ -22,7 +22,7 @@ module Zuora
 
       dirty_valid_attr :currency,
                        type: String,
-                       valid?: ->(c) { c.length == 3 }
+                       valid?: length(3)
 
       dirty_valid_attr :credit_card,
                        type: Zuora::Models::PaymentMethods::CreditCard,
@@ -49,7 +49,7 @@ module Zuora
       dirty_valid_attr :payment_term,
                        type: String,
                        required?: true,
-                       valid?: ->(s) { Zuora::PAYMENT_TERMS.include? s }
+                       valid?: one_of(Zuora::PAYMENT_TERMS)
 
       dirty_valid_attr :sold_to_contact,
                        type: Zuora::Models::Contact,

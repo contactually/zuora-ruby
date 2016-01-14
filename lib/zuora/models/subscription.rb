@@ -11,11 +11,16 @@ module Zuora
       dirty_valid_attr :contract_effective_date, type: Date, required?: true
       dirty_valid_attr :collect, type: String
       dirty_valid_attr :customer_acceptance_date, type: Date
+
       dirty_valid_attr :term_type,
                        type: String,
                        required?: true,
-                       valid?: ->(t) { Zuora::SUBSCRIPTION_TERM_TYPES.include? t }
-      dirty_valid_attr :initial_term, type: String, required?: ->(model) { model.respond_to?(:term_type) == 'EVERGREEN' }
+                       valid?: one_of(Zuora::SUBSCRIPTION_TERM_TYPES)
+
+      dirty_valid_attr :initial_term,
+                       type: String,
+                       required?: other_attr_eq(:term_type, 'EVERGREEN')
+
       dirty_valid_attr :initial_term_period_type, type: String
       dirty_valid_attr :invoice_owner_account_key, type: String
       dirty_valid_attr :invoice_collect, type: Boolean

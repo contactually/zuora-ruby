@@ -21,6 +21,7 @@
 #  (checks  are all optional, and are applied in the above order)
 
 require 'set'
+require_relative 'validation_predicates'
 
 ## Composite Types
 module Boolean; end
@@ -32,36 +33,34 @@ class FalseClass; include Boolean; end
 
 module DirtyValidAttr
   def self.included(base)
+    base.include InstanceMethods
     base.extend ClassMethods
-    base.class_eval do
-      attr_accessor :changed_attributes
-      attr_accessor :attributes
+    base.extend ValidationPredicates
+  end
 
-      def validate!(attr, value, validation)
-        unless validation.call(value)
-          message = "Invalid value for: attr: #{attr} - value: #{value}}"
-          fail message
-        end
-      end
+  module InstanceMethods
+    attr_accessor :changed_attributes
+    attr_accessor :attributes
 
-      def validate_type!(attr, value, type)
-        unless value.is_a?(type)
-          message = %(Invalid type for: attr: #{attr}
-                     - value: #{value}
-                     - is: #{value.class}
-                     - should be: #{type})
-          fail message
-        end
-      end
+    def fail_validation!(attr, value)
+      message = "Invalid value for: attr: #{attr} - value: #{value}}"
+      fail message
+    end
 
-      def coerce_value(coerce, value)
-        return coerce.call(value)
-      rescue
-        throw "Unable to coerce #{value}"
-      end
+    def fail_type!(attr, value, type)
+      fail %(Invalid type for: attr: #{attr}
+                   - value: #{value}
+                   - is: #{value.class}
+                   - should be: #{type})
+    end
+
+    def coerce_value(coerce, value)
+      return coerce.call(value)
+    rescue
+      throw "Unable to coerce #{value}"
     end
   end
-  require 'byebug'
+
   module ClassMethods
     attr_accessor :attr_definitions
 
@@ -71,25 +70,33 @@ module DirtyValidAttr
     #                          [Proc] coerce - coercion fn, optional
     #                          [Boolean] required? - default: nil (falsy)
     def dirty_valid_attr(attr, options = {})
-      type, validation, coerce = options.values_at(:type, :valid?, :coerce)
-
       upsert_attr_definition! attr, options
 
-      define_method("#{attr}=") do |value|
-        self.changed_attributes ||= Set.new
+      # Setter
+      define_setter attr, options
 
-        value = coerce_value(coerce, value) if coerce
-        validate!(attr, value, validation) if validation
-        validate_type!(attr, value, type) if type
-
-        changed_attributes << attr
-        instance_variable_set "@#{attr}", value
-      end
-
+      # Getter
       attr_reader attr
     end
 
     private
+
+    # Defines setter method for instance (plus validation)
+    # @param [Object] attr
+    # @param [Object] options
+    def define_setter(attr, options = {})
+      define_method("#{attr}=") do |value|
+        self.changed_attributes ||= Set.new
+
+        type, validation, coerce = options.values_at(:type, :valid?, :coerce)
+        value = coerce_value(coerce, value) if coerce
+        fail_validation!(attr, value) if validation && !validation.call(value)
+        fail_type!(attr, value, type) unless type && value.is_a?(type)
+
+        changed_attributes << attr
+        instance_variable_set "@#{attr}", value
+      end
+    end
 
     # Upsert to class-level hash of {attr => options}
     # @param [Sym] attr - attribtue name
@@ -142,7 +149,7 @@ end
 #   dirty_valid_attr :fuz,
 #                    type: String,
 #                    valid: ->(attr) { attr == 'fuzz' },
-#                    :coerce => ->(attr) { attr.to_str }
+#                    coerce => ->(attr) { attr.to_str }
 #
 #   dirty_valid_attr :bizz,
 #                    type: Fixnum,

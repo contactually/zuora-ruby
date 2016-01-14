@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe Zuora::Models::Account do
   describe '.new' do
-
     context 'with_invalid data' do
       subject { build :account }
 

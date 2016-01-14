@@ -1,4 +1,5 @@
 require_relative 'models/dirty'
+require_relative 'models/validation_predicates'
 
 require_relative 'models/contact'
 require_relative 'models/payment_method'
