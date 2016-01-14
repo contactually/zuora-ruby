@@ -18,12 +18,10 @@ module Zuora
                        required?: true
 
       dirty_valid_attr :price_format,
-                       type: Numeric,
+                       type: String,
                        valid?: ->(s) { %w(FlatFee PerUnit).include? s }
 
-      def initialize(attrs = {})
-        set_attributes!(attrs)
-      end
+      alias_method :initialize, :set_attributes!
     end
   end
 end

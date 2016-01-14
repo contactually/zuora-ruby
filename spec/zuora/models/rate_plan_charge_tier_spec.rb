@@ -5,13 +5,13 @@ describe Zuora::Models::RatePlanChargeTier do
     context 'with invalid data' do
       subject { Zuora::Models::RatePlanChargeTier.new }
 
-      it { is_expected.to_not be_valid }
+      it { expect { subject }.to raise_error }
     end
 
     context 'with valid data' do
       subject { build :rate_plan_charge_tier }
 
-      it { is_expected.to be_valid }
+      it { expect { subject }.to_not raise_error }
     end
   end
 end

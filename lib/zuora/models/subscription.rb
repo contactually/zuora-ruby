@@ -15,15 +15,15 @@ module Zuora
                        type: String,
                        required?: true,
                        valid?: ->(t) { Zuora::SUBSCRIPTION_TERM_TYPES.include? t }
-      dirty_valid_attr :initial_term, type: String, required?: ->(model) { model.term_type == 'EVERGREEN' }
+      dirty_valid_attr :initial_term, type: String, required?: ->(model) { model.respond_to?(:term_type) == 'EVERGREEN' }
       dirty_valid_attr :initial_term_period_type, type: String
       dirty_valid_attr :invoice_owner_account_key, type: String
-      dirty_valid_attr :invoice_collect, type: String
+      dirty_valid_attr :invoice_collect, type: Boolean
       dirty_valid_attr :invoice, type: String
       dirty_valid_attr :invoice_separately, type: String
       dirty_valid_attr :invoice_target_date, type: Date
       dirty_valid_attr :notes, type: String
-      dirty_valid_attr :renewal_term, type: String
+      dirty_valid_attr :renewal_term, type: Numeric
       dirty_valid_attr :renewal_term_period_type, type: String
       dirty_valid_attr :renewal_setting, type: String
       dirty_valid_attr :service_activation_date, type: Date

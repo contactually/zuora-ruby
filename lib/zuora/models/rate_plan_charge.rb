@@ -38,7 +38,7 @@ module Zuora
       dirty_valid_attr :trigger_date, type: Date
       dirty_valid_attr :unused_units_credit_rates, type: String
       dirty_valid_attr :up_to_periods_type, type: String, valid?: ->(u) { UP_TO_PERIODS.include? u }
-      dirty_valid_attr :up_to_periods, type: String, required?: -> (model) { model.end_date_condition == 'Fixed_Period' }
+      dirty_valid_attr :up_to_periods, type: String, required?: -> (model) { model.respond_to?(:end_date_condition) && model.end_date_condition == 'Fixed_Period' }
       dirty_valid_attr :weekly_bill_cycle_day, type: String
 
       alias_method :initialize, :set_attributes!

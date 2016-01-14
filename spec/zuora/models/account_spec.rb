@@ -2,6 +2,13 @@ require 'spec_helper'
 
 describe Zuora::Models::Account do
   describe '.new' do
+
+    context 'with_invalid data' do
+      subject { build :account }
+
+      it { expect { subject }.to raise_error }
+    end
+
     context 'with valid data' do
       subject do
         build :account,
@@ -10,7 +17,7 @@ describe Zuora::Models::Account do
               credit_card: build(:credit_card)
       end
 
-      it { is_expected.to_not raise_error }
+      it { expect { subject }.to_not raise_error }
     end
   end
 end
