@@ -107,7 +107,8 @@ module DirtyValidAttr
   # @param [Hash] attrs - initial attribute keys and values
   # @return [Nil]
   def set_attributes!(attrs = {})
-    missing = missing_attrs(attrs)
+    required = required_attrs(attrs)
+    missing = required.keys - attrs.keys
     raise "Missing required attrs: #{missing} " unless missing.empty?
     attrs.each do |attr, v|
       send("#{attr}=", v)
@@ -120,7 +121,7 @@ module DirtyValidAttr
   #                       [String] value
   # @return [Hash] -      [String] attr
   #                       [Hash] options (:required?, :valid?, :coerce)
-  def missing_attrs(attrs = {})
+  def required_attrs(attrs = {})
     # An attribute is determined to be 'missing' using the :required? key.
     # if provided present in the attribute's definition.
     #

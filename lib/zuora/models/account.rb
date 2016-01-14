@@ -4,8 +4,7 @@ module Zuora
       include DirtyValidAttr
 
       dirty_valid_attr :account_number,
-                       type: String,
-                       required?: true
+                       type: String
 
       dirty_valid_attr :auto_pay,
                        type: Boolean,
@@ -26,7 +25,7 @@ module Zuora
                        valid?: ->(c){ c.length == 3 }
 
       dirty_valid_attr :credit_card,
-                       type: String,
+                       type: Zuora::Models::PaymentMethods::CreditCard,
                        required?: true
 
       dirty_valid_attr :name,
