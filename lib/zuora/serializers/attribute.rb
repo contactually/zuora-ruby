@@ -6,8 +6,8 @@ module Zuora
       # @param [Hash] { [String]: lowerCamelCased key =>
       #                 [Any]: value }
       def self.serialize(model)
-        attrs = model.changed_attributes
-        attr_pairs =  attrs.map { |attr| serialize_attr model, attr }
+        attrs = model.changed_attributes || {}
+        attr_pairs = attrs.map { |attr| serialize_attr model, attr }
         Hash[attr_pairs]
       end
 

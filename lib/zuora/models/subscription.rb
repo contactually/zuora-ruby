@@ -11,6 +11,10 @@ module Zuora
       dirty_valid_attr :contract_effective_date, type: Date, required?: true
       dirty_valid_attr :collect, type: String
       dirty_valid_attr :customer_acceptance_date, type: Date
+      dirty_valid_attr :term_type,
+                       type: String,
+                       required?: true,
+                       valid?: ->(t) { Zuora::SUBSCRIPTION_TERM_TYPES.include? t }
       dirty_valid_attr :initial_term, type: String, required?: ->(model) { model.term_type == 'EVERGREEN' }
       dirty_valid_attr :initial_term_period_type, type: String
       dirty_valid_attr :invoice_owner_account_key, type: String
@@ -27,9 +31,6 @@ module Zuora
                        type: Array,
                        required?: false
       dirty_valid_attr :term_start_date, type: Date
-      dirty_valid_attr :term_type, type: String,
-                       required?: true,
-                       valid?: ->(t) { Zuora::SUBSCRIPTION_TERM_TYPES.include? t }
 
       def initialize(attrs = {})
         set_attributes!(attrs)

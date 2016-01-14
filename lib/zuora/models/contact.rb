@@ -28,12 +28,12 @@ module Zuora
       dirty_valid_attr :first_name,
                        type: String,
                        required?: true,
-                       valid: ->(s){ s.length < 100 }
+                       valid?: ->(s){ s.length < 100 }
 
       dirty_valid_attr :last_name,
                        type: String,
                        required?: true,
-                       valid: ->(s){ s.length < 100 }
+                       valid?: ->(s){ s.length < 100 }
 
       dirty_valid_attr :mobile_phone,
                        type: String
@@ -64,7 +64,6 @@ module Zuora
 
       dirty_valid_attr :zip_code,
                        type: String
-
 
       def initialize(attrs = {})
         set_attributes!(attrs)
