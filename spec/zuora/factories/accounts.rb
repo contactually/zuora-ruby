@@ -7,5 +7,6 @@ FactoryGirl.define do
     currency 'USD'
     bill_cycle_day '0'
     payment_term 'Net 30'
+    account_number '123456'
   end
 end

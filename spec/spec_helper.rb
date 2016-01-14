@@ -20,7 +20,7 @@ VCR.configure do |c|
   c.cassette_library_dir = 'zuora/fixtures/vcr_cassettes'
   c.hook_into :webmock # or :fakeweb
   c.filter_sensitive_data('<ZUORA_SANDBOX_USERNAME>') do
-    ENV['ZUORA_SANDBOX_USERNAME']
+    ENV[' ']
   end
   c.filter_sensitive_data('<ZUORA_SANDBOX_PASSWORD>') do
     ENV['ZUORA_SANDBOX_PASSWORD']

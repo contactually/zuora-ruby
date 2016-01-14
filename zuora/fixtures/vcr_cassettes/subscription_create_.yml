@@ -1,0 +1,114 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://apisandbox-api.zuora.com/rest/v1/connections
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Apiaccesskeyid:
+      - "<ZUORA_SANDBOX_USERNAME>"
+      Apisecretaccesskey:
+      - "<ZUORA_SANDBOX_PASSWORD>"
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '0'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - Zuora App
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '22'
+      Expires:
+      - Fri, 15 Jan 2016 19:25:56 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Fri, 15 Jan 2016 19:25:56 GMT
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - ZSession=R-kRFnqPxT5TKoUxBLInRrbJ3LKeJs6h-49mDFGg9d6yMVTvf0XYcMe843f36xXNMJSEr3ugyh57cRXqBGW2ndut5DFzIG95u1tXZrZe3hi6bA7QOuaTON8Qo2XJjnad3HkxhIYxIeDrj7BFdpvsYrSgr62x-Rx72KvMmBogxyDHnkCM_VsmdXtCViAH1ikR8Jsn-KI79PDxgMqlUU2RRlbB_QvGkn8GHFKJuGAEaNwuh7j2WQqXLO3KpXpjnhT7;
+        Path=/; Secure; HttpOnly
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "success" : true
+        }
+    http_version: 
+  recorded_at: Fri, 15 Jan 2016 19:25:56 GMT
+- request:
+    method: post
+    uri: https://apisandbox-api.zuora.com/rest/v1/subscriptions
+    body:
+      encoding: UTF-8
+      string: '{"renewalTerm":3,"renewalTermPeriodType":"week","termType":"TERMED","autoRenew":true,"invoiceTargetDate":"-4712-01-01","accountKey":"123456","contractEffectiveDate":"-4712-01-01","invoiceCollect":false,"initialTerm":"12","initialTermPeriodType":"Week","notes":"Test
+        POST subscription from zuora-ruby"}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/json
+      Cookie:
+      - ZSession=R-kRFnqPxT5TKoUxBLInRrbJ3LKeJs6h-49mDFGg9d6yMVTvf0XYcMe843f36xXNMJSEr3ugyh57cRXqBGW2ndut5DFzIG95u1tXZrZe3hi6bA7QOuaTON8Qo2XJjnad3HkxhIYxIeDrj7BFdpvsYrSgr62x-Rx72KvMmBogxyDHnkCM_VsmdXtCViAH1ikR8Jsn-KI79PDxgMqlUU2RRlbB_QvGkn8GHFKJuGAEaNwuh7j2WQqXLO3KpXpjnhT7;
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - Zuora App
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '304'
+      Expires:
+      - Fri, 15 Jan 2016 19:25:56 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Fri, 15 Jan 2016 19:25:56 GMT
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - ZSession=N3s-LaLVoObl0D8YagtPcjeTe3ykE2bTVHuj1rbFhB54JjIwHnobsDnsRJRkemgMKfjcQNcUDtUWsyjyeNlxlfv0xUKm7m2dKxFaHj4bdIQ-DMrSa-zdV0I5sgRgLfn8fH7WKiOFqB3iuSl8d_mo4RSk2_m_vDUgPlIUFQKaBHbvvUsZGaD5ugegLJqBVnO_b5SRm4lfi8HwWBJ5NFvYkd4DUaknfQN7PzPdr7CiHyZg0ROk7Mw6M7mmjw4ufEAW;
+        Path=/; Secure; HttpOnly
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "success" : false,
+          "processId" : "701D3B2AAC3AC4E7",
+          "reasons" : [ {
+            "code" : 53001820,
+            "message" : "'renewalTermPeriodType' value should be one of: Month, Year, Day, Week"
+          }, {
+            "code" : 53001020,
+            "message" : "'invoiceTargetDate' must match \"\\d{4}-\\d{1,2}-\\d{1,2}\""
+          } ]
+        }
+    http_version: 
+  recorded_at: Fri, 15 Jan 2016 19:25:57 GMT
+recorded_with: VCR 3.0.1
