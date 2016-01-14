@@ -21,7 +21,7 @@ module Zuora
                        type: String,
                        valid?: ->(s) { %w(FlatFee PerUnit).include? s }
 
-      alias_method :initialize, :set_attributes!
+      alias_method :initialize, :initialize_attributes!
     end
   end
 end

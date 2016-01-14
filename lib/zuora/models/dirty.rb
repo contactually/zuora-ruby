@@ -37,30 +37,27 @@ module DirtyValidAttr
       attr_accessor :changed_attributes
       attr_accessor :attributes
 
-      def valid?
-        true
-      end
-
       def validate!(attr, value, validation)
         unless validation.call(value)
-          raise("Invalid value for: attr: #{attr} - value: #{value}}")
+          message = "Invalid value for: attr: #{attr} - value: #{value}}"
+          fail message
         end
       end
 
       def validate_type!(attr, value, type)
         unless value.is_a?(type)
-          message = %Q(Invalid type for: attr: #{attr}
+          message = %(Invalid type for: attr: #{attr}
                      - value: #{value}
                      - is: #{value.class}
                      - should be: #{type})
-          raise(message)
+          fail message
         end
       end
 
       def coerce_value(coerce, value)
         return coerce.call(value)
       rescue
-        raise "Unable to coerce #{value}"
+        throw "Unable to coerce #{value}"
       end
     end
   end
@@ -106,10 +103,10 @@ module DirtyValidAttr
 
   # @param [Hash] attrs - initial attribute keys and values
   # @return [Nil]
-  def set_attributes!(attrs = {})
+  def initialize_attributes!(attrs = {})
     required = required_attrs(attrs)
     missing = required.keys - attrs.keys
-    raise "Missing required attrs: #{missing} " unless missing.empty?
+    fail "Missing required attrs: #{missing} " unless missing.empty?
     attrs.each do |attr, v|
       send("#{attr}=", v)
     end
@@ -156,7 +153,7 @@ end
 #                    type: Fixnum
 #
 #   def initialize(attrs)
-#     set_attributes!(attrs)
+#     initialize_attributes!(attrs)
 #   end
 # end
 
@@ -164,7 +161,8 @@ end
 
 # Create a valid record
 # > a = Account.new(:fuz => 'fuzz', :bizz => "4")
-# <Account:0x007f8f0c9052c0 @changed_attributes=#<Set: {:fuz, :bizz}>, @fuz="fuzz", @bizz=4>
+# <Account:0x007f8f0c9052c0 @changed_attributes=
+#     #<Set: {:fuz, :bizz}>, @fuz="fuzz", @bizz=4>
 
 # Access changed attributes
 # > a.changed_attributes

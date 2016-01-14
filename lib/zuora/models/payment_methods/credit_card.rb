@@ -21,14 +21,14 @@ module Zuora
         dirty_valid_attr :expiration_year,
                          type: String,
                          required?: true,
-                         valid?: ->(y) { (y.to_s.length == 4) and (y.to_i > DateTime.now.year - 1) }
+                         valid?: ->(y) (y.to_s.length == 4) && (y.to_i > Time.zone.now.year - 1) }
 
         dirty_valid_attr :security_code,
                          type: String,
                          required: true
 
         def initialize(attrs)
-          set_attributes! attrs
+          initialize_attributes! attrs
         end
       end
     end

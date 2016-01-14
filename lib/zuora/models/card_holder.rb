@@ -48,7 +48,7 @@ module Zuora
                        type: String,
                        required?: true
 
-      alias_method :initialize, :set_attributes!
+      alias_method :initialize, :initialize_attributes!
     end
   end
 end

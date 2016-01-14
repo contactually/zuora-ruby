@@ -22,7 +22,7 @@ module Zuora
 
       dirty_valid_attr :currency,
                        type: String,
-                       valid?: ->(c){ c.length == 3 }
+                       valid?: ->(c) { c.length == 3 }
 
       dirty_valid_attr :credit_card,
                        type: Zuora::Models::PaymentMethods::CreditCard,
@@ -58,7 +58,7 @@ module Zuora
       dirty_valid_attr :subscription,
                        type: String
 
-      alias_method :initialize, :set_attributes!
+      alias_method :initialize, :initialize_attributes!
     end
   end
 end
