@@ -5,9 +5,27 @@
 # Zuora REST API: Ruby Client
 
 This library implements a Ruby client wrapping Zuora's REST API.
-- **Validations** (via `activemodel`)
-- **HTTP** (via `faraday`)
-- **Serialization**: To/from Ruby / JSON
+
+### Model
+A base module called `DirtyValidAttr` provides `dirty_model_attr`
+* **Accessors**: attribute name provides getters and setters, as in `attr_accessor`
+* **Validations** `valid: max_length(3) ` 
+    *  Includes a library of predicate higher order validation functions
+* **Coercions** `coerce: ->(value) { value.to_s } `
+* **Type Checks** `type: String`
+* **Required Attributes**: `:required: true`
+
+### Resource 
+* **HTTP requests**: that are authenticated with provided credentials
+* **Zuora API endpoints**: 
+
+### Utilities
+- **Serialization**: Ruby <=> JSON serializer provided, just provide a module or class that respnds to `.serialize(hash)` 
+
+### Development: Specs and Testing
+- **Factories**: for generating sample valid and invalid data that works with the API
+- **Unit**: factories for testing model valdiations 
+- **Integration**: Tests against or memoized (via `VCR`) HTTP responses
 
 ## Quickstart
 ```ruby
@@ -15,9 +33,6 @@ This library implements a Ruby client wrapping Zuora's REST API.
 client = Zuora::Client.new(username, password) 
 # Create a model
 account = Zuora::Models::Account.new(...)
-# Validate
-account.valid? # true or false, check account.errors if false
-# Select a serializer (snake_case -> lowerCamelCase)
 serializer = Zuora::Serializers::Attribute
 # Low level HTTP API
 client.get('/rest/v1/accounts', serializer.serialze account)
@@ -33,14 +48,10 @@ used in subsequent requests. An optional third, truthy value enables Sandbox ins
 Use `client.<get|post|put>(url, params)` to make HTTP requests via the authenticated client. Request and response body will be converted to/from Ruby via `farraday_middleware`. 
 
 3. ***Models:***  Ruby interface for constructing valid Zuora objects.
-  - `account = Zuora::Models::Account.new(:attribute => 'name')`
-  - `account.valid?`  a boolean indicating validity
-  - `account.errors`  a hash of error message(s)
-  - `account.attributes` an array of attribute names
+  - Documentation coming soon. In the mean time, check comments in `Zuora::Models::Dirty`.
 
 4. **Serializers:** Recursive data transformations for mapping between formats; a Ruby -> JSON serializer is included; `snake_case` attributes are transformed into JSON `lowerCamelCase` recursively in a nested structure.
   - ex. `Zuora::Serializers::Attribute.serialize account` 
-  
 
 5. **Resources:** Wraps Zuora REST API endpoints. Hand a valid model and (optionally) a serializer to a Resource to trigger a request. Request will be made for valid models only. An exception will be raised if the model is invalid. Otherwise, a `Farraday::Response` object will be returned (responding to `.status`, `.headers`, and `.body`).
 
@@ -68,9 +79,9 @@ Models implement (recursive, nested) Zuora validations using `ActiveModel::Model
 ## Resources 
 In module  `Zuora::Resources::` 
 * `Account.create!` **[working]**
-* `Account.update!` [in progress]
-* `Subscription.create!` [in progress]
-* `Subscription.update!` [in progress]
+* `Account.update!` **[working]**
+* `Subscription.create!` **[working]**
+* `Subscription.update!` **[working]**
 * `Subscription.cancel!` [in progress]
 * `PaymentMethod.update!` [in progress]
 
@@ -182,12 +193,17 @@ pp response
 ```
 # Changelog
 * **[0.1.0 - 2016-01-12]** Initial release 
-* **[0.1.1 - 2016-01-14]** Dirty Attribute Tracking
-     - Refactored client
+* **[0.2.0] - 2016-01-14]** Models
+     - Refactored client to clarify logic 
+     - Replaces `ActiveRecord::Model` and `::Validations` with a base module that provides powerful and extensible facilities for modeling remote resources in Ruby. 
+       * required attributes, coercions, validations, type checking
+       * dirty attribute tracking
+       * extensible predicate library
+     - Implements fine-grained validations per Zuora spec
+     - Removes invalid model state paradigm used via `ActiveModel` in version 0.1.0.
+     -  A model now performs its validations on `.new`, and will raise a detailed exception on mistyped, invalid or uncoercable data.
      - Adds VCR for mocking out HTTP requests
-
-# Roadmap
-* **[0.1.3 - 2016-01-14] ** Adds additional resources
+     - Adds integration specs for `Subscribe` `create!` and `update!` and `Account` `create!` and `update!`
 
 # Commit rights
 Anyone who has a patch accepted may request commit rights. Please do so inside the pull request post-merge.
