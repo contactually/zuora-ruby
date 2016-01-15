@@ -3,16 +3,17 @@ module Zuora
     module Accounts
       RESOURCE_URI = '/rest/v1/accounts'
 
-      def self.create!(client, model, serializer = Zuora::Serializers::Noop)
-        Zuora::Resources.with_valid model do |mod|
-          client.post RESOURCE_URI, serializer.serialize(mod)
-        end
+      def self.request!(verb, uri, args)
+        client, model, serializer = args
+        client.send verb, uri, serializer.serialize(model)
       end
 
-      def self.update!(client, model, serializer = Zuora::Serializers::Noop)
-        Zuora::Resources.with_valid model do |mod|
-          client.post RESOURCE_URI, serializer.serialize(mod)
-        end
+      def self.create!(*args)
+        request! :post, RESOURCE_URI, args
+      end
+
+      def self.update!(*args)
+        request! :put, RESOURCE_URI, args
       end
     end
   end

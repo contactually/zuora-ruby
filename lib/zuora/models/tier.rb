@@ -1,27 +1,27 @@
 module Zuora
   module Models
     class RatePlanChargeTier
-      include ActiveModel::Model
+      include DirtyValidAttr
 
-      ATTRIBUTES = :tier,
-                   :starting_unit,
-                   :ending_unit,
-                   :price,
-                   :price_format
+      dirty_valid_attr :tier,
+        type: Numeric,
+        required?: true
 
-      attr_accessor(*ATTRIBUTES)
+      dirty_valid_attr :starting_unit,
+        type: Numeric
 
-      def attributes
-        ATTRIBUTES
-      end
+      dirty_valid_attr :ending_unit,
+        type: Numeric
 
-      validates :tier,
-                :price,
-                presence: true
+      dirty_valid_attr :price,
+        type: Numeric,
+        required?: true
 
-      validates :price_format,
-                inclusion: { in: %w(FlatFee PerUnit) },
-                allow_nil: true
+      dirty_valid_attr :price_format,
+        type: String,
+        valid?: one_of(%w(FlatFee PerUnit))
+
+      alias_method :initialize, :initialize_attributes!
     end
   end
 end

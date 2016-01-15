@@ -1,13 +1,11 @@
 require 'spec_helper'
 
 describe Zuora::Models::Account do
-  describe '#valid?' do
+  describe '.new?' do
     context 'with invalid data' do
       subject { Zuora::Models::Subscription.new }
 
-      it 'should be invalid with no data' do
-        expect(subject.valid?).to eq false
-      end
+      it { expect { subject }.to raise_error }
     end
 
     context 'with valid data' do
@@ -15,10 +13,10 @@ describe Zuora::Models::Account do
 
       subject do
         build :subscription,
-              subscribe_to_rate_plans: [rate_plan]
+          subscribe_to_rate_plans: [rate_plan]
       end
 
-      it { is_expected.to be_valid }
+      it { expect { subject }.to_not raise_error }
     end
   end
 end

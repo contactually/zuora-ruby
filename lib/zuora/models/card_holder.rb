@@ -3,58 +3,52 @@
 module Zuora
   module Models
     class CardHolder
-      include ActiveModel::Model
+      include DirtyValidAttr
 
-      ATTRIBUTES = :card_holder_name,
-                   :address_line_1,
-                   :address_line_2,
-                   :city,
-                   :state,
-                   :zip_code,
-                   :country,
-                   :phone,
-                   :email
+      dirty_valid_attr :card_holder_name,
+        type: String,
+        required?: true,
+        valid?: max_length(50)
 
-      attr_accessor(*ATTRIBUTES)
+      dirty_valid_attr :address_line_1,
+        type: String,
+        required?: true,
+        valid?: max_length(255)
 
-      def attributes
-        ATTRIBUTES
-      end
+      dirty_valid_attr :address_line_2,
+        type: String,
+        valid?: max_length(255)
 
-      validates :card_holder_name,
-                :address_line_1,
-                :city,
-                :state,
-                :zip_code,
-                :country,
-                presence: true
+      dirty_valid_attr :city,
+        type: String,
+        required?: true,
+        valid?: max_length(40)
 
-      validates :card_holder_name,
-                length: { maximum: 50 }
+      dirty_valid_attr :state,
+        type: String,
+        required?: true,
+        valid?: one_of(Zuora::STATE_ABBREVIATIONS)
 
-      validates :address_line_1,
-                length: { maximum: 255 }
+      dirty_valid_attr :zip_code,
+        type: String,
+        required?: true,
+        valid?: max_length(20)
 
-      validates :address_line_2,
-                length: { maximum: 255 },
-                allow_nil: true
+      dirty_valid_attr :country,
+        type: String,
+        required?: true,
+        valid?: max_length(50)
 
-      validates :city,
-                length: { maximum: 40 }
+      dirty_valid_attr :phone,
+        type: String,
+        required?: true,
+        valid?: max_length(20)
 
-      validates :state,
-                inclusion: { in: Zuora::STATE_ABBREVIATIONS }
+      dirty_valid_attr :email,
+        type: String,
+        required?: true
 
-      validates :zip_code,
-                length: { maximum: 20 }
-
-      validates :phone,
-                length: { maximum: 20 },
-                allow_nil: true
-
-      validates :email,
-                length: { maximum: 80 },
-                allow_nil: true
+      alias_method :initialize, :initialize_attributes!
     end
   end
 end

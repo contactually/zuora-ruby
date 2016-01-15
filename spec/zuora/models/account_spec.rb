@@ -1,24 +1,22 @@
 require 'spec_helper'
 
 describe Zuora::Models::Account do
-  describe '#valid?' do
-    context 'with invalid data' do
-      subject { Zuora::Models::Account.new }
+  describe '.new' do
+    context 'with_invalid data' do
+      subject { build :account }
 
-      it 'should be invalid with no data' do
-        expect(subject.valid?).to eq false
-      end
+      it { expect { subject }.to raise_error }
     end
 
     context 'with valid data' do
       subject do
         build :account,
-              bill_to_contact: build(:contact),
-              sold_to_contact: build(:contact),
-              credit_card: build(:credit_card)
+          bill_to_contact: build(:contact),
+          sold_to_contact: build(:contact),
+          credit_card: build(:credit_card)
       end
 
-      it { is_expected.to be_valid }
+      it { expect { subject }.to_not raise_error }
     end
   end
 end

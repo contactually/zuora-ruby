@@ -6,15 +6,11 @@ module Zuora
       RESOURCE_URI = '/rest/v1/subscriptions'
 
       def self.create!(client, model, serializer = Zuora::Serializers::Noop)
-        Zuora::Resources.with_valid model do |mod|
-          client.post RESOURCE_URI, serializer.serialize(mod)
-        end
+        client.post RESOURCE_URI, serializer.serialize(model)
       end
 
       def self.update!(client, model, serializer = Zuora::Serializers::Noop)
-        Zuora::Resources.with_valid model do |mod|
-          client.post RESOURCE_URI, serializer.serialize(mod)
-        end
+        client.post RESOURCE_URI, serializer.serialize(model)
       end
     end
   end

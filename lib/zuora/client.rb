@@ -25,16 +25,9 @@ module Zuora
       base_url = api_url sandbox
       conn = connection base_url
 
-      response = conn.post do |req|
-        set_auth_request_headers! req, username, password
-      end
+      response = auth_request conn, username, password
 
-      if response.status == 200
-        @auth_cookie = response.headers['set-cookie'].split(' ')[0]
-        @connection = conn
-      else
-        fail ConnectionError, response.body['reasons']
-      end
+      handle_response response, conn
     end
 
     # @param [String] url - URL of request
@@ -66,9 +59,9 @@ module Zuora
     # @param [Params] params - Data to be sent in request body
     # @return [Faraday::Response] A response, with .headers, .status & .body
     def put(url, params)
-      response = @connection.put do |req|
-        set_request_headers! req, url
-        req.body = JSON.generate params
+      response = @connection.put do |request|
+        set_request_headers! request, url
+        request.body = JSON.generate params
       end
 
       response
@@ -81,18 +74,40 @@ module Zuora
 
     private
 
-    # @param [Faraday::Request] req - Faraday::Request builder
-    # @param [String] username -
-    # @param [String] password -
-    def set_auth_request_headers!(req, username, password)
-      req.url '/rest/v1/connections'
-      req.headers['apiAccessKeyId'] = username
-      req.headers['apiSecretAccessKey'] = password
-      req.headers['Content-Type'] = 'application/json'
+    # Make connection attempt
+    # @param [Faraday::Connection] conn
+    # @param [String] username
+    # @param [String] password
+    def auth_request(conn, username, password)
+      conn.post do |request|
+        set_auth_request_headers! request, username, password
+      end
+    end
+
+    # Sets instance variables or throws Connection error
+    # @param [Faraday::Response] response
+    # @param [Faraday::Connection] conn
+    def handle_response(response, conn)
+      if response.status == 200
+        @auth_cookie = response.headers['set-cookie'].split(' ')[0]
+        @connection = conn
+      else
+        fail ConnectionError, response.body['reasons']
+      end
+    end
+
+    # @param [Faraday::Request] request - Faraday::Request builder
+    # @param [String] username - Zuora username
+    # @param [String] password - Zuora password
+    def set_auth_request_headers!(request, username, password)
+      request.url '/rest/v1/connections'
+      request.headers['apiAccessKeyId'] = username
+      request.headers['apiSecretAccessKey'] = password
+      request.headers['Content-Type'] = 'application/json'
     end
 
     # @param [Faraday::Request] request - Faraday Request builder
-    # @param [String] url - Relative URL for HTTP requst
+    # @param [String] url - Relative URL for HTTP request
     # @return [Nil]
     def set_request_headers!(request, url)
       request.url url

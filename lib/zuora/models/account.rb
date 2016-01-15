@@ -1,53 +1,64 @@
-# encoding: utf-8
-
 module Zuora
   module Models
     class Account
-      include ActiveModel::Model
-      # See http://api.rubyonrails.org/classes/ActiveModel/Dirty.html
+      include DirtyValidAttr
 
-      ATTRIBUTES = :account_number,
-                   :auto_pay,
-                   :bill_to_contact,
-                   :bill_cycle_day,
-                   :crm_id,
-                   :currency,
-                   :credit_card,
-                   :name,
-                   :hpm_credit_card_payment_method_id,
-                   :notes,
-                   :invoice_template_id,
-                   :communication_profile_id,
-                   :payment_gateway,
-                   :payment_term,
-                   :sold_to_contact,
-                   :subscription
+      dirty_valid_attr :account_number,
+        type: String
 
-      attr_accessor(*ATTRIBUTES)
+      dirty_valid_attr :auto_pay,
+        type: Boolean,
+        required?: true
 
-      def attributes
-        ATTRIBUTES
-      end
+      dirty_valid_attr :bill_to_contact,
+        type: Zuora::Models::Contact,
+        required?: true
 
-      Zuora::Models::Utils.validate_children self,
-                                             'contact',
-                                             :bill_to_contact,
-                                             :sold_to_contact
+      dirty_valid_attr :bill_cycle_day,
+        type: String
 
-      validates :auto_pay,
-                :bill_to_contact,
-                :credit_card,
-                :currency,
-                :name,
-                :payment_term,
-                :sold_to_contact,
-                presence: true
+      dirty_valid_attr :crm_id,
+        type: String
 
-      validates :currency,
-                length: { is: 3 }
+      dirty_valid_attr :currency,
+        type: String,
+        valid?: length(3)
 
-      validates :payment_term,
-                inclusion: { in: Zuora::PAYMENT_TERMS }
+      dirty_valid_attr :credit_card,
+        type: Zuora::Models::PaymentMethods::CreditCard,
+        required?: true
+
+      dirty_valid_attr :name,
+        type: String
+
+      dirty_valid_attr :hpm_credit_card_payment_method_id,
+        type: String
+
+      dirty_valid_attr :notes,
+        type: String
+
+      dirty_valid_attr :invoice_template_id,
+        type: String
+
+      dirty_valid_attr :communication_profile_id,
+        type: String
+
+      dirty_valid_attr :payment_gateway,
+        type: String
+
+      dirty_valid_attr :payment_term,
+        type: String,
+        required?: true,
+        valid?: one_of(Zuora::PAYMENT_TERMS)
+
+      dirty_valid_attr :sold_to_contact,
+        type: Zuora::Models::Contact,
+        required?: true
+
+      dirty_valid_attr :subscription,
+        type: String
+
+      alias_method :initialize, :initialize_attributes!
     end
   end
 end

@@ -10,12 +10,10 @@ describe 'Sign up a customer' do
 
   let(:account) do
     build :account,
-          sold_to_contact: customer,
-          bill_to_contact: customer,
-          credit_card: credit_card
+      sold_to_contact: customer,
+      bill_to_contact: customer,
+      credit_card: credit_card
   end
-
-  it { expect(account).to be_valid }
 
   let(:username) { ENV['ZUORA_SANDBOX_USERNAME'] }
   let(:password) { ENV['ZUORA_SANDBOX_PASSWORD'] }
