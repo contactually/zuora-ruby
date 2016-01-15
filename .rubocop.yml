@@ -14,11 +14,33 @@ Style/Documentation:
 Style/Encoding:
   Enabled: false
 
-Style/NestedMethodDefinition:
-  Enabled: false
-
 AbcSize:
   Enabled: false
 
 Rails/TimeZone:
   Enabled: false
+
+Style/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+  SupportedStyles:
+    - with_first_parameter
+    - with_fixed_indentation
+
+Style/CaseIndentation:
+  IndentWhenRelativeTo: end
+  SupportedStyles:
+    - case
+    - end
+  IndentOneStep: false
+
+Style/IndentHash:
+  EnforcedStyle: consistent
+  SupportedStyles:
+    - special_inside_parentheses
+    - consistent
+
+Style/MultilineOperationIndentation:
+  EnforcedStyle: indented
+  SupportedStyles:
+    - aligned
+    - indented

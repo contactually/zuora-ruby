@@ -13,7 +13,7 @@ describe Zuora::Models::Account do
 
       subject do
         build :subscription,
-              subscribe_to_rate_plans: [rate_plan]
+          subscribe_to_rate_plans: [rate_plan]
       end
 
       it { expect { subject }.to_not raise_error }

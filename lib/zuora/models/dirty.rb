@@ -147,7 +147,7 @@ end
 #   include DirtyValidAttr
 #
 #   dirty_valid_attr :fuz,
-#                    type: String,
+#                    :type => String,
 #                    valid: ->(attr) { attr == 'fuzz' },
 #                    coerce => ->(attr) { attr.to_str }
 #

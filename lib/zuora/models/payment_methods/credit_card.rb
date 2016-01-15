@@ -5,28 +5,29 @@ module Zuora
         include DirtyValidAttr
 
         dirty_valid_attr :card_type,
-                         type: String,
-                         required?: true,
-                         valid?: one_of(Zuora::CREDIT_CARD_TYPES)
+          type: String,
+          required?: true,
+          valid?: one_of(Zuora::CREDIT_CARD_TYPES)
 
         dirty_valid_attr :card_number,
-                         type: String,
-                         required?: true
+          type: String,
+          required?: true
 
         dirty_valid_attr :expiration_month,
-                         type: String,
-                         required?: true,
-                         valid?: one_of(Zuora::MONTHS)
+          type: String,
+          required?: true,
+          valid?: one_of(Zuora::MONTHS)
 
         dirty_valid_attr :expiration_year,
-                         type: String,
-                         required?: true,
-                         valid?: valid_year
+          type: String,
+          required?: true,
+          valid?: valid_year
 
         dirty_valid_attr :security_code,
-                         type: String,
-                         required: true
+          type: String,
+          required: true
 
+        # @param [Hash] attrs
         def initialize(attrs)
           initialize_attributes! attrs
         end

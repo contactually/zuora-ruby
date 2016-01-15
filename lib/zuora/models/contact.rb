@@ -4,66 +4,66 @@ module Zuora
       include DirtyValidAttr
 
       dirty_valid_attr :address_1,
-                       type: String,
-                       required?: true
+        type: String,
+        required?: true
 
       dirty_valid_attr :address_2,
-                       type: String
+        type: String
 
       dirty_valid_attr :city,
-                       type: String
+        type: String
 
       dirty_valid_attr :country,
-                       type: String
+        type: String
 
       dirty_valid_attr :county,
-                       type: String
+        type: String
 
       dirty_valid_attr :fax,
-                       type: String
+        type: String
 
       dirty_valid_attr :home_phone,
-                       type: String
+        type: String
 
       dirty_valid_attr :first_name,
-                       type: String,
-                       required?: true,
-                       valid?: max_length(100)
+        type: String,
+        required?: true,
+        valid?: max_length(100)
 
       dirty_valid_attr :last_name,
-                       type: String,
-                       required?: true,
-                       valid?: max_length(100)
+        type: String,
+        required?: true,
+        valid?: max_length(100)
 
       dirty_valid_attr :mobile_phone,
-                       type: String
+        type: String
 
       dirty_valid_attr :nickname,
-                       type: String
+        type: String
 
       dirty_valid_attr :other_phone,
-                       type: String
+        type: String
 
       dirty_valid_attr :other_phone_type,
-                       type: String
+        type: String
 
       dirty_valid_attr :personal_email,
-                       type: String
+        type: String
 
       dirty_valid_attr :state,
-                       type: String
+        type: String
 
       dirty_valid_attr :tax_region,
-                       type: String
+        type: String
 
       dirty_valid_attr :work_email,
-                       type: String
+        type: String
 
       dirty_valid_attr :work_phone,
-                       type: String
+        type: String
 
       dirty_valid_attr :zip_code,
-                       type: String
+        type: String
 
       alias_method :initialize, :initialize_attributes!
     end

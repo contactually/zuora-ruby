@@ -59,9 +59,9 @@ module Zuora
     # @param [Params] params - Data to be sent in request body
     # @return [Faraday::Response] A response, with .headers, .status & .body
     def put(url, params)
-      response = @connection.put do |req|
-        set_request_headers! req, url
-        req.body = JSON.generate params
+      response = @connection.put do |request|
+        set_request_headers! request, url
+        request.body = JSON.generate params
       end
 
       response
@@ -75,16 +75,18 @@ module Zuora
     private
 
     # Make connection attempt
-    # @param [Faraday::Connection] connection
+    # @param [Faraday::Connection] conn
     # @param [String] username
     # @param [String] password
     def auth_request(conn, username, password)
-      conn.post { |req| set_auth_request_headers! req, username, password }
+      conn.post do |request|
+        set_auth_request_headers! request, username, password
+      end
     end
 
     # Sets instance variables or throws Connection error
-    # @param [Faraday::Response] username
-    # @param [Faraday::Connection] password
+    # @param [Faraday::Response] response
+    # @param [Faraday::Connection] conn
     def handle_response(response, conn)
       if response.status == 200
         @auth_cookie = response.headers['set-cookie'].split(' ')[0]
@@ -94,23 +96,23 @@ module Zuora
       end
     end
 
-    # @param [Faraday::Request] req - Faraday::Request builder
+    # @param [Faraday::Request] request - Faraday::Request builder
     # @param [String] username - Zuora username
     # @param [String] password - Zuora password
-    def set_auth_request_headers!(req, username, password)
-      req.url '/rest/v1/connections'
-      req.headers['apiAccessKeyId'] = username
-      req.headers['apiSecretAccessKey'] = password
-      req.headers['Content-Type'] = 'application/json'
+    def set_auth_request_headers!(request, username, password)
+      request.url '/rest/v1/connections'
+      request.headers['apiAccessKeyId'] = username
+      request.headers['apiSecretAccessKey'] = password
+      request.headers['Content-Type'] = 'application/json'
     end
 
     # @param [Faraday::Request] request - Faraday Request builder
     # @param [String] url - Relative URL for HTTP request
     # @return [Nil]
-    def set_request_headers!(req, url)
-      req.url url
-      req.headers['Content-Type'] = 'application/json'
-      req.headers['Cookie'] = @auth_cookie
+    def set_request_headers!(request, url)
+      request.url url
+      request.headers['Content-Type'] = 'application/json'
+      request.headers['Cookie'] = @auth_cookie
     end
 
     # @param [String] url
