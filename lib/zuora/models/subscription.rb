@@ -3,6 +3,7 @@
 module Zuora
   module Models
     class Subscription
+      # POST https://api.zuora.com/rest/v1/subscriptions
       include DirtyValidAttr
 
       dirty_valid_attr :auto_renew,

@@ -77,8 +77,11 @@ module Zuora
   WEEKDAYS = %w(Sunday Monday Tuesday Wednesday Thursday Friday Saturday)
 end
 
+require_relative 'utils/composite_types'
+require_relative 'utils/resource_model'
+
 require_relative 'zuora/version'
 require_relative 'zuora/client'
-require_relative 'zuora/models'
+# require_relative 'zuora/models'
 require_relative 'zuora/serializers'
 require_relative 'zuora/resources'
