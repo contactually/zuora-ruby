@@ -4,193 +4,101 @@
 
 # Zuora REST API: Ruby Client
 
-This library implements a Ruby client wrapping Zuora's REST API.
+# Building Blocks
 
-### Model
-A base module called `DirtyValidAttr` provides `dirty_model_attr`
-* **Accessors**: attribute name provides getters and setters, as in `attr_accessor`
-* **Validations** `valid: max_length(3) ` 
-    *  Includes a library of predicate higher order validation functions
-* **Coercions** `coerce: ->(value) { value.to_s } `
-* **Type Checks** `type: String`
-* **Required Attributes**: `:required: true`
+## Schemas
+- Provide ***recursive** data driven validations, accessors, tracking and coercion. 
+- Provides Ruby builder patterns for request construction
+- See example
 
-### Resource 
-* **HTTP requests**: that are authenticated with provided credentials
-* **Zuora API endpoints**: 
+## Resources
+- Model HTTP endpoints
+- URL parameterization
+- Schematized data validation
 
-### Utilities
-- **Serialization**: Ruby <=> JSON serializer provided, just provide a module or class that respnds to `.serialize(hash)` 
+# HTTP Client 
+- JSON encoding, authentication, request and response 
 
-### Development: Specs and Testing
-- **Factories**: for generating sample valid and invalid data that works with the API
-- **Unit**: factories for testing model valdiations 
-- **Integration**: Tests against or memoized (via `VCR`) HTTP responses
+# Schemas API Examples
 
-## Quickstart
+## Simple Example
 ```ruby
-# Connect
-client = Zuora::Client.new(username, password) 
-# Create a model
-account = Zuora::Models::Account.new(...)
-serializer = Zuora::Serializers::Attribute
-# Low level HTTP API
-client.get('/rest/v1/accounts', serializer.serialze account)
-# High Level Resource API 
-Zuora::Resources::Account.create! client, account, serializer
+class ChildSchema
+  include Schema
+  
+  schema :item,
+    id: {
+      type: Numeric,
+      required?: true,
+      valid?: -> (field) { field > 0 }, 
+    },
+
+    label: {
+      type: String,
+      required?: true
+    },
+end
+
+class ParentSchema
+  include Schema
+  schema :items,
+   id: {
+     type: Numeric,
+     required?: true,
+     valid?: -> (field) { field > 0 },
+   },
+   items: {
+     type: String,
+     schema: [ChildSchema]
+   }
+ end
+ 
+ # child is missing required label 
+ items = ParentSchema.new( id: 1, items: [{ id: 22 }] ) 
+ 
+ items.valid? 
+ => false
+ 
+ items.errors? 
+ => { items: [{ label: 'is required but not present' }] }
+ 
+ 
+ items.items.first.label = "Label"
+ 
+ items.valid? 
+ => true 
+  
+ 
 ```
-## Key Features & Concepts 
-1. ***Client:*** Create a client by providing username and password.
-This authenticates and stores the returned session cookie 
-used in subsequent requests. An optional third, truthy value enables Sandbox instead of production mode.
 
-2. ***HTTP:***
-Use `client.<get|post|put>(url, params)` to make HTTP requests via the authenticated client. Request and response body will be converted to/from Ruby via `farraday_middleware`. 
 
-3. ***Models:***  Ruby interface for constructing valid Zuora objects.
-  - Documentation coming soon. In the mean time, check comments in `Zuora::Models::Dirty`.
+## Subscription Example
+Zuora's subscription endpoint is a nested 4-level object.
+ subscriptions => 
 
-4. **Serializers:** Recursive data transformations for mapping between formats; a Ruby -> JSON serializer is included; `snake_case` attributes are transformed into JSON `lowerCamelCase` recursively in a nested structure.
-  - ex. `Zuora::Serializers::Attribute.serialize account` 
-
-5. **Resources:** Wraps Zuora REST API endpoints. Hand a valid model and (optionally) a serializer to a Resource to trigger a request. Request will be made for valid models only. An exception will be raised if the model is invalid. Otherwise, a `Farraday::Response` object will be returned (responding to `.status`, `.headers`, and `.body`).
-
-6. **Factories:** Factories are set up for easily constructing Zuora requests in development (via `factory_girl`) 
-```ruby
-account = create :account, :credit_card => create(:credit_card),
-                           :sold_to_contact => create(:contact),
-                           :bill_to_contact => create(:contact)
-                           
-account.valid? # => true
 ```
-7. **Test coverage:** Unit and integration specs coverage via `rspec`. Coming soon: HTTP response caching (using `VCR`)
+ subscription = Zuora::Models::Root.new(
+  account_key: -3, 
+  subscribe_to_rate_plans: 
+   [{ :product_rate_plan_id => 3,
+      :charge_overrides => [] }] )
 
-## Models
-Models implement (recursive, nested) Zuora validations using `ActiveModel::Model` and soon, dirty attribute tracking via `ActiveModel::Dirty`
-* Account
-* CardHolder
-* Contact
-* PaymentMethod::CreditCard
-* RatePlan
-* RatePlanCharge
-* Subscription
-* Tier
+> subscription.errors
 
-## Resources 
-In module  `Zuora::Resources::` 
-* `Account.create!` **[working]**
-* `Account.update!` **[working]**
-* `Subscription.create!` **[working]**
-* `Subscription.update!` **[working]**
-* `Subscription.cancel!` [in progress]
-* `PaymentMethod.update!` [in progress]
+=>  {:account_key=>{:type=>"should be of type String but is of type Fixnum"},
+     :term_type=>{:required?=>"is required but is not set"},
+     :contract_effective_date=>{:required?=>"is required but is not set"},
+     :initial_term=>{:required?=>"is required but is not set"},
+     :subscribe_to_rate_plans=>[]}
+  
+> subscription.valid? 
 
-## Examples
-### Creating an Account
+true
 
-```ruby
-username = 'your@username.com'
-password = 'super_secure_password'
+# Now it can be serialized and sent via HTTP
 
-client = Zuora::Client.new(username, password, true) # true for sandbox
-
-account = Zuora::Models::Account.new(
-  :name => 'Abc',
-  :auto_pay => true,
-  :currency => 'USD',
-  :bill_cycle_day => '0',
-  :payment_term => 'Net 30',
-  :bill_to_contact => Zuora::Models::Contact.new(
-    :first_name => 'Abc',
-    :last_name => 'Def',
-    :address_1 => '123 Main St',
-    :city => 'Palm Springs',
-    :state => 'FL',
-    :zip_code => '90210',
-    :country => 'US'
-  ),
-  :sold_to_contact => Zuora::Models::Contact.new(
-    :first_name => 'Abc',
-    :last_name => 'Def',
-    :country => 'US'
-  ),
-  :credit_card => Zuora::Models::PaymentMethod.new(
-    :card_type => 'Visa',
-    :card_number => '4111111111111111',
-    :expiration_month => '03',
-    :expiration_year => '2017',
-    :security_code => '122',
-  )
-)
-
-# Create an account in one of two ways:
-
-serializer = Zuora::Serializers::Attribute
-
-# Using the low-level API exposed by `Client`
-response = client.post('/rest/v1/accounts', serializer.serialize accont)
-
-# or using the higher-level resource API
-response = Zuora::Resources::Accounts.create!(client, account, serializer)
-
-# Le response
-
-pp response
-
-#<Faraday::Response:0x007f8033b05f08
- @env=
-  #<struct Faraday::Env
-   method=:post,
-   body=
-    {"success"=>true,
-     "accountId"=>"2c92c0fa521b466c0152250822741a71",
-     "accountNumber"=>"A00000038",
-     "paymentMethodId"=>"2c92c0fa521b466c0152250829c81a7b"},
-   url=#<URI::HTTPS https://apisandbox-api.zuora.com/rest/v1/accounts>,
-   request=
-    #<struct Faraday::RequestOptions
-     params_encoder=nil,
-     proxy=nil,
-     bind=nil,
-     timeout=nil,
-     open_timeout=nil,
-     boundary=nil,
-     oauth=nil>,
-   request_headers=
-    {"User-Agent"=>"Faraday v0.9.2",
-     "Content-Type"=>"application/json",
-     "Cookie"=>
-      "ZSession=LBToVw72ZCAQLjdZ9Ksj8rx2BlP3NbgmMYwCzuf_slSJqIhMbJjdQ1T-4otbdfjUOImQ_XJOCbJgdCd7jHmGsnnJyG49NyRkI7FVKOukVQtdJssJ5n1xAXJeVjxj3qj97iiIZp697v3G2w86iCTN6kWycUlSVezBElbC8_EhScbx8YmaP4QJxXRIFHHdOQPq3IN-9ezk21Cpq3fdXn6s0fIPMU7NUFj7-kD4dcYNBAyd7i2fJVAIV31mXNBH2MuU;"},
-   ssl=
-    #<struct Faraday::SSLOptions
-     verify=false,
-     ca_file=nil,
-     ca_path=nil,
-     verify_mode=nil,
-     cert_store=nil,
-     client_cert=nil,
-     client_key=nil,
-     certificate=nil,
-     private_key=nil,
-     verify_depth=nil,
-     version=nil>,
-   parallel_manager=nil,
-   params=nil,
-   response=#<Faraday::Response:0x007f8033b05f08 ...>,
-   response_headers=
-    {"server"=>"Zuora App",
-     "content-type"=>"application/json;charset=utf-8",
-     "expires"=>"Sat, 09 Jan 2016 06:17:18 GMT",
-     "cache-control"=>"max-age=0, no-cache, no-store",
-     "pragma"=>"no-cache",
-     "date"=>"Sat, 09 Jan 2016 06:17:18 GMT",
-     "content-length"=>"165",
-     "connection"=>"close",
-     "set-cookie"=>
-      "ZSession=dOz9WgdPQbb9J9wzwhuR_t1j9feD4dYBUEZ_sjK6pS9KAaJtPdKN-jAivNELsaANWMJrvHW_1eLxT7XqzjLVBJKzLDJT7_0ucvzcrwNcwMW8mUGpeUhQQu_h2HzNH1kZjc1HX6pfw-BH66BafLemLIdqL75ifmglk8YuTOf_wTg54GsovkrgJCAp9zferw6pYHkZoQUXyH7zmUmmWvMAZ1ZVamhLOf1P3FrrHaw6eIiUj0ehlKvrtxB-GHIgYxh6; Path=/; Secure; HttpOnly"},
-   status=200>,
- @on_complete_callbacks=[]>
 ```
+
 # Changelog
 * **[0.1.0 - 2016-01-12]** Initial release 
 * **[0.2.0] - 2016-01-14]** Models
@@ -204,7 +112,13 @@ pp response
      -  A model now performs its validations on `.new`, and will raise a detailed exception on mistyped, invalid or uncoercable data.
      - Adds VCR for mocking out HTTP requests
      - Adds integration specs for `Subscribe` `create!` and `update!` and `Account` `create!` and `update!`
-
+# **[0.3.0] ** Stronger models and improved Resource API
+    - Implements SchemaModel, providing a rich yet simple, declarative data DSL to declare a validatable model
+    - Implements ResourceModel, providing declarative data DSL for declare HTTP resources
+    - Implements Zuora models and models: Account, CardHolderInfo, Charge, Contact, CreditCard, Plan, Subscription, Tier
+    - Redesigns resource API to enable direct manupulation of resource
+    - Previously, only one error at a time was thrown. Now, all model validations are inspectable at once 
+    
 # Commit rights
 Anyone who has a patch accepted may request commit rights. Please do so inside the pull request post-merge.
 
