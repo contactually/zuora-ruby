@@ -1,27 +1,36 @@
-module Zuora
-  module Models
-    class RatePlanChargeTier
-      include DirtyValidAttr
+class Zuora::Models::Tier
+  extend ValidationPredicates
+  include SchemaModel
 
-      dirty_valid_attr :tier,
-        type: Numeric,
-        required?: true
+  schema :tier,
+    tier: {
+      required?: true,
+      type: Numeric,
+      doc: 'Unique number that identifies the tier that the price applies to.'
+    },
 
-      dirty_valid_attr :starting_unit,
-        type: Numeric
+    starting_unit: {
+      doc: 'Starting number of a range of units for the tier.',
+      type: Numeric
+    },
 
-      dirty_valid_attr :ending_unit,
-        type: Numeric
+    ending_unit: {
+      required?: true,
+      type: Numeric, # decimal
+      doc: 'End number of a range of units for the tier.'
+    },
 
-      dirty_valid_attr :price,
-        type: Numeric,
-        required?: true
+    price: {
+      required?: true,
+      doc: 'Price of the tier if the charge is a flat fee,
+       or the price of each unit in the tier if the charge model
+       is tiered pricing.',
+      type: Numeric, # currency
+    },
 
-      dirty_valid_attr :price_format,
-        type: String,
-        valid?: one_of(%w(FlatFee PerUnit))
-
-      alias_method :initialize, :initialize_attributes!
-    end
-  end
+    price_format: {
+      doc: 'Indicates if pricing is a flat fee or is per unit.',
+      type: String,
+      valid?: one_of(%w(PerUnit FlatFee))
+    }
 end

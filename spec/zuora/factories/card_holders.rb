@@ -1,7 +1,5 @@
 FactoryGirl.define do
-  factory :card_holder, class: Zuora::Models::CardHolder do
-    initialize_with { new(attributes) }
-
+  factory :card_holder do
     card_holder_name 'First Last'
     address_line_1 '123 Main St'
     city 'Dayton'
@@ -10,5 +8,13 @@ FactoryGirl.define do
     phone '301-555-1212'
     email 'abc@abc.com'
     zip_code '12345'
+
+    factory :card_holder_model, class: Zuora::Models::CardHolderInfo do
+      initialize_with { new(attributes) }
+    end
+
+    factory :card_holder_hash, class: Hash do
+      initialize_with { Hash[attributes] }
+    end
   end
 end

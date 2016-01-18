@@ -44,3 +44,9 @@ Style/MultilineOperationIndentation:
   SupportedStyles:
     - aligned
     - indented
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/ClassLength:
+  Enabled: false
