@@ -24,28 +24,18 @@ module ResourceModel
   end
 
   module InstanceMethods
-    attr_reader :errors
+    private
 
-    def initialize
-      @errors = []
-    end
-
-    def valid?
-      @errors = [:a]
-      nil
-    end
-
-    def exec!(env = :sandbox)
-      url_template = self.request[:uris][env]
-      url = url_template.gsub '{subscription_key}', 'get-value-from-instance'
-      puts "Executing HTTP #{self.http_method} to #{url}"
-    end
+    # def exec!(env = :sandbox)
+    #   url_template = request[:uris][env]
+    #   url = url_template.gsub '{subscription_key}', 'get-value-from-instance'
+    #   puts "Executing HTTP #{http_method} to #{url}"
+    # end
   end
 
   module ClassMethods
     def resource(name, opts = {})
-      define_method(:name) { name }
-      opts.each { |k, value| define_method("#{k}") { value } }
+      # TODO
     end
   end
 end
