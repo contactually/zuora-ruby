@@ -80,14 +80,14 @@ module SchemaModel
       return nil unless changed_attributes
       Hash[
         changed_attributes.map do |attr|
-          value = self.send(attr)
+          value = send(attr)
 
           value = if value.is_a?(Hash)
-            value.to_json
-          elsif value.is_a?(Array)
-                value.map(&:to_json)
-          else
-            value
+                    value.to_json
+                  elsif value.is_a?(Array)
+                    value.map(&:to_json)
+                  else
+                    value
           end
 
           [attr.to_s.camelize(:lower), value]
@@ -131,9 +131,7 @@ module SchemaModel
     # @return [Maybe String] error message
     def check_required(required, value)
       required = required.call(value) if required.respond_to?(:call)
-      if required && value.nil?
-        'is required but is not set'
-      end
+      'is required but is not set' if required && value.nil?
     end
 
     # Checks that required field meets validation
@@ -192,11 +190,11 @@ module SchemaModel
     def ensure_schema(value, child_schema)
       if value.present? && child_schema.present?
         value = if child_schema.is_a?(Array)
-          value.map do |item|
-            item.is_a?(SchemaModel) ? item : child_schema[0].new(item)
-          end
-        else
-          value.is_a?(SchemaModel) ? value : child_schema.new(value)
+                  value.map do |item|
+                    item.is_a?(SchemaModel) ? item : child_schema[0].new(item)
+                  end
+                else
+                  value.is_a?(SchemaModel) ? value : child_schema.new(value)
         end
       end
 
