@@ -50,5 +50,4 @@ describe SchemaModelSpec do
     it { expect(subject.errors).to be_empty }
     it { expect(subject.to_json).to eq json }
   end
-
 end

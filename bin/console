@@ -11,11 +11,11 @@ require 'zuora'
 # require "pry"
 # Pry.start
 
-# require 'factory_girl'
-# FactoryGirl.definition_file_path# s = ['spec/zuora/factories']
-# FactoryGirl.find_definitions
-# # Short hand factory girl syntax
-# include FactoryGirl::Syntax::Methods
+require 'factory_girl'
+FactoryGirl.definition_file_paths = ['spec/zuora/factories']
+FactoryGirl.find_definitions
+# Short hand factory girl syntax
+include FactoryGirl::Syntax::Methods
 
 require 'irb'
 IRB.start
