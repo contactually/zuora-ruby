@@ -23,7 +23,6 @@ describe 'Sign up a customer' do
   end
 
   let(:account_resource) do
-
   end
 
   # Expectations

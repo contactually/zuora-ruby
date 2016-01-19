@@ -6,6 +6,7 @@ require_relative 'models/tier'
 require_relative 'models/charge'
 require_relative 'models/charge_update'
 require_relative 'models/plan'
+require_relative 'models/subscription_update'
 require_relative 'models/subscription'
 
 # Subscription resource nested data structure
@@ -18,8 +19,6 @@ require_relative 'models/subscription'
 require_relative 'models/card_holder_info'
 require_relative 'models/contact'
 require_relative 'models/credit_card'
-require_relative 'models/subscription'
-require_relative 'models/subscription_update'
 require_relative 'models/account'
 
 # Account resource nested data structure

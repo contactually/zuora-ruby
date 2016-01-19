@@ -3,7 +3,7 @@ FactoryGirl.define do
     name 'Abc'
     auto_pay true
     currency 'USD'
-    billing_cycle_day '0'
+    bill_cycle_day '0'
     payment_term 'Net 30'
     account_number '123456'
 

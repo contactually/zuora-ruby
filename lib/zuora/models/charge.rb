@@ -250,10 +250,11 @@ Renewal, or Terms and Conditions amendment, the charge end date
 
       type: String,
       valid?: one_of(%w(DefaultFromCustomer SpecificDayofMonth
-                        SubscriptionStartDay ChargeTriggerDay SpecificDayOfWeek))
+                        SubscriptionStartDay ChargeTriggerDay
+                        SpecificDayOfWeek))
     },
 
-    billing_cycle_day: {
+    bill_cycle_day: {
       doc: 'Sets the bill cycle day (BCD)
         for the charge.
         The BCD determines which day of the month customer is billed.',
