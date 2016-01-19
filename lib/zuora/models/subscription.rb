@@ -3,6 +3,10 @@ class Zuora::Models::Subscription
   include SchemaModel
 
   schema :subscription,
+    update: {
+      schema: [Zuora::Models::SubscriptionUpdate]
+    },
+
     account_key: {
       doc: 'Customer account number or ID',
       type: String,
