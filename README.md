@@ -127,12 +127,8 @@ true
         or
        
         - schema: one or many. Provides a means for recursion
-         
-    - Implements `ResourceModel`, a metaclass providing declarative data DSL for defining HTTP resource
-        - URL parameterization. e.g.` { :some_param => '123' } /account/:some_param /account/123`
-       
+
     - Implements Zuora models using `SchemaModel` for: Account, CardHolderInfo, Charge, Contact, CreditCard, Plan, Subscription, Tier
-    - Redesigns resource API to enable direct manuipulation of Resources
     - Previously, only one error at a time was thrown. Now, all model validations are inspectable at once 
     - Updates factories with both Hash and Model constructors
     

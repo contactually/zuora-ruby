@@ -54,9 +54,10 @@ class Zuora::Models::Account
 
     currency: {
       type: String,
+      required?: true,
       valid?: length(3),
       doc: 'A currency as defined in Z-Billing Settings in the
-                      Zuora UI'
+            Zuora UI'
     },
 
     credit_card: {

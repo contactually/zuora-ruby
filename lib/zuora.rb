@@ -79,16 +79,10 @@ end
 require_relative 'utils/validation_predicates'
 require_relative 'utils/composite_types'
 require_relative 'utils/schema_model'
-require_relative 'utils/resource_model'
 
 require_relative 'zuora/version'
 require_relative 'zuora/client'
 require_relative 'zuora/models'
 
-require_relative 'zuora/accounts/create'
-require_relative 'zuora/accounts/update'
-require_relative 'zuora/accounts/get'
-require_relative 'zuora/accounts/get_summary'
-#
 # require_relative 'zuora/subscriptions/create'
 # require_relative 'zuora/subscriptions/update'
