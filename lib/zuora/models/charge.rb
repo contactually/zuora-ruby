@@ -253,7 +253,7 @@ Renewal, or Terms and Conditions amendment, the charge end date
                         SubscriptionStartDay ChargeTriggerDay SpecificDayOfWeek))
     },
 
-    bill_cycle_day: {
+    billing_cycle_day: {
       doc: 'Sets the bill cycle day (BCD)
         for the charge.
         The BCD determines which day of the month customer is billed.',
@@ -306,7 +306,7 @@ Renewal, or Terms and Conditions amendment, the charge end date
         PriceChangeOption field to SpecificPercentageValue."
     },
 
-    weekly_bill_cycle_day: {
+    weekly_billing_cycle_day: {
       doc: 'Specifies which day of the week as the bill cycle day (BCD)
        for the charge',
       type: String,

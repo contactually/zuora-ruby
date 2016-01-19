@@ -3,6 +3,14 @@ class Zuora::Models::CardHolderInfo
   include SchemaModel
 
   schema :card_holder_info,
+    card_holder_name: {
+      required?: true,
+      doc: %(The card holder's full name as it appears on the card,
+             e.g., "John J Smith", 50 characters or less),
+      valid?: max_length(50),
+      type: String
+    },
+
     address_line_1: {
       required?: true,
       doc: 'First address line, 255 characters or less',
