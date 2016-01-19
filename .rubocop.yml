@@ -3,6 +3,7 @@ AllCops:
     - 'db/**/*'
     - 'config/**/*'
     - 'vendor/**/*'
+    - 'scratchpad.rb'
 
 Style/Encoding:
   Enabled: true
@@ -49,4 +50,7 @@ Style/ClassAndModuleChildren:
   Enabled: false
 
 Style/ClassLength:
+  Enabled: false
+
+Style/EachWithObject:
   Enabled: false

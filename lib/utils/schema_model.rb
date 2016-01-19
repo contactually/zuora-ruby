@@ -79,23 +79,26 @@ module SchemaModel
     def to_json
       return nil unless changed_attributes
       Hash[
-        changed_attributes.map do |attr|
-          value = send(attr)
-
-          value = if value.is_a?(Hash) || value.is_a?(SchemaModel)
-                    value.to_json
-                  elsif value.is_a?(Array)
-                    value.map(&:to_json)
-                  else
-                    value
-          end
-
-          [attr.to_s.camelize(:lower), value]
-        end
+        changed_attributes.map { |attr| serialize_attr(attr) }
       ]
     end
 
     private
+
+    # @param [Symbol] attr
+    # @return [Array]
+    def serialize_attr(attr)
+      value = send(attr)
+      value = if value.is_a?(Hash) || value.is_a?(SchemaModel)
+                value.to_json
+              elsif value.is_a?(Array)
+                value.map(&:to_json)
+              else
+                value
+              end
+
+      [attr.to_s.camelize(:lower), value]
+    end
 
     # Given a schema and a value which may be a single record or collection,
     # collect and return any errors.
@@ -104,12 +107,12 @@ module SchemaModel
     # @return [Object] Array of errors hashes, or one hash.
     #                   Structure matches 'value' input
     def check_children(child_schema, value)
-      if child_schema && value.present?
-        if value.is_a? Array
-          value.map(&:errors).reject(&:empty?)
-        else
-          value.errors
-        end
+      return unless child_schema && value.present?
+
+      if value.is_a? Array
+        value.map(&:errors).reject(&:empty?)
+      else
+        value.errors
       end
     end
 
@@ -118,9 +121,9 @@ module SchemaModel
     # @param [Object] value - value to check
     # @return [Maybe String] error message
     def check_type(type, value)
-      if type && value && !value.is_a?(type)
-        "should be of type #{type} but is of type #{value.class}"
-      end
+      return unless type && value && !value.is_a?(type)
+
+      "should be of type #{type} but is of type #{value.class}"
     end
 
     # Checks that required field is present
@@ -140,15 +143,14 @@ module SchemaModel
     # @param [Object] value - value to check
     # @return [Maybe String] error message
     def check_validation(valid, value)
-      if valid && value
-        passes_validation = begin
-          valid.call(value)
-        rescue
-          false
-        end
+      return unless valid && value
 
-        passes_validation ? nil : 'is invalid'
-      end
+      passes_validation = begin
+                            valid.call(value)
+                          rescue
+                            false
+                          end
+      passes_validation ? nil : 'is invalid'
     end
 
     # Mutates errors, adding in error messages scoped to the attribute and key
@@ -157,13 +159,16 @@ module SchemaModel
     # @param [Symbol] key - name of validation step
     # @param [Object] val - data to append
     def append!(errors, attr, key, val)
-      if val.present?
-        errors ||= {}
-        errors[attr] ||= {}
-        errors[attr][key] = val
-      end
+      return unless val.present?
+
+      errors ||= {}
+      errors[attr] ||= {}
+      errors[attr][key] = val
     end
 
+    # @param [Hash] schema
+    # @param [Hash|Object] data
+    # @return [Hash]
     def check(schema, data)
       schema.reduce({}) do |errors, (attr, defn)|
         # Destructuring
@@ -195,7 +200,7 @@ module SchemaModel
                   end
                 else
                   value.is_a?(SchemaModel) ? value : child_schema.new(value)
-        end
+                end
       end
 
       value

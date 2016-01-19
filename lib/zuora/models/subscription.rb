@@ -3,6 +3,10 @@ class Zuora::Models::Subscription
   include SchemaModel
 
   schema :subscription,
+    update: {
+      schema: [Zuora::Models::SubscriptionUpdate]
+    },
+
     account_key: {
       doc: 'Customer account number or ID',
       type: String,
@@ -150,8 +154,8 @@ class Zuora::Models::Subscription
     },
 
     invoice_separately: {
-      doc: 'Separates a single subscription from other subscriptions and invoices
-            the charge independently.
+      doc: 'Separates a single subscription from other subscriptions and
+            invoices the charge independently.
 
             If the value is true, the subscription is billed separately from
             other subscriptions. If the value is false, the subscription is
