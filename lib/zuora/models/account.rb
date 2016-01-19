@@ -32,7 +32,7 @@ class Zuora::Models::Account
                       affect soldToContact and vice versa.'
     },
 
-    billing_cycle_day: {
+    bill_cycle_day: {
       type: String,
       doc: %q(The account's bill cycle day (BCD), when bill runs
                 generate invoices for the account.  Specify any day of the

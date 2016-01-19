@@ -6,20 +6,15 @@
 
 # Building Blocks
 
-## Schemas
+## Models
 - Provide ***recursive** data driven validations, accessors, tracking and coercion. 
 - Provides Ruby builder patterns for request construction
-- See example
-
-## Resources
-- Model HTTP endpoints
-- URL parameterization
-- Schematized data validation
+- See examples below
 
 # HTTP Client 
 - JSON encoding, authentication, request and response 
 
-# Schemas API Examples
+# Examples
 
 ## Simple Example
 ```ruby
