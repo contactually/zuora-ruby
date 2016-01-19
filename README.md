@@ -112,13 +112,37 @@ true
      -  A model now performs its validations on `.new`, and will raise a detailed exception on mistyped, invalid or uncoercable data.
      - Adds VCR for mocking out HTTP requests
      - Adds integration specs for `Subscribe` `create!` and `update!` and `Account` `create!` and `update!`
-# **[0.3.0] ** Stronger models and improved Resource API
-    - Implements SchemaModel, providing a rich yet simple, declarative data DSL to declare a validatable model
-    - Implements ResourceModel, providing declarative data DSL for declare HTTP resources
-    - Implements Zuora models and models: Account, CardHolderInfo, Charge, Contact, CreditCard, Plan, Subscription, Tier
-    - Redesigns resource API to enable direct manupulation of resource
+# **[0.3.0 2016-]** Stronger models and improved Resource API
+    - The goal of this iteration was to find a high-leverage way to get extremely close to the Zuora REST API specification.
+      The approach taken is to declare in full detail Zuora REST specs using data, and then use Ruby's metaprogramming 
+      facilities to create a Ruby object interface with convenience features such as dirty attribute tracking, builder pattern, etc.
+    - Implements `SchemaModel`, a metaclass providing a declarative data Ruby DSL
+        - docstrings from zuora so API spec is co-located 
+        
+        - validations
+        - type checks
+        - required? fields
+
+        or
+       
+        - schema: one or many. Provides a means for recursion
+         
+    - Implements `ResourceModel`, a metaclass providing declarative data DSL for defining HTTP resource
+        - URL parameterization. e.g.` { :some_param => '123' } /account/:some_param /account/123`
+       
+    - Implements Zuora models using `SchemaModel` for: Account, CardHolderInfo, Charge, Contact, CreditCard, Plan, Subscription, Tier
+    - Redesigns resource API to enable direct manuipulation of Resources
     - Previously, only one error at a time was thrown. Now, all model validations are inspectable at once 
+    - Updates factories with both Hash and Model constructors
     
+    
+# Planned Roadmap
+
+* **[0.3.1]** coercions (in and out)
+    - Ex: `'1' => 1` before validating `1 > 0`
+    - Ex: `Date => String '2015-01-01'
+
+
 # Commit rights
 Anyone who has a patch accepted may request commit rights. Please do so inside the pull request post-merge.
 
