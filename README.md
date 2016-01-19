@@ -112,7 +112,8 @@ true
      -  A model now performs its validations on `.new`, and will raise a detailed exception on mistyped, invalid or uncoercable data.
      - Adds VCR for mocking out HTTP requests
      - Adds integration specs for `Subscribe` `create!` and `update!` and `Account` `create!` and `update!`
-# **[0.3.0 2016-]** Stronger models and improved Resource API
+
+* **[0.3.0 2016-]** Stronger models and improved Resource API
     - The goal of this iteration was to find a high-leverage way to get extremely close to the Zuora REST API specification.
       The approach taken is to declare in full detail Zuora REST specs using data, and then use Ruby's metaprogramming 
       facilities to create a Ruby object interface with convenience features such as dirty attribute tracking, builder pattern, etc.

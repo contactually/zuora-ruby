@@ -82,7 +82,7 @@ module SchemaModel
         changed_attributes.map do |attr|
           value = send(attr)
 
-          value = if value.is_a?(Hash)
+          value = if value.is_a?(Hash) || value.is_a?(SchemaModel)
                     value.to_json
                   elsif value.is_a?(Array)
                     value.map(&:to_json)
