@@ -1,5 +1,3 @@
-require_relative '../schemas/account'
-
 module Zuora
   module Accounts
     class Create
