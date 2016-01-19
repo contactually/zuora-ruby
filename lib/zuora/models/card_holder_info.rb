@@ -26,7 +26,7 @@ class Zuora::Models::CardHolderInfo
       type: String
     },
 
-    zipCode: {
+    zip_code: {
       required?: true,
       doc: 'Zip code, 20 characters or less',
       type: String

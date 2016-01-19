@@ -5,6 +5,9 @@ if ENV['CIRCLECI']
 end
 
 require_relative '../lib/zuora'
+require_relative '../lib/utils/resource_model'
+require_relative '../lib/utils/schema_model'
+
 require 'byebug'
 require 'factory_girl'
 require 'rspec/mocks'

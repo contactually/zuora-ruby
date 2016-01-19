@@ -22,6 +22,10 @@ describe 'Sign up a customer' do
     # optional: Subscription
   end
 
+  let(:account_resource) do
+
+  end
+
   # Expectations
   # it { expect(account_create_response.status).to eq 200 }
   # it { expect(account_update_response.status).to eq 200 }

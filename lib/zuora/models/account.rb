@@ -43,7 +43,7 @@ class Zuora::Models::Account
                 field is optional, and defaults to the day-of-the-month
                 of te subscription's contractEffectiveDate." ),
       required?: -> (model) { !model.respond_to? :subscription },
-      valid?: -> (v) { (0..32).to_a.include? v.to_i }
+      valid?: -> (v) { (0...31).to_a.include? v.to_i }
     },
 
     crm_id: {

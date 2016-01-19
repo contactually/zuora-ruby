@@ -1,5 +1,3 @@
-require_relative '../schemas/account'
-
 module Zuora
   module Accounts
     class Create
@@ -23,14 +21,14 @@ module Zuora
            ',
         cors: true,
         request: {
-          method: :PUT,
+          method: :post,
           content_type: 'application/json',
           urls: {
             production: 'https://api.zuora.com/rest/v1/accounts',
-            sandbox: 'https://api.zuora.com/rest/v1/accounts'
+            sandbox: 'https://apisandbox.zuora.com/rest/v1/accounts'
           },
 
-          schema: nil # Zuora::Models::Account.schema
+          schema: Zuora::Models::Account
         },
 
         response: {
