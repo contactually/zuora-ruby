@@ -19,7 +19,7 @@ module Zuora
                account.",
         cors: true,
         request: {
-          method: :GET,
+          method: :get,
           content_type: 'application/json',
           urls: {
             production:

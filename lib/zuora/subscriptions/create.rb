@@ -17,7 +17,7 @@ subscription for an existing customer account.',
 
         cors:       true,
         request:    {
-          method: :POST,
+          method: :get,
           schema: Zuora::Models::Subscription,
           urls:   {
             production: 'https://api.zuora.com/rest/v1/subscriptions',

@@ -23,14 +23,14 @@ module ResourceModel
 
     PARAM_REGEXP = /:[a-z0-9_]+/
 
-    def initialize(model)
+    def initialize(model, client)
       fail 'Model must be valid' unless model.valid?
       @model = model
     end
 
     def exec!(env = :sandbox)
       puts "Executing HTTP #{request_method} to #{url}"
-      Struct.new(:status).new(200)
+      resp = @client.send(request_method, url, serialized_model)
     end
 
     def request_method
@@ -41,6 +41,11 @@ module ResourceModel
       definition[:request][:urls][env]
     end
 
+    def serialized_model
+      @model.to_json
+    end
+
+    # Renders URL parameters
     def url(env = :sandbox)
       _url = raw_url(env)
       matches = PARAM_REGEXP.match(_url)

@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :card_holder do
-    card_holder_name 'First Last'
     address_line_1 '123 Main St'
     city 'Dayton'
     state 'OH'

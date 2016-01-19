@@ -20,7 +20,7 @@ module Zuora
         },
 
         request: {
-          method: :PUT,
+          method: :put,
 
           content_type: 'application/json',
 

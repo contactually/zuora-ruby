@@ -34,7 +34,7 @@ class ResourceModelSpec
                   account.",
     cors: true,
     request: {
-      method: :GET,
+      method: :get,
       content_type: 'application/json',
       urls: {
         production:
@@ -50,15 +50,20 @@ end
 describe ResourceModelSpec do
   let(:model) { SchemaModelSpec.new account_key: 1, label: 'Hello' }
 
+  # Authentication
+  let(:username) { ENV['ZUORA_SANDBOX_USERNAME'] }
+  let(:password) { ENV['ZUORA_SANDBOX_PASSWORD'] }
+  let(:client) { Zuora::Client.new username, password, true }
+
   let(:subject) do
-    ResourceModelSpec.new model
+    ResourceModelSpec.new client, model
   end
 
   let(:url) { 'https://apisandbox-api.zuora.com/rest/v1/accounts/1'}
-  let(:meth) { :GET }
+  let(:meth) { :get }
 
   it { expect(subject.url).to eq url }
   it { expect(subject.request_method).to eq meth }
-  it { expect(subject.exec!.status).to eq 200 }
+  # it { expect(subject.exec!.status).to eq 200 }
 
 end
