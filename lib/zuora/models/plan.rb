@@ -8,7 +8,6 @@ class Zuora::Models::Plan
     },
 
     charge_overrides: {
-      required?: true,
       doc: 'This optional container is used to override the quantity of
             one or more product rate plan charges for this subscription.',
       schema: [Zuora::Models::Charge]
