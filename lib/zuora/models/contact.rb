@@ -1,5 +1,4 @@
 class Zuora::Models::Contact
-  extend ValidationPredicates
   include SchemaModel
 
   schema :contact,
@@ -15,8 +14,7 @@ class Zuora::Models::Contact
 
     city: {
       type: String,
-      doc: 'City, 40 characters or less',
-      valid: max_length(40)
+      doc: 'City, 40 characters or less'
     },
 
     country: {
@@ -28,13 +26,11 @@ class Zuora::Models::Contact
       # TODO: validate against valid country codes
     },
     county: {
-      valid?: max_length(40),
       doc: 'County; 32 characters or less. May optionally be used by
              Z-Tax to calculate county tax.'
     },
 
     fax: {
-      valid?: max_length(40),
       type: String,
       doc: 'Fax phone number, 40 characters or less'
     },
@@ -42,25 +38,21 @@ class Zuora::Models::Contact
     first_name: {
       doc: 'First name, 100 characters or less',
       type: String,
-      valid?: max_length(100)
     },
 
     home_phone: {
       doc: 'Home phone number, 40 characters or less',
       type: String,
-      valid?: max_length(40)
     },
 
     last_name: {
       doc: 'Last name, 100 characters or less',
       type: String,
-      valid?: max_length(100)
     },
 
     mobile_phone: {
       doc: 'Mobile phone number, 40 characters or less',
       type: String,
-      valid?: max_length(100)
     },
 
     nickname: {
@@ -71,25 +63,21 @@ class Zuora::Models::Contact
     other_phone: {
       doc: 'Other phone number, 40 characters or less',
       type: String,
-      valid?: max_length(40)
     },
 
     other_phone_type: {
       doc: 'Possible values are: Work, Mobile, Home, Other.',
       type: String,
-      valid?: one_of(%w(Work Mobile Home Other))
     },
 
     personal_email: {
       doc: 'Personal email address, 80 characters or less',
       type: String,
-      valid?: max_length(80)
     },
 
     zip_code: {
       doc: 'Zip code, 20 characters or less',
       type: String,
-      valid?: max_length(20)
     },
 
     state: {
@@ -109,12 +97,10 @@ class Zuora::Models::Contact
 
     work_email: {
       type: String,
-      valid?: max_length(80),
       doc: 'Work email address, 80 characters or less' },
 
     work_phone: {
       type: String,
-      valid?: max_length(40),
       doc: 'Work phone number, 40 characters or less'
     }
 end

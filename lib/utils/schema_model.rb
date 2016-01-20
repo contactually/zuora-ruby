@@ -126,30 +126,15 @@ module SchemaModel
       "should be of type #{type} but is of type #{value.class}"
     end
 
-    # Checks that required field is present
-    # @param [Boolean or Callable] required - callable fn or boolean
-    #    function will be called with entire record so other fields can
-    #    be checked
-    # @param [Object] value - value to check
-    # @return [Maybe String] error message
-    def check_required(required, value)
-      required = required.call(value) if required.respond_to?(:call)
-      'is required but is not set' if required && value.nil?
-    end
-
     # Checks that required field meets validation
-    # @param [Boolean or Callable] required - callable validation fn or boolean
+    # @param [Boolean or Callable] valid - callable validation fn or boolean
     #                               function will be called with value
     # @param [Object] value - value to check
     # @return [Maybe String] error message
     def check_validation(valid, value)
       return unless valid && value
 
-      passes_validation = begin
-                            valid.call(value)
-                          rescue
-                            false
-                          end
+      passes_validation = valid.call(value) rescue false
       passes_validation ? nil : 'is invalid'
     end
 
@@ -173,16 +158,13 @@ module SchemaModel
       schema.reduce({}) do |errors, (attr, defn)|
         # Destructuring
         child_schema, type = defn.values_at :schema, :type
-        valid, required = defn.values_at :valid?, :required?
 
         # Get the value for this attribute
         value = data.send attr
 
         # Add error messages
-        append! errors, attr, :required?, check_required(required, value)
         append! errors, attr, :child, check_children(child_schema, value)
         append! errors, attr, :type, check_type(type, value)
-        append! errors, attr, :valid?, check_validation(valid, value)
         errors
       end
     end

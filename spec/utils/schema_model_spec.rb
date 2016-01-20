@@ -2,16 +2,13 @@ require 'spec_helper'
 
 class SchemaModelSpec
   include SchemaModel
-  extend ValidationPredicates
 
   schema :schema_model_spec,
     id: {
       type: Numeric,
-      valid?: -> (v) { v > 0 }
     },
     label_field: {
       type: String,
-      valid?: max_length(5)
     }
 end
 

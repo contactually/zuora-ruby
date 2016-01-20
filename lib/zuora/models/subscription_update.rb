@@ -1,5 +1,4 @@
 class Zuora::Models::SubscriptionUpdate
-  extend ValidationPredicates
   include SchemaModel
 
   schema :subscription_update,

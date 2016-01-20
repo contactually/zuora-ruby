@@ -1,5 +1,4 @@
 class Zuora::Models::Subscription
-  extend ValidationPredicates
   include SchemaModel
 
   schema :subscription,
@@ -30,7 +29,6 @@ class Zuora::Models::Subscription
       doc: 'Possible values are: TERMED, EVERGREEN.
            See Subscriptions for more information.',
       type: String,
-      valid?: one_of(%w(TERMED EVERGREEN))
     },
 
     contract_effective_date: {
@@ -73,7 +71,6 @@ class Zuora::Models::Subscription
             this field is ignored.',
 
       type: Numeric,
-      valid?:  -> (f) { f > 0 }
     },
 
     initial_term_period_type: {
@@ -97,7 +94,6 @@ class Zuora::Models::Subscription
       doc: 'The length of the period for the subscription renewal term.
             Default is 0.',
       type: Numeric,
-      valid?: min(0)
     },
 
     renewal_term_period_type: {
@@ -110,7 +106,6 @@ class Zuora::Models::Subscription
         Values are:
 
         Month (default), Year, Day, Week',
-      valid?: one_of(%w(Month Year Day Week))
     },
 
     renewal_setting: {
@@ -122,13 +117,11 @@ class Zuora::Models::Subscription
             RENEW_WITH_SPECIFIC_TERM (default)
             RENEW_TO_EVERGREEN',
       type: String,
-      valid?: one_of(%w(RENEW_WITH_SPECIFIC_TERM RENEW_TO_EVERGREEN))
     },
 
     notes: {
       doc: 'String of up to 500 characters',
       type: String,
-      valid?: max_length(500)
     },
 
     invoice: {

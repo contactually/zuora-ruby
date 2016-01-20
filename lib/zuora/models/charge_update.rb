@@ -1,5 +1,4 @@
 class Zuora::Models::ChargeUpdate
-  extend ValidationPredicates
   include SchemaModel
 
   schema :charge_update,

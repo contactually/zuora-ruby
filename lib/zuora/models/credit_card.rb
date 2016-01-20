@@ -1,11 +1,9 @@
 class Zuora::Models::CreditCard
-  extend ValidationPredicates
   include SchemaModel
 
   schema :credit_card,
     card_type: {
       type: String,
-      valid?: one_of(%w(Visa MasterCard AmericanExpress Discover))
     },
     expiration_month: {
       doc: 'Two-digit expiration month (01-12)',

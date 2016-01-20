@@ -1,13 +1,11 @@
 class Zuora::Models::Account
   include SchemaModel
-  extend ValidationPredicates
 
   schema :account,
     batch: {
       doc: 'The alias name given to a batch. A string of 50
                characters or less.',
       type: String,
-      valid?: max_length(50)
     },
 
     account_number: {
@@ -40,18 +38,15 @@ class Zuora::Models::Account
                 required. If a subscription is being created, this
                 field is optional, and defaults to the day-of-the-month
                 of te subscription's contractEffectiveDate." ),
-      valid?: -> (v) { (0...31).to_a.include? v.to_i }
     },
 
     crm_id: {
       type: String,
       doc: 'CRM account ID for the account, up to 100 characters',
-      valid?: max_length(100)
     },
 
     currency: {
       type: String,
-      valid?: length(3),
       doc: 'A currency as defined in Z-Billing Settings in the
             Zuora UI'
     },
@@ -75,7 +70,6 @@ class Zuora::Models::Account
     notes: {
       type: String,
       doc: 'A string of up to 65,535 characters',
-      valid?: max_length(65_325)
     },
 
     invoice_template_id: {
@@ -98,7 +92,6 @@ class Zuora::Models::Account
 
     payment_term: {
       type: String,
-      valid?: one_of(['Due Upon Receipt', 'Net 30', 'Net 60', 'Net 90']),
       doc: 'Payment terms for this account. Possible values are
                "Due Upon Receipt", "Net 30", "Net 60", "Net 90".'
     },

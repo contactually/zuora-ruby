@@ -76,7 +76,6 @@ module Zuora
   WEEKDAYS = %w(Sunday Monday Tuesday Wednesday Thursday Friday Saturday)
 end
 
-require_relative 'utils/validation_predicates'
 require_relative 'utils/composite_types'
 require_relative 'utils/schema_model'
 
