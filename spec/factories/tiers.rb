@@ -1,14 +1,12 @@
 FactoryGirl.define do
-  factory :tier do
+  factory :tier, class: Zuora::Models::Tier do
     tier 1
     starting_unit 1
     ending_unit 10
     price 60
     price_format 'FlatFee'
 
-    factory :tier_model, class: Zuora::Models::Tier do
-      initialize_with { new(attributes) }
-    end
+    initialize_with { new(attributes) }
 
     factory :tier_hash, class: Hash do
       initialize_with { Hash[attributes] }

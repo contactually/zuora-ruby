@@ -1,12 +1,12 @@
 FactoryGirl.define do
   factory :contact, class: Zuora::Models::Contact do
-    first_name 'Abc'
-    last_name 'Def'
-    address_1 '123 Main St'
-    city 'Palm Springs'
-    state 'FL'
-    zip_code '90210'
-    country 'US'
+    first_name Faker::Name.first_name
+    last_name Faker::Name.last_name
+    address_1 Faker::Address.street_address
+    city Faker::Address.city
+    state Faker::Address.state_abbr
+    zip_code Faker::Address.zip
+    country 'USA'
 
     initialize_with { new(attributes) }
 

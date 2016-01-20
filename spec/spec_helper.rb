@@ -10,6 +10,7 @@ require_relative '../lib/utils/schema_model'
 require 'byebug'
 require 'factory_girl'
 require 'rspec/mocks'
+require 'faker'
 
 ## Dotenv load environment from .env
 require 'dotenv'
@@ -19,7 +20,7 @@ Dotenv.load
 require 'vcr'
 
 VCR.configure do |c|
-  c.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
+  c.cassette_library_dir = 'spec/cassettes'
   c.hook_into :webmock # or :fakeweb
   c.filter_sensitive_data('<ZUORA_SANDBOX_USERNAME>') do
     ENV[' ']
