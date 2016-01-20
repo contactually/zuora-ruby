@@ -134,7 +134,11 @@ module SchemaModel
     def check_validation(valid, value)
       return unless valid && value
 
-      passes_validation = valid.call(value) rescue false
+      passes_validation = begin
+                            valid.call(value)
+                          rescue
+                            false
+                          end
       passes_validation ? nil : 'is invalid'
     end
 

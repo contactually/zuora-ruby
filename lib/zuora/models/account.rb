@@ -5,7 +5,7 @@ class Zuora::Models::Account
     batch: {
       doc: 'The alias name given to a batch. A string of 50
                characters or less.',
-      type: String,
+      type: String
     },
 
     account_number: {
@@ -37,12 +37,12 @@ class Zuora::Models::Account
                 If no subscription is being created, this field is
                 required. If a subscription is being created, this
                 field is optional, and defaults to the day-of-the-month
-                of te subscription's contractEffectiveDate." ),
+                of te subscription's contractEffectiveDate." )
     },
 
     crm_id: {
       type: String,
-      doc: 'CRM account ID for the account, up to 100 characters',
+      doc: 'CRM account ID for the account, up to 100 characters'
     },
 
     currency: {
@@ -52,7 +52,7 @@ class Zuora::Models::Account
     },
 
     credit_card: {
-      schema: Zuora::Models::CreditCard,
+      schema: Zuora::Models::CreditCard
     },
 
     name: {
@@ -64,12 +64,12 @@ class Zuora::Models::Account
       type: String,
       doc: 'The ID of the HPM credit card payment method associated with
                       this account. You must provide either this field or the
-                      creditCard structure, but not both.',
+                      creditCard structure, but not both.'
     },
 
     notes: {
       type: String,
-      doc: 'A string of up to 65,535 characters',
+      doc: 'A string of up to 65,535 characters'
     },
 
     invoice_template_id: {
@@ -97,7 +97,7 @@ class Zuora::Models::Account
     },
 
     sold_to_contact: {
-      schema: Zuora::Models::Contact,
+      schema: Zuora::Models::Contact
     },
 
     subscription: {

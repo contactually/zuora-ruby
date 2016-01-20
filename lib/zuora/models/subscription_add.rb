@@ -4,7 +4,7 @@ class Zuora::Models::SubscriptionAdd
   schema :subscription_add,
     product_rate_plan_id: {
       doc: 'ID of a rate plan for this subscription',
-      type: String,
+      type: String
     },
 
     contract_effective_date: {

@@ -11,12 +11,12 @@ class Zuora::Models::Charge
     number: {
       type: String,
       doc: 'Unique number that identifies the charge.
-          System-generated if not provided.',
+          System-generated if not provided.'
     },
 
     description: {
       type: String,
-      doc: 'Description of the charge.',
+      doc: 'Description of the charge.'
     },
 
     price: {
@@ -49,7 +49,7 @@ class Zuora::Models::Charge
     list_price_base: {
       doc: 'The list price base for the product rate plan
         charge.',
-      type: String,
+      type: String
     },
 
     quantity: {
@@ -70,7 +70,7 @@ class Zuora::Models::Charge
     apply_discount_to: {
       doc: 'Specifies the type of charges that
 you want a specific discount to apply to.',
-      type: String,
+      type: String
     },
 
     discount_level: {
@@ -87,7 +87,7 @@ you want a specific discount to apply to.',
     trigger_date: {
       doc: 'Specifies when to start billing the customer for the charge.
          Required if the triggerEvent field is set to USD.',
-      type: Date,
+      type: Date
     },
 
     end_date_condition: {
@@ -164,7 +164,7 @@ Renewal, or Terms and Conditions amendment, the charge end date
 
         IN_ADVANCE (default)
         IN_ARREARS',
-      type: String,
+      type: String
     },
 
     rating_group: {
@@ -212,7 +212,7 @@ Renewal, or Terms and Conditions amendment, the charge end date
       doc: 'Sets the bill cycle day (BCD)
         for the charge.
         The BCD determines which day of the month customer is billed.',
-      type: Numeric,
+      type: Numeric
     },
 
     number_of_periods: {
@@ -224,7 +224,7 @@ Renewal, or Terms and Conditions amendment, the charge end date
     overage_unused_units_credit_option: {
       doc: 'Determines whether to credit the customer with unused units of
             usage.',
-      type: String,
+      type: String
     },
 
     unused_units_credit_rates: {

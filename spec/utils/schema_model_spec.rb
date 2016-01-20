@@ -5,10 +5,10 @@ class SchemaModelSpec
 
   schema :schema_model_spec,
     id: {
-      type: Numeric,
+      type: Numeric
     },
     label_field: {
-      type: String,
+      type: String
     }
 end
 

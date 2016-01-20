@@ -26,6 +26,6 @@ class Zuora::Models::Tier
 
     price_format: {
       doc: 'Indicates if pricing is a flat fee or is per unit.',
-      type: String,
+      type: String
     }
 end

@@ -37,22 +37,22 @@ class Zuora::Models::Contact
 
     first_name: {
       doc: 'First name, 100 characters or less',
-      type: String,
+      type: String
     },
 
     home_phone: {
       doc: 'Home phone number, 40 characters or less',
-      type: String,
+      type: String
     },
 
     last_name: {
       doc: 'Last name, 100 characters or less',
-      type: String,
+      type: String
     },
 
     mobile_phone: {
       doc: 'Mobile phone number, 40 characters or less',
-      type: String,
+      type: String
     },
 
     nickname: {
@@ -62,22 +62,22 @@ class Zuora::Models::Contact
 
     other_phone: {
       doc: 'Other phone number, 40 characters or less',
-      type: String,
+      type: String
     },
 
     other_phone_type: {
       doc: 'Possible values are: Work, Mobile, Home, Other.',
-      type: String,
+      type: String
     },
 
     personal_email: {
       doc: 'Personal email address, 80 characters or less',
-      type: String,
+      type: String
     },
 
     zip_code: {
       doc: 'Zip code, 20 characters or less',
-      type: String,
+      type: String
     },
 
     state: {

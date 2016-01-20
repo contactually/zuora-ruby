@@ -16,7 +16,7 @@ class Zuora::Models::Subscription
 
     account_key: {
       doc: 'Customer account number or ID',
-      type: String,
+      type: String
     },
 
     invoice_owner_account_key: {
@@ -28,12 +28,12 @@ class Zuora::Models::Subscription
     term_type: {
       doc: 'Possible values are: TERMED, EVERGREEN.
            See Subscriptions for more information.',
-      type: String,
+      type: String
     },
 
     contract_effective_date: {
       doc: 'Effective contract date for this subscription, as yyyy-mm-dd',
-      type: Date,
+      type: Date
     },
 
     service_activation_date: {
@@ -70,7 +70,7 @@ class Zuora::Models::Subscription
             the value must be greater than 0. If termType is EVERGREEN,
             this field is ignored.',
 
-      type: Numeric,
+      type: Numeric
     },
 
     initial_term_period_type: {
@@ -93,7 +93,7 @@ class Zuora::Models::Subscription
     renewal_term: {
       doc: 'The length of the period for the subscription renewal term.
             Default is 0.',
-      type: Numeric,
+      type: Numeric
     },
 
     renewal_term_period_type: {
@@ -105,7 +105,7 @@ class Zuora::Models::Subscription
 
         Values are:
 
-        Month (default), Year, Day, Week',
+        Month (default), Year, Day, Week'
     },
 
     renewal_setting: {
@@ -116,12 +116,12 @@ class Zuora::Models::Subscription
 
             RENEW_WITH_SPECIFIC_TERM (default)
             RENEW_TO_EVERGREEN',
-      type: String,
+      type: String
     },
 
     notes: {
       doc: 'String of up to 500 characters',
-      type: String,
+      type: String
     },
 
     invoice: {
