@@ -15,7 +15,7 @@ describe 'Sign up a customer' do
   let(:credit_card) { build :credit_card_hash }
 
   let(:account) do
-    build :account_model,
+    build :account,
       sold_to_contact: customer,
       bill_to_contact: customer,
       credit_card: credit_card

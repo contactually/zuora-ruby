@@ -19,7 +19,7 @@ Dotenv.load
 require 'vcr'
 
 VCR.configure do |c|
-  c.cassette_library_dir = 'zuora/fixtures/vcr_cassettes'
+  c.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
   c.hook_into :webmock # or :fakeweb
   c.filter_sensitive_data('<ZUORA_SANDBOX_USERNAME>') do
     ENV[' ']
@@ -38,5 +38,11 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
+  end
+
+  config.before(:each) do
+    unless %w(ZUORA_SANDBOX_USERNAME ZUORA_SANDBOX_PASSWORD).all? { |k| ENV[k] }
+      fail 'Please set ZUORA_SANDBOX_USERNAME and ZUORA_SANDBOX_PASSWORD'
+    end
   end
 end
