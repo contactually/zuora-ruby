@@ -24,13 +24,10 @@ class ChildSchema
   schema :item,
     id: {
       type: Numeric,
-      required?: true,
-      valid?: -> (field) { field > 0 }, 
     },
 
     label: {
       type: String,
-      required?: true
     },
 end
 
@@ -39,31 +36,15 @@ class ParentSchema
   schema :items,
    id: {
      type: Numeric,
-     required?: true,
-     valid?: -> (field) { field > 0 },
    },
    items: {
      type: String,
      schema: [ChildSchema]
    }
  end
- 
- # child is missing required label 
- items = ParentSchema.new( id: 1, items: [{ id: 22 }] ) 
- 
- items.valid? 
- => false
- 
- items.errors? 
- => { items: [{ label: 'is required but not present' }] }
- 
- 
- items.items.first.label = "Label"
- 
- items.valid? 
- => true 
   
- 
+ items.valid? 
+ => true
 ```
 
 
@@ -81,9 +62,6 @@ Zuora's subscription endpoint is a nested 4-level object.
 > subscription.errors
 
 =>  {:account_key=>{:type=>"should be of type String but is of type Fixnum"},
-     :term_type=>{:required?=>"is required but is not set"},
-     :contract_effective_date=>{:required?=>"is required but is not set"},
-     :initial_term=>{:required?=>"is required but is not set"},
      :subscribe_to_rate_plans=>[]}
   
 > subscription.valid? 

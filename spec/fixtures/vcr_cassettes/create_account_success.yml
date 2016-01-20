@@ -1,0 +1,111 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://apisandbox-api.zuora.com/rest/v1/connections
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Apiaccesskeyid:
+      - engineering+dev@contactually.com
+      Apisecretaccesskey:
+      - "<ZUORA_SANDBOX_PASSWORD>"
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '0'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - Zuora App
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '22'
+      Expires:
+      - Wed, 20 Jan 2016 21:23:34 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Wed, 20 Jan 2016 21:23:34 GMT
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - ZSession=l1fllD4Z0yHPlU-G7X35GUan2qkxyO686IO8SaDA6TYky-mftldpWS4fx6BziI2FPVXvlNuW6iOd9tAzDYk2fJLN77VECNCben7byopuwUarm_ieYmgvBqYOBiYzKRNvTgNlLU7ml46ynWOAMLaICzuz8Fx5aU6Tf0n9bCh_lg-WgZVUM4Mgu1WKhP0ffWGweLyNa8cUiRdndzcH_-UxRsC_gluiQ3zVVPu7l4xf65QFUOzNm6CYN8Bzom98a9uG;
+        Path=/; Secure; HttpOnly
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "success" : true
+        }
+    http_version: 
+  recorded_at: Wed, 20 Jan 2016 21:23:33 GMT
+- request:
+    method: post
+    uri: https://apisandbox-api.zuora.com/rest/v1/accounts
+    body:
+      encoding: UTF-8
+      string: '{"name":"1577f4d4-4583-41fb-92f8-6c141059eac6","autoPay":true,"currency":"USD","billCycleDay":"0","paymentTerm":"Net
+        30","billToContact":{"firstName":"Abc","lastName":"Def","address1":"123 Main
+        St","city":"Palm Springs","state":"FL","zipCode":"90210","country":"US"},"soldToContact":{"firstName":"Abc","lastName":"Def","address1":"123
+        Main St","city":"Palm Springs","state":"FL","zipCode":"90210","country":"US"},"creditCard":{"cardType":"Visa","cardNumber":"4111111111111111","expirationMonth":"03","expirationYear":2017,"securityCode":"122"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/json
+      Cookie:
+      - ZSession=l1fllD4Z0yHPlU-G7X35GUan2qkxyO686IO8SaDA6TYky-mftldpWS4fx6BziI2FPVXvlNuW6iOd9tAzDYk2fJLN77VECNCben7byopuwUarm_ieYmgvBqYOBiYzKRNvTgNlLU7ml46ynWOAMLaICzuz8Fx5aU6Tf0n9bCh_lg-WgZVUM4Mgu1WKhP0ffWGweLyNa8cUiRdndzcH_-UxRsC_gluiQ3zVVPu7l4xf65QFUOzNm6CYN8Bzom98a9uG;
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - Zuora App
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '165'
+      Expires:
+      - Wed, 20 Jan 2016 21:23:36 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Wed, 20 Jan 2016 21:23:36 GMT
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - ZSession=R8yAsk8pWbqtK27uha_77vFDQ3bxFBKIgOD94hPiOwhxFJ-m-izf9UtcFEcs4tvs7NriyiWilEfgVzJG48zVd2Bb8_Lv70aM_4vNgfuJ8JMxWcqa1lEbUQu-Op9lwLmFwzKIrwUlisNfLPAmY-rcb_HyLwua6PDKURA-YLbyhuii3ZII0RcqBxT-rCiSSQnGAN2FAqHDZXgJFbmJsA4Q06Q66B1kFE_t73llGKSBFGhjzQloFKBohyG5GZiTUGfD;
+        Path=/; Secure; HttpOnly
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "success" : true,
+          "accountId" : "2c92c0fa525e25d5015260ebd56464ef",
+          "accountNumber" : "A00000119",
+          "paymentMethodId" : "2c92c0fa525e25d5015260ebdcdf64f5"
+        }
+    http_version: 
+  recorded_at: Wed, 20 Jan 2016 21:23:35 GMT
+recorded_with: VCR 3.0.1

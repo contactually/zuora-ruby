@@ -3,7 +3,6 @@ class Zuora::Models::Plan
 
   schema :product_rate_plan,
     product_rate_plan_id: {
-      required?: true,
       doc: 'ID of a product rate plan for this subscription.'
     },
 

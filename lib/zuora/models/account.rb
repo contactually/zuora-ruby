@@ -1,13 +1,11 @@
 class Zuora::Models::Account
   include SchemaModel
-  extend ValidationPredicates
 
   schema :account,
     batch: {
       doc: 'The alias name given to a batch. A string of 50
                characters or less.',
-      type: String,
-      valid?: max_length(50)
+      type: String
     },
 
     account_number: {
@@ -18,13 +16,11 @@ class Zuora::Models::Account
     },
 
     auto_pay: {
-      type: Boolean,
-      required?: true
+      type: Boolean
     },
 
     bill_to_contact: {
       schema: Zuora::Models::Contact,
-      required?: true,
       doc: 'Container for bill-to contact information for this account.
                       If you do not provide a sold-to contact, the bill-to
                       contact is copied to sold-to contact. Once the sold-to
@@ -41,33 +37,26 @@ class Zuora::Models::Account
                 If no subscription is being created, this field is
                 required. If a subscription is being created, this
                 field is optional, and defaults to the day-of-the-month
-                of te subscription's contractEffectiveDate." ),
-      required?: -> (model) { !model.respond_to? :subscription },
-      valid?: -> (v) { (0...31).to_a.include? v.to_i }
+                of te subscription's contractEffectiveDate." )
     },
 
     crm_id: {
       type: String,
-      doc: 'CRM account ID for the account, up to 100 characters',
-      valid?: max_length(100)
+      doc: 'CRM account ID for the account, up to 100 characters'
     },
 
     currency: {
       type: String,
-      required?: true,
-      valid?: length(3),
       doc: 'A currency as defined in Z-Billing Settings in the
             Zuora UI'
     },
 
     credit_card: {
-      schema: Zuora::Models::CreditCard,
-      required?: -> (r) { !r.respond_to? :hpm_credit_card_payment_method_id }
+      schema: Zuora::Models::CreditCard
     },
 
     name: {
       type: String,
-      required?: true,
       doc: 'Account name, up to 255 characters'
     },
 
@@ -75,14 +64,12 @@ class Zuora::Models::Account
       type: String,
       doc: 'The ID of the HPM credit card payment method associated with
                       this account. You must provide either this field or the
-                      creditCard structure, but not both.',
-      required?: false #-> (r) { !r.respond_to? :credit_card }
+                      creditCard structure, but not both.'
     },
 
     notes: {
       type: String,
-      doc: 'A string of up to 65,535 characters',
-      valid?: max_length(65_325)
+      doc: 'A string of up to 65,535 characters'
     },
 
     invoice_template_id: {
@@ -105,15 +92,12 @@ class Zuora::Models::Account
 
     payment_term: {
       type: String,
-      required?: true,
-      valid?: one_of(['Due Upon Receipt', 'Net 30', 'Net 60', 'Net 90']),
       doc: 'Payment terms for this account. Possible values are
                "Due Upon Receipt", "Net 30", "Net 60", "Net 90".'
     },
 
     sold_to_contact: {
-      schema: Zuora::Models::Contact,
-      required?: true
+      schema: Zuora::Models::Contact
     },
 
     subscription: {
