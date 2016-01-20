@@ -30,7 +30,7 @@ VCR.configure do |c|
 end
 
 # FactoryGirl
-FactoryGirl.definition_file_paths = ['spec/zuora/factories']
+FactoryGirl.definition_file_paths = ['spec/factories']
 FactoryGirl.find_definitions
 
 # RSpec configuration
