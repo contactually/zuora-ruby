@@ -10,6 +10,7 @@ require_relative '../lib/utils/schema_model'
 require 'byebug'
 require 'factory_girl'
 require 'rspec/mocks'
+require 'faker'
 
 ## Dotenv load environment from .env
 require 'dotenv'

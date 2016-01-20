@@ -1,0 +1,111 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://apisandbox-api.zuora.com/rest/v1/connections
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Apiaccesskeyid:
+      - engineering+dev@contactually.com
+      Apisecretaccesskey:
+      - "<ZUORA_SANDBOX_PASSWORD>"
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '0'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - Zuora App
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '22'
+      Expires:
+      - Wed, 20 Jan 2016 22:09:23 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Wed, 20 Jan 2016 22:09:23 GMT
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - ZSession=MbBMnB4O3tMdFubvz5Hp1ULk-_sBrYyXIA54AD1L962dkxYJ2REHdxAJoYdsb_odCHgHcBgN9vqTXZFaNpzsuzzwu5QbU5iKb_USzxNOfuLDO6SQeiSd7ZthNzDd4Lp8xNj0fgZy6J2TsJrgSMeXIL0o1X1aMHNH2Br4i1P_HFxEhgJFrxDs2TlG5AbGDrCV3Z1RDDMDyuQFYPi11mUyprRkD7LmjWB1-nE7ZG5ADyRCoxdZWDP4Jh0djbYHrfMf;
+        Path=/; Secure; HttpOnly
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "success" : true
+        }
+    http_version: 
+  recorded_at: Wed, 20 Jan 2016 22:09:22 GMT
+- request:
+    method: post
+    uri: https://apisandbox-api.zuora.com/rest/v1/accounts
+    body:
+      encoding: UTF-8
+      string: '{"name":"693d0a7a-7946-467a-90a6-cc9c7953588a","autoPay":true,"currency":"USD","billCycleDay":"0","paymentTerm":"Net
+        30","billToContact":{"firstName":"Velma","lastName":"Gutkowski","address1":"30661
+        Lynch Route","city":"Gillianshire","state":"NE","zipCode":"68108-3953","country":"USA"},"soldToContact":{"firstName":"Velma","lastName":"Gutkowski","address1":"30661
+        Lynch Route","city":"Gillianshire","state":"NE","zipCode":"68108-3953","country":"USA"},"creditCard":{"cardType":"Visa","cardNumber":"4242424242424242","expirationMonth":"03","expirationYear":2017,"securityCode":"122"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/json
+      Cookie:
+      - ZSession=MbBMnB4O3tMdFubvz5Hp1ULk-_sBrYyXIA54AD1L962dkxYJ2REHdxAJoYdsb_odCHgHcBgN9vqTXZFaNpzsuzzwu5QbU5iKb_USzxNOfuLDO6SQeiSd7ZthNzDd4Lp8xNj0fgZy6J2TsJrgSMeXIL0o1X1aMHNH2Br4i1P_HFxEhgJFrxDs2TlG5AbGDrCV3Z1RDDMDyuQFYPi11mUyprRkD7LmjWB1-nE7ZG5ADyRCoxdZWDP4Jh0djbYHrfMf;
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - Zuora App
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '165'
+      Expires:
+      - Wed, 20 Jan 2016 22:09:26 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Wed, 20 Jan 2016 22:09:26 GMT
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - ZSession=I0zVzU8gIqHbMXYyO4PBvkb_8rwxAJjEhepuPa0gL7riitpEgkM8BDHnbhvMP_UxaJhzuiv4_zzMadhQxcBZI0Jy1WwWs5hTp5l-xaAyPN_XLd-fAZ4LRdl5H3rcaLQNIS-joQnaWks-v-erw0wAazHp_XJDRUlbj0PDvrizxM_MbFeF393u2UNFLQlS0VFU1leSCuS8em8m7LhulGW2SSzhYGb8P3lHgHgF-yPezbnpzHjEpNph6P4yryx00pNV;
+        Path=/; Secure; HttpOnly
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "success" : true,
+          "accountId" : "2c92c0fb525e37e701526115c7d06beb",
+          "accountNumber" : "A00000120",
+          "paymentMethodId" : "2c92c0fb525e37e701526115d4296bf1"
+        }
+    http_version: 
+  recorded_at: Wed, 20 Jan 2016 22:09:26 GMT
+recorded_with: VCR 3.0.1

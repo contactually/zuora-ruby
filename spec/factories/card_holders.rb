@@ -1,12 +1,12 @@
 FactoryGirl.define do
   factory :card_holder do
-    address_line_1 '123 Main St'
-    city 'Dayton'
-    state 'OH'
+    address_line_1 Faker::Address.street_address
+    city Faker::Address.city
+    state Faker::Address.state_abbr
+    zip_code Faker::Address.zip
     country 'USA'
-    phone '301-555-1212'
-    email 'abc@abc.com'
-    zip_code '12345'
+    phone Faker::PhoneNumber.cell_phone
+    email Faker::Internet.email
 
     factory :card_holder_model, class: Zuora::Models::CardHolderInfo do
       initialize_with { new(attributes) }

@@ -14,10 +14,6 @@ FactoryGirl.define do
     initial_term_period_type 'Week'
     notes 'Test POST subscription from zuora-ruby'
 
-    factory :subscription_model, class: Zuora::Models::Subscription do
-      initialize_with { new(attributes) }
-    end
-
     factory :subscription_hash, class: Hash do
       initialize_with { Hash[attributes] }
     end
