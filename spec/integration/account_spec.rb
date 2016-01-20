@@ -45,3 +45,6 @@ describe 'create a customer account' do
     end
   end
 end
+
+describe 'create a subscription' do
+end
