@@ -38,38 +38,18 @@ module Zuora
       end
     end
 
-    # @param [String] url - URL for HTTP POST request
-    # @param [Params] params - Data to be sent in request body
-    # @return [Faraday::Response] A response, with .headers, .status & .body
-    def post(url, params)
-      response = @connection.post do |req|
-        set_request_headers! req, url
-        req.body = JSON.generate params
+    # # @param [String] url - URL for HTTP POST request
+    # # @param [Params] object - Object to be sent in request body
+    # # @return [Faraday::Response] A response, with .headers, .status & .body
+    [:post, :put].each do |http_method|
+      define_method(http_method) do |url, object|
+        response = @connection.send(http_method) do |request|
+          set_request_headers! request, url
+          request.body = JSON.generate object.to_json
+        end
+
+        response
       end
-
-      response
-      # if response.body['success']
-      #  return response
-      # else
-      #  raise ErrorResponse.new(response)
-      # end
-    end
-
-    # @param [String] url - URL for HTTP PUT request
-    # @param [Params] params - Data to be sent in request body
-    # @return [Faraday::Response] A response, with .headers, .status & .body
-    def put(url, params)
-      response = @connection.put do |request|
-        set_request_headers! request, url
-        request.body = JSON.generate params
-      end
-
-      response
-      # if response.body['success']
-      #  return response
-      # else
-      #  raise ErrorResponse.new(response)
-      # end
     end
 
     private
