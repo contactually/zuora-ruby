@@ -1,9 +1,9 @@
-class Zuora::Models::SubscriptionUpdate
+class Zuora::Models::SubscriptionAdd
   extend ValidationPredicates
   include SchemaModel
 
-  schema :subscription_update,
-    rate_plan_id: {
+  schema :subscription_add,
+    product_rate_plan_id: {
       doc: 'ID of a rate plan for this subscription',
       type: String,
       required?: true
@@ -12,9 +12,5 @@ class Zuora::Models::SubscriptionUpdate
     contract_effective_date: {
       required?: true,
       type: Date
-    },
-
-    charge_update_details: {
-      schema: [Zuora::Models::ChargeUpdate]
     }
 end
