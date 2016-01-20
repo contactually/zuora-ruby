@@ -3,7 +3,15 @@ class Zuora::Models::Subscription
   include SchemaModel
 
   schema :subscription,
+    add: {
+      schema: [Zuora::Models::SubscriptionAdd]
+    },
+
     update: {
+      schema: [Zuora::Models::SubscriptionUpdate]
+    },
+
+    remove: {
       schema: [Zuora::Models::SubscriptionUpdate]
     },
 
@@ -136,6 +144,9 @@ class Zuora::Models::Subscription
             no action is taken.
 
             The default value is true.',
+      type: Boolean
+    },
+    invoice_collect: {
       type: Boolean
     },
 

@@ -7,6 +7,7 @@ require_relative 'models/charge'
 require_relative 'models/charge_update'
 require_relative 'models/plan'
 require_relative 'models/subscription_update'
+require_relative 'models/subscription_add'
 require_relative 'models/subscription'
 
 # Subscription resource nested data structure
