@@ -19,7 +19,7 @@ Dotenv.load
 require 'vcr'
 
 VCR.configure do |c|
-  c.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
+  c.cassette_library_dir = 'spec/cassettes'
   c.hook_into :webmock # or :fakeweb
   c.filter_sensitive_data('<ZUORA_SANDBOX_USERNAME>') do
     ENV[' ']

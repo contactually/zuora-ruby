@@ -1,7 +1,6 @@
 require 'spec_helper'
 
-describe 'Sign up a customer' do
-  # Authentication
+describe 'create a customer account' do
   let(:username) { ENV['ZUORA_SANDBOX_USERNAME'] }
   let(:password) { ENV['ZUORA_SANDBOX_PASSWORD'] }
   let(:client) { Zuora::Client.new username, password, true }
@@ -45,4 +44,8 @@ describe 'Sign up a customer' do
       end
     end
   end
+end
+
+describe 'create a subscription' do
+
 end
