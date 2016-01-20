@@ -59,7 +59,6 @@ class Zuora::Models::Charge
     },
 
     quantity: {
-      required?: true,
       doc: 'Number of units. Must be >=0.',
       type: Numeric # decimal
     },
@@ -106,7 +105,6 @@ you want a specific discount to apply to.',
       doc: 'Specifies when to start billing the customer for the charge.
          Required if the triggerEvent field is set to USD.',
       type: Date,
-      required?: other_attr_eq(:trigger_event, 'USD')
     },
 
     end_date_condition: {

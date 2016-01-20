@@ -18,7 +18,6 @@ class Zuora::Models::Subscription
     account_key: {
       doc: 'Customer account number or ID',
       type: String,
-      required?: true
     },
 
     invoice_owner_account_key: {
@@ -31,14 +30,12 @@ class Zuora::Models::Subscription
       doc: 'Possible values are: TERMED, EVERGREEN.
            See Subscriptions for more information.',
       type: String,
-      required?: true,
       valid?: one_of(%w(TERMED EVERGREEN))
     },
 
     contract_effective_date: {
       doc: 'Effective contract date for this subscription, as yyyy-mm-dd',
       type: Date,
-      required?: true
     },
 
     service_activation_date: {
@@ -75,7 +72,6 @@ class Zuora::Models::Subscription
             the value must be greater than 0. If termType is EVERGREEN,
             this field is ignored.',
 
-      required?: other_attr_eq(:term_type, 'TERMED'),
       type: Numeric,
       valid?:  -> (f) { f > 0 }
     },

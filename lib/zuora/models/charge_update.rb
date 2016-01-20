@@ -5,8 +5,7 @@ class Zuora::Models::ChargeUpdate
   schema :charge_update,
     rate_plan_charge_id: {
       doc: 'Subscription ID',
-      type: String,
-      required?: true
+      type: String
     },
 
     quantity: {

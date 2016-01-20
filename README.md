@@ -24,13 +24,11 @@ class ChildSchema
   schema :item,
     id: {
       type: Numeric,
-      required?: true,
       valid?: -> (field) { field > 0 }, 
     },
 
     label: {
       type: String,
-      required?: true
     },
 end
 
@@ -39,7 +37,6 @@ class ParentSchema
   schema :items,
    id: {
      type: Numeric,
-     required?: true,
      valid?: -> (field) { field > 0 },
    },
    items: {

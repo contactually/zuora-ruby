@@ -18,13 +18,11 @@ class Zuora::Models::Account
     },
 
     auto_pay: {
-      type: Boolean,
-      required?: true
+      type: Boolean
     },
 
     bill_to_contact: {
       schema: Zuora::Models::Contact,
-      required?: true,
       doc: 'Container for bill-to contact information for this account.
                       If you do not provide a sold-to contact, the bill-to
                       contact is copied to sold-to contact. Once the sold-to
@@ -42,7 +40,6 @@ class Zuora::Models::Account
                 required. If a subscription is being created, this
                 field is optional, and defaults to the day-of-the-month
                 of te subscription's contractEffectiveDate." ),
-      required?: -> (model) { !model.respond_to? :subscription },
       valid?: -> (v) { (0...31).to_a.include? v.to_i }
     },
 
@@ -54,7 +51,6 @@ class Zuora::Models::Account
 
     currency: {
       type: String,
-      required?: true,
       valid?: length(3),
       doc: 'A currency as defined in Z-Billing Settings in the
             Zuora UI'
@@ -62,12 +58,10 @@ class Zuora::Models::Account
 
     credit_card: {
       schema: Zuora::Models::CreditCard,
-      required?: -> (r) { !r.respond_to? :hpm_credit_card_payment_method_id }
     },
 
     name: {
       type: String,
-      required?: true,
       doc: 'Account name, up to 255 characters'
     },
 
@@ -76,7 +70,6 @@ class Zuora::Models::Account
       doc: 'The ID of the HPM credit card payment method associated with
                       this account. You must provide either this field or the
                       creditCard structure, but not both.',
-      required?: false #-> (r) { !r.respond_to? :credit_card }
     },
 
     notes: {
@@ -105,7 +98,6 @@ class Zuora::Models::Account
 
     payment_term: {
       type: String,
-      required?: true,
       valid?: one_of(['Due Upon Receipt', 'Net 30', 'Net 60', 'Net 90']),
       doc: 'Payment terms for this account. Possible values are
                "Due Upon Receipt", "Net 30", "Net 60", "Net 90".'
@@ -113,7 +105,6 @@ class Zuora::Models::Account
 
     sold_to_contact: {
       schema: Zuora::Models::Contact,
-      required?: true
     },
 
     subscription: {
