@@ -15,9 +15,7 @@ class Zuora::Models::Account
                If no account number is specified, one is generated.'
     },
 
-    auto_pay: {
-      type: Boolean
-    },
+    auto_pay: {},
 
     bill_to_contact: {
       schema: Zuora::Models::Contact,

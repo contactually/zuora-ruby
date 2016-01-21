@@ -86,8 +86,8 @@ class Zuora::Models::Subscription
     },
 
     auto_renew: {
-      doc: '',
-      type: Boolean
+      doc: 'If true, this subscription automatically renews at the end of the
+            subscription term. Default is false.'
     },
 
     renewal_term: {
@@ -132,11 +132,14 @@ class Zuora::Models::Subscription
             If the value is true, an invoice is created. If the value is false,
             no action is taken.
 
-            The default value is true.',
-      type: Boolean
+            The default value is true.'
     },
     invoice_collect: {
-      type: Boolean
+      doc: 'If true (default), an invoice is generated and payment collected
+            automatically during the subscription process. If false, no
+            invoicing or payment takes place. The invoice generated in this
+            operation is only for this subscription, not for the entire customer
+            account.'
     },
 
     collect: {
@@ -149,8 +152,7 @@ class Zuora::Models::Subscription
 
             The default value is true.
 
-            Prerequisite: invoice must be true. ',
-      type: Boolean
+            Prerequisite: invoice must be true. '
     },
 
     invoice_separately: {
@@ -164,8 +166,7 @@ class Zuora::Models::Subscription
             The default value is false.
 
             Prerequisite: The default subscription setting Enable Subscriptions
-            to be Invoiced Separately must be set to Yes.',
-      type: Boolean
+            to be Invoiced Separately must be set to Yes.'
     },
 
     apply_credit_balance: {
@@ -175,8 +176,7 @@ class Zuora::Models::Subscription
             Prerequisite: invoice must be true.
 
             To view the credit balance adjustment, retrieve the details
-            of the invoice using the Get Invoices method.',
-      type: Boolean
+            of the invoice using the Get Invoices method.'
     },
 
     invoice_target_date: {
