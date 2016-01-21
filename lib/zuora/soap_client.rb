@@ -86,9 +86,7 @@ module Zuora
     # for use in subsequent requests
     # @param [Faraday::Response] response - response to auth request
     def extract_session_token(response)
-      Nokogiri::XML(response.body)
-        .xpath(SESSION_TOKEN_XPATH, NAMESPACES)
-        .text
+      Nokogiri::XML(response.body).xpath(SESSION_TOKEN_XPATH, NAMESPACES).text
     end
 
     # Generates Login Envelope XML builder

@@ -27,6 +27,7 @@ VCR.configure do |c|
   c.filter_sensitive_data('<ZUORA_SANDBOX_PASSWORD>') do
     ENV['ZUORA_SANDBOX_PASSWORD']
   end
+  c.ignore_hosts 'codeclimate.com'
 end
 
 # FactoryGirl
