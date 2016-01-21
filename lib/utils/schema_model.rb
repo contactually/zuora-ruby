@@ -1,4 +1,3 @@
-require_relative 'composite_types'
 require 'byebug'
 
 module SchemaModel
