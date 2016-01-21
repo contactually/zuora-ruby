@@ -12,10 +12,10 @@ describe Zuora::SoapClient do
   end
   let!(:create_bill_run_response) do
     VCR.use_cassette('soap_create_bill_run', match_requests_on: [:path]) do
-      client.create_bill_run!({
+      client.create_bill_run!(
         target_date: '2016-03-01',
         invoice_date: '2016-03-01'
-      })
+      )
     end
   end
 
@@ -24,7 +24,7 @@ describe Zuora::SoapClient do
   end
 
   it 'sets client auth token' do
-     expect(client.session_token).to_not be_nil
+    expect(client.session_token).to_not be_nil
   end
 
   it 'successfully creates a bill run' do

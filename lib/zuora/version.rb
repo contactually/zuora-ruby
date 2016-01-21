@@ -1,3 +1,3 @@
 module Zuora
-  VERSION = '0.3.0-SNAPSHOT'
+  VERSION = '0.3.0-SNAPSHOT'.freeze
 end

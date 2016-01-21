@@ -49,7 +49,7 @@ Style/MultilineOperationIndentation:
 Style/ClassAndModuleChildren:
   Enabled: false
 
-Style/ClassLength:
+Metrics/ClassLength:
   Enabled: false
 
 Style/EachWithObject:
