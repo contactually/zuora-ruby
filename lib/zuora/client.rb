@@ -1,4 +1,3 @@
-# encoding: utf-8
 require 'faraday'
 require 'faraday_middleware'
 require 'json'
@@ -43,12 +42,10 @@ module Zuora
     # # @return [Faraday::Response] A response, with .headers, .status & .body
     [:post, :put].each do |http_method|
       define_method(http_method) do |url, object|
-        response = @connection.send(http_method) do |request|
+        @connection.send(http_method) do |request|
           set_request_headers! request, url
           request.body = JSON.generate object.to_json
         end
-
-        response
       end
     end
 

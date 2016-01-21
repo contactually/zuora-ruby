@@ -81,6 +81,7 @@ require_relative 'utils/schema_model'
 
 require_relative 'zuora/version'
 require_relative 'zuora/client'
+require_relative 'zuora/soap_client'
 require_relative 'zuora/models'
 
 # require_relative 'zuora/subscriptions/create'

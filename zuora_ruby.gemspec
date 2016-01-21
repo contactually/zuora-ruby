@@ -35,6 +35,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'active_model_serializers', '~> 0.8'
   spec.add_runtime_dependency 'activesupport'
+  spec.add_runtime_dependency 'nokogiri', '~> 1.6'
 
   # Development
   spec.add_development_dependency 'bundler'
