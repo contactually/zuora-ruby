@@ -38,7 +38,22 @@ module Zuora
 
     # Makes auth request and sets :session_token
     def authenticate!
-      response = auth_response # fires request
+      auth_response( request login_request_xml )
+    rescue Object => e
+      raise SoapConnectionError.new(e)
+    end
+
+    def request(body)
+      fail 'body must support to_xml' unless body.respond_to? :to_xml
+
+      connection.post do |request|
+        request.url SOAP_API_URI
+        request.headers['Content-Type'] = 'text/xml'
+        request.body = body.to_xml
+      end
+    end
+
+    def auth_response(response)
       if response.status == 200
         @session_token = extract_session_token response
       else
@@ -46,16 +61,6 @@ module Zuora
         raise SoapErrorResponse.new(message)
       end
       response
-    rescue Object => e
-      raise SoapConnectionError.new(e)
-    end
-
-    def auth_response
-      connection.post do |request|
-        request.url SOAP_API_URI
-        request.headers['Content-Type'] = 'text/xml'
-        request.body = login_request_xml.to_xml
-      end
     end
 
     def extract_session_token(response)
@@ -84,6 +89,22 @@ module Zuora
       builder
     end
 
+    def create_bill_run!(opts)
+      request create_bill_run_xml(opts)
+    end
+
+    def create_bill_run_xml(opts = {})
+      target_date, invoice_date = opts.values_at :target_date, :invoice_date
+      envelope_xml do |builder|
+        builder[:ns1].create() {
+          builder[:ns1].zObjects('xsi:type' => 'ns2:BillRun') {
+            builder[:ns2].TargetDate(target_date) if target_date
+            builder[:ns2].InvoiceDate(invoice_date) if invoice_date
+          }
+        }
+      end
+    end
+
     def connection
       Faraday.new(api_url, ssl: { verify: false }) do |conn|
         conn.adapter Faraday.default_adapter
@@ -96,6 +117,26 @@ module Zuora
       else
         'https://api.zuora.com/apps/services/a/74.0'
       end
+    end
+
+    def envelope_xml(&constructor)
+      failure_message = 'Session token not set. Did you call authenticate? '
+      fail failure_message unless @session_token.present?
+
+      token = @session_token
+
+      builder = Nokogiri::XML::Builder.new
+      builder[:soapenv].Envelope(NAMESPACES) {
+        builder[:soapenv].Header {
+          builder[:ns1].SessionHeader {
+            builder[:ns1].session(token)
+          }
+        }
+        builder[:soapenv].Body  {
+          yield(builder) if block_given?
+        }
+      }
+      builder
     end
   end
 end
