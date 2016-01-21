@@ -183,11 +183,26 @@ class Zuora::Models::Subscription
       doc: 'Date through which to calculate charges if an invoice is generated,
             as yyyy-mm-dd. Default is current date.',
       type: Date
-      # TODO: specifiy serialization function
     },
 
     subscribe_to_rate_plans: {
       doc: 'Container for one or more rate plans for this subscription.',
       schema: [Zuora::Models::Plan]
+    },
+
+    cancellation_policy: {
+      doc: 'Cancellation method. Possible values are: EndOfCurrentTerm,
+            EndOfLastInvoicePeriod, SpecificDate. If using SpecificDate,
+            the cancellationEffectiveDate field is required.',
+      type: String
+    },
+
+    cancellation_effective_date: {
+      doc: 'Date the cancellation takes effect, in the format yyyy-mm-dd.
+            Use only if cancellationPolicy is SpecificDate. Should not be
+            earlier than the subscription contract-effective date, later
+            than the subscription term-end date, or within a period for
+            which the customer has been invoiced.',
+      type: Date
     }
 end
