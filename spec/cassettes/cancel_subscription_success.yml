@@ -1,0 +1,109 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://apisandbox-api.zuora.com/rest/v1/connections
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Apiaccesskeyid:
+      - engineering+dev@contactually.com
+      Apisecretaccesskey:
+      - "<ZUORA_SANDBOX_PASSWORD>"
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '0'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - Zuora App
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '22'
+      Expires:
+      - Thu, 21 Jan 2016 02:01:58 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Thu, 21 Jan 2016 02:01:58 GMT
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - ZSession=51DeTE-J7p-Aqg4Avu13cFv4gtjyZC0VA8z7nzqqGdRmcjsHdNaonBYedOfLKu8QZKQQcmu-IYy6lBXukTJSA2qz2-Zxj4KL0o_Gtcj18-ct0r61iw3ZQCCjEUSfTHZ6YpoHF1EQKlxlpmkwI5nlKhIHaQhU4mvBChbhyQ6CIlzxVjD6OBsxCwlZb3sEF3bdZNJu5ySSGZWv_dm_IrALafpGSGPZ7IR01KIxsCjxven_UbQNyDM3lWwKpcnfSpvu;
+        Path=/; Secure; HttpOnly
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "success" : true
+        }
+    http_version: 
+  recorded_at: Thu, 21 Jan 2016 02:01:58 GMT
+- request:
+    method: put
+    uri: https://apisandbox-api.zuora.com/rest/v1/subscriptions/2c92c0fb525e37e7015261ea7f220aae/cancel
+    body:
+      encoding: UTF-8
+      string: '{"cancellationPolicy":"SpecificDate","cancellationEffectiveDate":"2016-01-20","invoiceCollect":false}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/json
+      Cookie:
+      - ZSession=51DeTE-J7p-Aqg4Avu13cFv4gtjyZC0VA8z7nzqqGdRmcjsHdNaonBYedOfLKu8QZKQQcmu-IYy6lBXukTJSA2qz2-Zxj4KL0o_Gtcj18-ct0r61iw3ZQCCjEUSfTHZ6YpoHF1EQKlxlpmkwI5nlKhIHaQhU4mvBChbhyQ6CIlzxVjD6OBsxCwlZb3sEF3bdZNJu5ySSGZWv_dm_IrALafpGSGPZ7IR01KIxsCjxven_UbQNyDM3lWwKpcnfSpvu;
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - Zuora App
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '165'
+      Expires:
+      - Thu, 21 Jan 2016 02:01:58 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Thu, 21 Jan 2016 02:01:58 GMT
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - ZSession=kZynonkxMN-7w4E1cbMgZatgRRS7OT9fdSqyrqENvGRVW45FH4tlBGqcqiLlufhHs-qy90Y2qPh6HojUoARbZM44TuapEQsHLkIGoTeobZpMg_hoC_0UX_poil-OK7V4DagFCMfP3bU5t7a_Z7hP_hPsi4jsGZ_WS_iuNaH9BKDF0OePA0pgRQCo-e-d7aKRN233o-50Fb2h9nyEdYLlVK8_2UL27sB6bXFDKew7yaIyo3N8nK_wpCwLRonJUuju;
+        Path=/; Secure; HttpOnly
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "success" : true,
+          "subscriptionId" : "2c92c0fa525e261a015261eab81e0d60",
+          "cancelledDate" : "2016-01-20",
+          "totalDeltaMrr" : 0E-9,
+          "totalDeltaTcv" : null
+        }
+    http_version: 
+  recorded_at: Thu, 21 Jan 2016 02:01:58 GMT
+recorded_with: VCR 3.0.1

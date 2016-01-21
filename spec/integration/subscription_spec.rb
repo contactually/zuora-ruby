@@ -150,4 +150,44 @@ describe 'creates/updates a subscription' do
       end
     end
   end
+
+  context 'when canceling a subscription' do
+    let(:subscription_id) { '2c92c0fb525e37e7015261ea7f220aae' }
+    let(:subscription) do
+      build(
+        :subscription,
+        cancellation_policy: 'SpecificDate',
+        cancellation_effective_date: Date.today,
+        invoice_collect: false
+      )
+    end
+    let(:url) { "/rest/v1/subscriptions/#{subscription_id}/cancel" }
+
+    context 'with valid data' do
+      let(:cassette) { 'cancel_subscription_success' }
+
+      it 'creates a new subscription' do
+        VCR.use_cassette(cassette, match_requests_on: [:path]) do
+          response = client.put(url, subscription)
+          expect(response.body['success']).to be_truthy
+          expect(response.body['subscriptionId'].present?).to be_truthy
+          expect(response.body['cancelledDate'].present?).to be_truthy
+        end
+      end
+    end
+
+    context 'with invalid data' do
+      let(:cassette) { 'cancel_subscription_failure' }
+      let(:subscription_id) { 'INVALID_ID' }
+
+      it 'returns an error' do
+        VCR.use_cassette(cassette, match_requests_on: [:path]) do
+          response = client.put(url, subscription)
+          expect(response.body['success']).to be_falsey
+          expect(response.body['subscriptionId'].present?).to be_falsey
+          expect(response.body['cancelledDate'].present?).to be_falsey
+        end
+      end
+    end
+  end
 end
