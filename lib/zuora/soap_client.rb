@@ -46,11 +46,68 @@ module Zuora
       raise SoapConnectionError, e
     end
 
-    # Fires a create bill run request
-    # @params [Hash] opts - one or more BillRun create fields
-    # @return [Faraday::Response]
-    def create_bill_run!(opts)
-      request create_bill_run_xml(opts)
+    REFUND_FIELDS = [
+      :AccountId,
+      :Amount,
+      :PaymentId,
+      :Type
+
+    ].freeze
+
+    BILL_RUN_FIELDS = [
+      :AccountId,
+      :AutoEmail,
+      :AutoPost,
+      :AutoRenewal,
+      :Batch,
+      :BillCycleDay,
+      :ChargeTypeToExclude,
+      :Id,
+      :InvoiceDate,
+      :NoEmailForZeroAmountInvoice,
+      :Status,
+      :TargetDate
+    ].freeze
+
+    Z_OBJECTS = { Refund: REFUND_FIELDS,
+                  BillRun: BILL_RUN_FIELDS }.freeze
+
+    # Dynamically generates methods that create zobject xml
+    Z_OBJECTS.each do |z_object_name, fields|
+      object_name = z_object_name.to_s.underscore
+      create_xml_method_name = "create_#{object_name}_xml"
+      create_request_method_name = "create_#{object_name}!"
+
+      # Generates XML builder for given Z-object using data
+      # @params [Hash] data - hash of data for the new z-object
+      define_method(create_xml_method_name) do |data = {}|
+        create_object_xml z_object_name, fields, data
+      end
+
+      # Fires a create ___ request sending XML envelope for Z-Object
+      # @params [Hash] data - hash of data for the new z-object
+      # @return [Faraday::Response]
+      define_method(create_request_method_name) do |data = {}|
+        request send(create_xml_method_name, data)
+      end
+    end
+
+    # Generates a SOAP envelope for given Zuora object
+    # of `type`, having `fields`, with `data`
+    # @params [Symbol] type e.g. :BillRun, :Refund
+    # @params [Array] fields - hash of whitelisted zuora object field names
+    # @return [Nokogiri::Xml::Builder] - SOAP envelope
+    def create_object_xml(type, fields, data)
+      authenticated_envelope_xml do |builder|
+        builder[:ns1].create do
+          builder[:ns1].zObjects('xsi:type' => "ns2:#{type}") do
+            fields.each do |field|
+              value = data[field.to_s.underscore.to_sym]
+              builder[:ns2].send(field, value) if value
+            end
+          end
+        end
+      end
     end
 
     private
@@ -103,37 +160,6 @@ module Zuora
       end
 
       envelope_xml nil, body
-    end
-
-    BILL_RUN_FIELDS = [
-      :AccountId,
-      :AutoEmail,
-      :AutoPost,
-      :AutoRenewal,
-      :Batch,
-      :BillCycleDay,
-      :ChargeTypeToExclude,
-      :Id,
-      :InvoiceDate,
-      :NoEmailForZeroAmountInvoice,
-      :Status,
-      :TargetDate
-    ].freeze
-
-    # Generates BillRun Envelope XML builder
-    # @params [Hash] opts - one or more BillRun create fields
-    # @return [Nokogiri::XML::Builder]
-    def create_bill_run_xml(fields = {})
-      authenticated_envelope_xml do |builder|
-        builder[:ns1].create do
-          builder[:ns1].zObjects('xsi:type' => 'ns2:BillRun') do
-            BILL_RUN_FIELDS.each do |field|
-              value = fields[field.to_s.underscore.to_sym]
-              builder[:ns2].send(field, value) if value
-            end
-          end
-        end
-      end
     end
 
     # Initializes a connection using api_url

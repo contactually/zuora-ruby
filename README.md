@@ -2,12 +2,12 @@
 [![Code Climate](https://codeclimate.com/repos/569444dfa3d810003a00313f/badges/416bae00acf65d690efe/gpa.svg)](https://codeclimate.com/repos/569444dfa3d810003a00313f/feed)
 [![Test Coverage](https://codeclimate.com/repos/569444dfa3d810003a00313f/badges/416bae00acf65d690efe/coverage.svg)](https://codeclimate.com/repos/569444dfa3d810003a00313f/coverage)
 
-# Zuora REST API: Ruby Client
+# Zuora REST API: Ruby and SOAP Client
 
 # Building Blocks
 
 ## Models
-- Provide ***recursive** data driven validations, accessors, tracking and coercion. 
+- Provide **recursive** data driven validations, accessors, tracking and coercion. 
 - Provides Ruby builder patterns for request construction
 - See examples below
 
