@@ -10,15 +10,12 @@ http_interactions:
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://api.zuora.com/" xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
           <soapenv:Header>
             <ns1:SessionHeader>
-              <ns1:session>qYpOi5Zu9pMGApy-qZFHxsD0qtzCg3cff-E262Brb4qZUjvo2SFFa1HsDiqsENZ4j2Jp3vzXRePWa3cnhOxoDS7EpbGaVz1E7c6pyujp3nnyQ7qmRUCCdORB-dm7v8PnNGJ-btt17GVxFM4lwF7rE7UjpyPMMO9gvcZTDZQJLTXzLWSb4jujLZSgXn7XELHyNt4JHue76yq04gCXABpQFk2IipVjoiGBCiL28jaDu1-GNiMnE-btw0Dc9n-I6Y3Z</ns1:session>
+              <ns1:session>pz8o4CxxSzvEffI4tKuoy1pGVgZCWkVTCpEGJSk1JNq3lraPGy5ZCtG75Ptvuz-7eZH-d4BHnWdiM8mMDv6opgARuwt8YNwl5kWBtuZooKwI-noE3-E-QUSmCe_3DJ9Q-WdfuHuhLOMjrWYRamEmd5ORvq9RYcRmIfut5j5crWWFpGtTBE5euGN2oruJ2vkKc-JVuReBYFn-KxzUJa8RNLEkaQaZJ1gOI36CGzb9G1mrrlZZQ_YdAc1qPosDXhOj</ns1:session>
             </ns1:SessionHeader>
           </soapenv:Header>
           <soapenv:Body>
             <ns1:create>
-              <ns1:zObjects xsi:type="ns2:BillRun">
-                <ns2:InvoiceDate>2016-03-01</ns2:InvoiceDate>
-                <ns2:TargetDate>2016-03-01</ns2:TargetDate>
-              </ns1:zObjects>
+              <ns1:zObjects xsi:type="ns2:BillRun"/>
             </ns1:create>
           </soapenv:Body>
         </soapenv:Envelope>
@@ -41,21 +38,22 @@ http_interactions:
       Content-Type:
       - text/xml;charset=UTF-8
       Expires:
-      - Thu, 21 Jan 2016 22:11:50 GMT
+      - Fri, 22 Jan 2016 17:53:41 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Thu, 21 Jan 2016 22:11:50 GMT
+      - Fri, 22 Jan 2016 17:53:41 GMT
       Content-Length:
-      - '342'
+      - '435'
       Connection:
       - keep-alive
     body:
       encoding: UTF-8
       string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><ns1:createResponse
-        xmlns:ns1="http://api.zuora.com/"><ns1:result><ns1:Id>2c92c0f9525e37f30152663e61ad358b</ns1:Id><ns1:Success>true</ns1:Success></ns1:result></ns1:createResponse></soapenv:Body></soapenv:Envelope>
+        xmlns:ns1="http://api.zuora.com/"><ns1:result><ns1:Errors><ns1:Code>MISSING_REQUIRED_VALUE</ns1:Code><ns1:Message>InvoiceDate
+        and TargetDate are required fields</ns1:Message></ns1:Errors><ns1:Success>false</ns1:Success></ns1:result></ns1:createResponse></soapenv:Body></soapenv:Envelope>
     http_version: 
-  recorded_at: Thu, 21 Jan 2016 22:11:50 GMT
+  recorded_at: Fri, 22 Jan 2016 17:53:43 GMT
 recorded_with: VCR 3.0.1

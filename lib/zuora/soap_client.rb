@@ -120,27 +120,16 @@ module Zuora
       :TargetDate
     ].freeze
 
-    # Builds a field if its value exists in opts
-    # @params [Nokogiri::XML::Builder] opts - one or more BillRun create fields
-    # @params [Hash] opts - one or more BillRun create fields
-    # @params [Symbol] field - an upper-camel-cased Symbol
-    # @return [Nokogiri::XML::Builder]
-    def build_field(builder, opts, field)
-      snake_case_field = field.to_s.underscore.to_sym
-      value = opts[snake_case_field]
-      builder[:ns2].send(field, value) if value
-      builder
-    end
-
     # Generates BillRun Envelope XML builder
     # @params [Hash] opts - one or more BillRun create fields
     # @return [Nokogiri::XML::Builder]
-    def create_bill_run_xml(opts = {})
+    def create_bill_run_xml(fields = {})
       authenticated_envelope_xml do |builder|
         builder[:ns1].create do
           builder[:ns1].zObjects('xsi:type' => 'ns2:BillRun') do
             BILL_RUN_FIELDS.each do |field|
-              build_field builder, opts, field
+              value = fields[field.to_s.underscore.to_sym]
+              builder[:ns2].send(field, value) if value
             end
           end
         end
