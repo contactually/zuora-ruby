@@ -52,7 +52,7 @@ class ParentSchema
 Zuora's subscription endpoint is a nested 4-level object.
  subscriptions => 
 
-```
+```ruby
  subscription = Zuora::Models::Root.new(
   account_key: -3, 
   subscribe_to_rate_plans: 
@@ -104,15 +104,11 @@ true
     - Implements Zuora models using `SchemaModel` for: Account, CardHolderInfo, Charge, Contact, CreditCard, Plan, Subscription, Tier
     - Previously, only one error at a time was thrown. Now, all model validations are inspectable at once 
     - Updates factories with both Hash and Model constructors
+    - Removes Resources construct
+    - Adds SOAP Client
+    - Removes validations
+   
     
-    
-# Planned Roadmap
-
-* **[0.3.1]** coercions (in and out)
-    - Ex: `'1' => 1` before validating `1 > 0`
-    - Ex: `Date => String '2015-01-01'
-
-
 # Commit rights
 Anyone who has a patch accepted may request commit rights. Please do so inside the pull request post-merge.
 

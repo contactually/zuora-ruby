@@ -18,7 +18,6 @@ Dotenv.load
 
 ## VCR: Memoized HTTP request
 require 'vcr'
-
 VCR.configure do |c|
   c.cassette_library_dir = 'spec/cassettes'
   c.hook_into :webmock # or :fakeweb
@@ -28,6 +27,7 @@ VCR.configure do |c|
   c.filter_sensitive_data('<ZUORA_SANDBOX_PASSWORD>') do
     ENV['ZUORA_SANDBOX_PASSWORD']
   end
+  c.ignore_hosts 'codeclimate.com'
 end
 
 # FactoryGirl
