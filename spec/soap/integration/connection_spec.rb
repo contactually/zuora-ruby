@@ -1,11 +1,11 @@
 require 'spec_helper'
 require 'nokogiri'
 
-describe Zuora::SoapClient do
+describe Zuora::Soap::Client do
   let(:username) { ENV['ZUORA_SANDBOX_USERNAME'] }
   let(:password) { ENV['ZUORA_SANDBOX_PASSWORD'] }
   let(:vcr_options) { { match_requests_on: [:path] } }
-  let(:client) { Zuora::SoapClient.new(username, password, true) }
+  let(:client) { Zuora::Soap::Client.new(username, password, true) }
 
   let(:soap_success_xpath) do
     '/soapenv:Envelope/soapenv:Body/ns1:createResponse/ns1:result/ns1:Success'
@@ -47,7 +47,7 @@ describe Zuora::SoapClient do
 
     let(:create_bill_run_success_status) do
       Nokogiri::XML(create_bill_run_success_response.body).xpath(
-        soap_success_xpath, Zuora::SoapClient::NAMESPACES
+        soap_success_xpath, Zuora::Soap::NAMESPACES
       ).text
     end
 
@@ -59,7 +59,7 @@ describe Zuora::SoapClient do
 
     let(:create_bill_run_failure_status) do
       Nokogiri::XML(create_bill_run_failure_response.body).xpath(
-        soap_success_xpath, Zuora::SoapClient::NAMESPACES
+        soap_success_xpath, Zuora::Soap::NAMESPACES
       ).text
     end
 
@@ -90,7 +90,7 @@ describe Zuora::SoapClient do
     let(:parse_success) do
       lambda do |xml|
         Nokogiri::XML(xml).xpath(
-          soap_success_xpath, Zuora::SoapClient::NAMESPACES
+          soap_success_xpath, Zuora::Soap::NAMESPACES
         ).text
       end
     end
@@ -113,7 +113,7 @@ describe Zuora::SoapClient do
 
     let(:create_refund_failure_status) do
       Nokogiri::XML(create_refund_failure_response.body).xpath(
-        soap_success_xpath, Zuora::SoapClient::NAMESPACES
+        soap_success_xpath, Zuora::Soap::NAMESPACES
       ).text
     end
 

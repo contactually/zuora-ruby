@@ -51,7 +51,7 @@ http_interactions:
       - keep-alive
     body:
       encoding: UTF-8
-      string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><ns1:createResponse
+      string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/spec/envelope/"><soapenv:Body><ns1:createResponse
         xmlns:ns1="http://api.zuora.com/"><ns1:result><ns1:Errors><ns1:Code>MISSING_REQUIRED_VALUE</ns1:Code><ns1:Message>InvoiceDate
         and TargetDate are required fields</ns1:Message></ns1:Errors><ns1:Success>false</ns1:Success></ns1:result></ns1:createResponse></soapenv:Body></soapenv:Envelope>
     http_version: 
