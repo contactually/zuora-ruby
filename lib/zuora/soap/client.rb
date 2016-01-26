@@ -47,33 +47,10 @@ module Zuora
         raise SoapConnectionError, e
       end
 
-      REFUND_FIELDS = [
-        :AccountId,
-        :Amount,
-        :PaymentId,
-        :Type
-      ].freeze
-
-      BILL_RUN_FIELDS = [
-        :AccountId,
-        :AutoEmail,
-        :AutoPost,
-        :AutoRenewal,
-        :Batch,
-        :BillCycleDay,
-        :ChargeTypeToExclude,
-        :Id,
-        :InvoiceDate,
-        :NoEmailForZeroAmountInvoice,
-        :Status,
-        :TargetDate
-      ].freeze
-
-      Z_OBJECTS = { Refund: REFUND_FIELDS,
-                    BillRun: BILL_RUN_FIELDS }.freeze
+      Z_OBJECTS = [:Refund, :BillRun].freeze
 
       # Dynamically generates methods that create zobject xml
-      Z_OBJECTS.each do |z_object_name, fields|
+      Z_OBJECTS.each do |z_object_name|
         object_name = z_object_name.to_s.underscore
         create_xml_method_name = "create_#{object_name}_xml"
         create_request_method_name = "create_#{object_name}!"
@@ -84,7 +61,6 @@ module Zuora
           Zuora::Soap::Calls::Create.xml_builder(
             @session_token,
             z_object_name,
-            fields,
             data
           )
         end
