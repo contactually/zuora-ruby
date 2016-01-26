@@ -1,0 +1,59 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://apisandbox.zuora.com/apps/services/a/74.0
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0"?>
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://api.zuora.com/" xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <soapenv:Header>
+            <ns1:SessionHeader>
+              <ns1:session>pz8o4CxxSzvEffI4tKuoy1pGVgZCWkVTCpEGJSk1JNq3lraPGy5ZCtG75Ptvuz-7eZH-d4BHnWdiM8mMDv6opgARuwt8YNwl5kWBtuZooKwI-noE3-E-QUSmCe_3DJ9Q-WdfuHuhLOMjrWYRamEmd5ORvq9RYcRmIfut5j5crWWFpGtTBE5euGN2oruJ2vkKc-JVuReBYFn-KxzUJa8RNLEkaQaZJ1gOI36CGzb9G1mrrlZZQ_YdAc1qPosDXhOj</ns1:session>
+            </ns1:SessionHeader>
+          </soapenv:Header>
+          <soapenv:Body>
+            <ns1:create>
+              <ns1:zObjects xsi:type="ns2:Refund"/>
+            </ns1:create>
+          </soapenv:Body>
+        </soapenv:Envelope>
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - text/xml
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - Zuora App
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Expires:
+      - Fri, 22 Jan 2016 22:31:16 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Fri, 22 Jan 2016 22:31:16 GMT
+      Content-Length:
+      - '417'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '<?xml version=''1.0'' encoding=''UTF-8''?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><ns1:createResponse
+        xmlns:ns1="http://api.zuora.com/"><ns1:result><ns1:Errors><ns1:Code>MISSING_REQUIRED_VALUE</ns1:Code><ns1:Message>Missing
+        required value: Type</ns1:Message></ns1:Errors><ns1:Success>false</ns1:Success></ns1:result></ns1:createResponse></soapenv:Body></soapenv:Envelope>'
+    http_version: 
+  recorded_at: Fri, 22 Jan 2016 22:31:16 GMT
+recorded_with: VCR 3.0.1
