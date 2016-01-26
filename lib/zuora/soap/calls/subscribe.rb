@@ -1,9 +1,44 @@
 module Zuora
   module Soap
     module Calls
-      module Subscribe
-        def self.xml_builder
-          # account, batch, payment_method, bill_to_contact, subscription
+      class Subscribe < Hashie::Dash
+        property :token, required: true
+
+        property :account, required: true
+        property :payment_method
+        property :bill_to_contact, required: true
+        property :sold_to_contact
+        property :subscribe_options
+        property :subscription_data, required: true
+
+        def xml_builder
+          Zuora::Soap::Utils::Envelope.authenticated_xml @token do |b|
+            b[:ns2].subscribe do
+              b[:ns2].subscribes do
+                b[:ns2].Account do
+                end
+
+                b[:ns2].PaymentMethod do
+                end
+
+                b[:ns2].BillToContact do
+                end
+
+                b[:ns2].PaymentMethod do
+                end
+
+                b[:ns2].RatePlanData do
+                  b[:ns2].RatePlan do
+                  end
+                end
+
+                b[:ns2].SubscriptionData do
+                  b[:ns2].Subscription do
+                  end
+                end
+              end
+            end
+          end
         end
       end
     end
