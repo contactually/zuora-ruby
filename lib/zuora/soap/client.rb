@@ -81,7 +81,12 @@ module Zuora
         # Generates XML builder for given Z-object using data
         # @params [Hash] data - hash of data for the new z-object
         define_method(create_xml_method_name) do |data = {}|
-          create_object_xml z_object_name, fields, data
+          Zuora::Soap::Calls::Create.xml_builder(
+            @session_token,
+            z_object_name,
+            fields,
+            data
+          )
         end
 
         # Fires a create ___ request sending XML envelope for Z-Object
@@ -89,24 +94,6 @@ module Zuora
         # @return [Faraday::Response]
         define_method(create_request_method_name) do |data = {}|
           request send(create_xml_method_name, data)
-        end
-      end
-
-      # Generates a SOAP envelope for given Zuora object
-      # of `type`, having `fields`, with `data`
-      # @params [Symbol] type e.g. :BillRun, :Refund
-      # @params [Array] fields - hash of whitelisted zuora object field names
-      # @return [Nokogiri::Xml::Builder] - SOAP envelope
-      def create_object_xml(type, fields, data)
-        Zuora::Soap::Utils::Envelope.authenticated_xml @session_token do |b|
-          b[:ns1].create do
-            b[:ns1].zObjects('xsi:type' => "ns2:#{type}") do
-              fields.each do |field|
-                value = data[field.to_s.underscore.to_sym]
-                b[:ns2].send(field, value) if value
-              end
-            end
-          end
         end
       end
 
