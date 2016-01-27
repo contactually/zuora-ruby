@@ -102,18 +102,17 @@ describe 'creates a subscription' do
   let(:subscribes_selector) do
     %w(//soapenv:Envelope
        soapenv:Body
-       ns2:subscribe
-       ns2:subscribes
+       ns1:subscribe
+       ns1:subscribes
     )
   end
 
   let(:has_element) do
-    lambda do |element_name|
+    # @param [Nokogiri::XML::Document] xml
+    # @param [String] element_name
+    lambda do |xml_doc, element_name|
       selector = subscribes_selector.push(element_name).join('/')
-
-      subscribe_call_xml_parsed
-        .xpath(selector)
-        .present?
+      xml_doc.xpath(selector).present?
     end
   end
 
@@ -129,7 +128,11 @@ describe 'creates a subscription' do
     %w(Account PaymentMethod BillToContact
        PaymentMethod RatePlanData SubscriptionData).each do |object_name|
       it "contains object #{object_name}" do
-        expect(has_element.call("ns2:#{object_name}")).to be_truthy
+        expect(
+          has_element.call(
+            subscribe_call_xml_parsed, "ns1:#{object_name}"
+          )
+        ).to be_truthy
       end
     end
 

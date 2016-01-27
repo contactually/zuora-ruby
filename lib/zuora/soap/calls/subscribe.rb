@@ -13,27 +13,27 @@ module Zuora
 
         def xml_builder
           Zuora::Soap::Utils::Envelope.authenticated_xml token do |b|
-            b[:ns2].subscribe do
-              b[:ns2].subscribes do
-                b[:ns2].Account do
+            b[:ns1].subscribe do
+              b[:ns1].subscribes do
+                b[:ns1].Account do
                 end
 
-                b[:ns2].PaymentMethod do
+                b[:ns1].PaymentMethod do
                 end
 
-                b[:ns2].BillToContact do
+                b[:ns1].BillToContact do
                 end
 
-                b[:ns2].PaymentMethod do
+                b[:ns1].PaymentMethod do
                 end
 
-                b[:ns2].RatePlanData do
-                  b[:ns2].RatePlan do
+                b[:ns1].RatePlanData do
+                  b[:ns1].RatePlan do
                   end
                 end
 
-                b[:ns2].SubscriptionData do
-                  b[:ns2].Subscription do
+                b[:ns1].SubscriptionData do
+                  b[:ns1].Subscription do
                   end
                 end
               end
