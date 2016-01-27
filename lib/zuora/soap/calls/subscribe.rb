@@ -11,31 +11,39 @@ module Zuora
         property :subscribe_options
         property :subscription_data, required: true
 
+        SIMPLE_OBJECTS = [:account, :payment_method, :bill_to_contact].freeze
+
         def xml_builder
-          Zuora::Soap::Utils::Envelope.authenticated_xml token do |b|
-            b[:ns1].subscribe do
-              b[:ns1].subscribes do
-                b[:ns1].Account do
-                end
+          Zuora::Soap::Utils::Envelope.authenticated_xml token do |builder|
+            builder[:ns1].subscribe do
+              builder[:ns1].subscribes do
+                build_simple_objects! builder
+                build_complex_objects! builder
+              end
+            end
+          end
+        end
 
-                b[:ns1].PaymentMethod do
-                end
+        private
 
-                b[:ns1].BillToContact do
-                end
+        def build_simple_objects(builder)
+          SIMPLE_OBJECTS.each do |obj_name|
+            obj = send obj_name
+            next unless obj
+            zuora_name = Zuora::Soap::Utils::Envelope.to_zuora_key obj_name
+            builder[:ns1].send(zuora_name) do
+              Zuora::Soap::Utils::Envelope.build_fields(builder, :ns1, obj)
+            end
+          end
+        end
 
-                b[:ns1].PaymentMethod do
-                end
+        def build_complex_objects(builder)
+          builder[:ns1].SubscriptionData do
+            builder[:ns1].Subscription do
+            end
 
-                b[:ns1].RatePlanData do
-                  b[:ns1].RatePlan do
-                  end
-                end
-
-                b[:ns1].SubscriptionData do
-                  b[:ns1].Subscription do
-                  end
-                end
+            builder[:ns1].RatePlanData do
+              builder[:ns1].RatePlan do
               end
             end
           end

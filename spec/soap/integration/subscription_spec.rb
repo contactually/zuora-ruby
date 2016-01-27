@@ -3,19 +3,23 @@ require 'spec_helper'
 describe 'creates a subscription' do
   # https://knowledgecenter.zuora.com/BC_Developers/SOAP_API/E1_SOAP_API_Object_Reference/Contact
 
+  let(:customer_email) { 'customer@email.com' }
+
   let(:account) do
     Zuora::Soap::Object[
+      auto_pay: false,
+      batch: 'Batch1',
       bill_cycle_day: 1,
       currency: 'USD',
       name: '',
-      payment_term: '', # one of the payment terms defined in the UI
-      status: nil, # set to 'Draft', 'Active', or 'Canceled' if using create()
+      payment_term: 'Due Upon Receipt',
+      status: 'Draft',
+      account_name: customer_email
     ]
   end
 
   let(:payment_method) do
     Zuora::Soap::Object[
-      account_id: 1, # not required for .subscribe
       type: 'CreditCard',
       use_default_retry_rule: false,
 
@@ -38,14 +42,15 @@ describe 'creates a subscription' do
   let(:contact) do
     Zuora::Soap::Object[
       first_name: 'John',
-      last_name: 'Smith'
+      last_name: 'Smith',
+      work_email: customer_email
     ]
   end
 
   let(:subscribe_options) do
     Zuora::Soap::Object[
-      generate_invoice: true,
-      process_payments: true
+      generate_invoice: false,
+      process_payments: false
     ]
   end
 
@@ -59,6 +64,7 @@ describe 'creates a subscription' do
       renewal_term: 12,
       service_activation_date: '2016-07-03',
       term_start_date: '2016-07-03',
+      term_type: 'EVERGREEN'
     ]
   end
 
@@ -125,8 +131,10 @@ describe 'creates a subscription' do
       expect(subscribe_call_xml_builder).to respond_to(:to_xml)
     end
 
-    %w(Account PaymentMethod BillToContact
-       PaymentMethod RatePlanData SubscriptionData).each do |object_name|
+    %w(Account
+       PaymentMethod
+       BillToContact
+       SubscriptionData).each do |object_name|
       it "contains object #{object_name}" do
         expect(
           has_element.call(
