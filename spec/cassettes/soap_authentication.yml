@@ -34,21 +34,21 @@ http_interactions:
       Content-Type:
       - text/xml;charset=UTF-8
       Expires:
-      - Fri, 22 Jan 2016 17:53:40 GMT
+      - Wed, 27 Jan 2016 20:50:32 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Fri, 22 Jan 2016 17:53:40 GMT
+      - Wed, 27 Jan 2016 20:50:32 GMT
       Content-Length:
       - '623'
       Connection:
       - keep-alive
     body:
       encoding: UTF-8
-      string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/spec/envelope/"><soapenv:Body><ns1:loginResponse
-        xmlns:ns1="http://api.zuora.com/"><ns1:result><ns1:Session>pz8o4CxxSzvEffI4tKuoy1pGVgZCWkVTCpEGJSk1JNq3lraPGy5ZCtG75Ptvuz-7eZH-d4BHnWdiM8mMDv6opgARuwt8YNwl5kWBtuZooKwI-noE3-E-QUSmCe_3DJ9Q-WdfuHuhLOMjrWYRamEmd5ORvq9RYcRmIfut5j5crWWFpGtTBE5euGN2oruJ2vkKc-JVuReBYFn-KxzUJa8RNLEkaQaZJ1gOI36CGzb9G1mrrlZZQ_YdAc1qPosDXhOj</ns1:Session><ns1:ServerUrl>https://apisandbox.zuora.com/apps/services/a/74.0</ns1:ServerUrl></ns1:result></ns1:loginResponse></soapenv:Body></soapenv:Envelope>
+      string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><ns1:loginResponse
+        xmlns:ns1="http://api.zuora.com/"><ns1:result><ns1:Session>VYOLUFFJihnFDokJkVNX2a0EaoP3_r6z0J3V5r4SwkznLYg-OcDp0D0yPodFVbjsQ5tR6rspCRhCNVTtrGGM0-m8rE8xBr2K_XSCi2BVGSrnHydDOmt8TrOsP0N5bWM44tBzRsr_tgQVZJVk-w9clHcsWDAYx0j85NYPH6nd1pdYpc3ZYEPnCtWPRUA-ucmTE9Xa38YBKfza2_QyerfQSr-j2PlgZxXlT4zpBBHMJO6vcVensClKwgAmtcgSjbKp</ns1:Session><ns1:ServerUrl>https://apisandbox.zuora.com/apps/services/a/74.0</ns1:ServerUrl></ns1:result></ns1:loginResponse></soapenv:Body></soapenv:Envelope>
     http_version: 
-  recorded_at: Fri, 22 Jan 2016 17:53:42 GMT
+  recorded_at: Wed, 27 Jan 2016 20:50:32 GMT
 recorded_with: VCR 3.0.1

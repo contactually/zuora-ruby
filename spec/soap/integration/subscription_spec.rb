@@ -5,13 +5,21 @@ describe 'creates a subscription' do
 
   let(:customer_email) { 'customer@email.com' }
 
+  let(:soap_success_xpath) do
+    %w(/soapenv:Envelope
+       soapenv:Body
+       ns1:subscribeResponse
+       ns1:result
+       ns1:Success).join('/')
+  end
+
   let(:account) do
     Zuora::Soap::Object[
       auto_pay: false,
       batch: 'Batch1',
       bill_cycle_day: 1,
       currency: 'USD',
-      name: '',
+      name: 'Some name',
       payment_term: 'Due Upon Receipt',
       status: 'Draft',
       account_name: customer_email
@@ -23,7 +31,7 @@ describe 'creates a subscription' do
       type: 'CreditCard',
       use_default_retry_rule: false,
 
-      credit_card_number: '424242424242424242424',
+      credit_card_number: '4242424242424242',
       credit_card_type: 'Visa',
       credit_card_address_1: '',
       credit_card_address_2: '',
@@ -60,7 +68,7 @@ describe 'creates a subscription' do
       contract_acceptance_date: '2016-07-03',
       contract_effective_date: '2016-07-03',
       initial_term: 12,
-      name: 'A-S00000020090703080755',
+      name: 'A-S00000020090703080757',
       renewal_term: 12,
       service_activation_date: '2016-07-03',
       term_start_date: '2016-07-03',
@@ -70,73 +78,22 @@ describe 'creates a subscription' do
 
   let(:rate_plan) do
     Zuora::Soap::Object[
-      product_rate_plan_id: '4028e6991f863ecb011fb8b7904141a6'
+      product_rate_plan_id: '2c92c0f950fa763f01510cbb937812dd'
     ]
   end
 
-  let(:subscribe_call) do
-    Zuora::Soap::Calls::Subscribe.new(
+  let(:subscribe_data) do
+    {
       account: account,
       payment_method: payment_method,
       bill_to_contact: contact,
       sold_to_contact: contact,
       subscription: subscription,
-      rate_plan: rate_plan,
-      token: 123
-    )
-  end
-
-  let(:subscribe_call_xml_builder) do
-    subscribe_call.xml_builder
-  end
-
-  let(:subscribe_call_xml) do
-    subscribe_call_xml_builder.to_xml
-  end
-
-  let(:subscribe_call_xml_parsed) do
-    Nokogiri::XML(subscribe_call_xml)
-  end
-
-  let(:subscribes_selector) do
-    %w(//soapenv:Envelope
-       soapenv:Body
-       ns1:subscribe
-       ns1:subscribes
-    )
-  end
-
-  let(:has_element) do
-    # @param [Nokogiri::XML::Document] xml
-    # @param [String] element_name
-    lambda do |xml_doc, element_name|
-      selector = subscribes_selector.push(element_name).join('/')
-      xml_doc.xpath(selector).present?
-    end
+      rate_plan: rate_plan
+    }
   end
 
   context 'with valid data' do
-    it 'successfully constructs .subscribe() call' do
-      expect { subscribe_call }.to_not raise_exception
-    end
-
-    it 'returns object that is serializable as XML' do
-      expect(subscribe_call_xml_builder).to respond_to(:to_xml)
-    end
-
-    %w(Account
-       PaymentMethod
-       BillToContact
-       SubscriptionData).each do |object_name|
-      it "contains object #{object_name}" do
-        expect(
-          has_element.call(
-            subscribe_call_xml_parsed, "ns1:#{object_name}"
-          )
-        ).to be_truthy
-      end
-    end
-
     ## Integration
     let(:username) { ENV['ZUORA_SANDBOX_USERNAME'] }
     let(:password) { ENV['ZUORA_SANDBOX_PASSWORD'] }
@@ -150,9 +107,19 @@ describe 'creates a subscription' do
       end
     end
 
-    it 'succcessfully executes request' do
+    let(:subscribe_response) { client.call!(:subscribe, subscribe_data) }
+    let(:subscribe_body_xml) { Nokogiri::XML(subscribe_response.body) }
+
+    it 'successfully executes subscribe request' do
       VCR.use_cassette('subscribe_success', match_requests_on: [:path]) do
-        expect(client.request(subscribe_call_xml_builder).status).to eq 200
+        expect(subscribe_response.status).to eq 200
+
+        expect(
+          subscribe_body_xml.xpath(
+            soap_success_xpath,
+            Zuora::Soap::NAMESPACES
+          ).text
+        ).to eq 'true'
       end
     end
   end

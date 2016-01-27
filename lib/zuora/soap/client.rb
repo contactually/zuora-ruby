@@ -35,11 +35,10 @@ module Zuora
       # Makes auth request, handles response
       # @return [Faraday::Response]
       def authenticate!
-        login_call = Zuora::Soap::Calls::Login.new(
+        auth_response = call! :login,
           username: @username,
           password: @password
-        )
-        auth_response = request login_call.xml_builder
+
         handle_auth_response auth_response
       rescue Object => e
         raise SoapConnectionError, e
@@ -48,7 +47,7 @@ module Zuora
       # Fire a request
       # @param [Xml] body - an object responding to .xml
       # @return [Faraday::Response]
-      def request(body)
+      def request!(body)
         fail 'body must support .to_xml' unless body.respond_to? :to_xml
 
         connection.post do |request|
@@ -58,34 +57,45 @@ module Zuora
         end
       end
 
-      Z_OBJECTS = [:Refund, :BillRun].freeze
-
-      # Dynamically generates methods that create zobject xml
-      Z_OBJECTS.each do |z_object_name|
-        object_name = z_object_name.to_s.underscore
-        create_xml_method_name = "create_#{object_name}_xml"
-        create_request_method_name = "create_#{object_name}!"
-
-        # Generates XML builder for given Z-object using data
-        # @params [Hash] data - hash of data for the new z-object
-        define_method(create_xml_method_name) do |data = {}|
-          create_call = Zuora::Soap::Calls::Create.new(
-            token: @session_token,
-            object_type: z_object_name,
-            data: data
-          )
-          create_call.xml_builder
-        end
-
-        # Fires a create ___ request sending XML envelope for Z-Object
-        # @params [Hash] data - hash of data for the new z-object
-        # @return [Faraday::Response]
-        define_method(create_request_method_name) do |data = {}|
-          request send(create_xml_method_name, data)
-        end
+      def call!(call_name, *args)
+        # Lambda taking a builder
+        factory = call_factory(call_name)
+        xml_builder = factory.new(*args).xml_builder
+        request_data = envelope_for call_name, xml_builder
+        request! request_data
       end
 
       private
+
+      # Generate envelope for request
+      # @param [Symbol] call name - one of the supported calls (see #call)
+      # @param [Callable] builder_modifier - function taking a builder
+      # @return [Nokogiri::XML::Builder]
+      def envelope_for(call_name, xml_builder_modifier)
+        if call_name == :login
+          Zuora::Soap::Utils::Envelope.xml(nil, xml_builder_modifier)
+        else
+          Zuora::Soap::Utils::Envelope.authenticated_xml(@session_token) do |b|
+            xml_builder_modifier.call b
+          end
+        end
+      end
+
+      # Maps a SOAP call name and args to its coresponding class.
+      # @params [Symbol] call name
+      # @return [Faraday::Response]
+      # @throw [SoapErrorResponse]
+      def call_factory(call_name)
+        case call_name
+        when :create then Zuora::Soap::Calls::Create
+        when :login then Zuora::Soap::Calls::Login
+        when :subscribe then Zuora::Soap::Calls::Subscribe
+        when :amend then Zuora::Soap::Calls::Amend
+        else
+          fail "Unknown SOAP API call name: #{call_name}.
+                Must be one of :create, :login, subscribe, :amend, :delete."
+        end
+      end
 
       # Handle auth response, setting session
       # @params [Faraday::Response]
@@ -105,9 +115,9 @@ module Zuora
       # for use in subsequent requests
       # @param [Faraday::Response] response - response to auth request
       def extract_session_token(response)
-        Nokogiri::XML(response.body)
-          .xpath(SESSION_TOKEN_XPATH, Zuora::Soap::NAMESPACES)
-          .text
+        Nokogiri::XML(response.body).xpath(
+          SESSION_TOKEN_XPATH, Zuora::Soap::NAMESPACES
+        ).text
       end
 
       # Initializes a connection using api_url

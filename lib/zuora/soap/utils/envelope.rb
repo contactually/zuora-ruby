@@ -60,12 +60,10 @@ module Zuora
           transform_sym key, :lower
         end
 
-        private
-
-        # Transforms symbol as if were a string, using operation
+        # Transforms symbol as if were a string, using operation.
         # Helper method for building specific symbol converters.
-        # @param symbol - operation
-        # @param symbol - symbol
+        # @param [Symbol] - operation
+        # @param [Symbol] - symbol
         def self.transform_sym(sym, operation)
           sym.to_s.send(operation).to_sym
         end

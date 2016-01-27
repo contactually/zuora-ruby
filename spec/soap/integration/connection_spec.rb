@@ -41,7 +41,7 @@ describe Zuora::Soap::Client do
 
     let!(:create_bill_run_success_response) do
       VCR.use_cassette('soap_create_bill_run_success', vcr_options) do
-        client.create_bill_run!(valid_bill_run_opts)
+        client.call!(:create, object_type: :BillRun, data: valid_bill_run_opts)
       end
     end
 
@@ -53,7 +53,11 @@ describe Zuora::Soap::Client do
 
     let!(:create_bill_run_failure_response) do
       VCR.use_cassette('soap_create_bill_run_failure', vcr_options) do
-        client.create_bill_run!(invalid_bill_run_opts)
+        client.call!(
+          :create,
+          object_type: :BillRun,
+          data: invalid_bill_run_opts
+        )
       end
     end
 
@@ -97,7 +101,7 @@ describe Zuora::Soap::Client do
 
     let!(:create_refund_success_response) do
       VCR.use_cassette('soap_create_refund_success', vcr_options) do
-        client.create_refund!(valid_refund_opts)
+        client.call!(:create, object_type: :Refund, data: valid_refund_opts)
       end
     end
 
@@ -107,7 +111,7 @@ describe Zuora::Soap::Client do
 
     let!(:create_refund_failure_response) do
       VCR.use_cassette('soap_create_refund_failure', vcr_options) do
-        client.create_refund!(invalid_refund_opts)
+        client.call!(:create, object_type: :Refund, data: invalid_refund_opts)
       end
     end
 

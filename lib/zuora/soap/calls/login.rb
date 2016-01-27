@@ -10,15 +10,12 @@ module Zuora
         # Generates Login Envelope XML builder
         # @return [Nokogiri::XML::Builder]
         def xml_builder
-          body = lambda do |builder|
+          lambda do |builder|
             builder[:ns1].login do
               builder[:ns1].username(username)
               builder[:ns1].password(password)
             end
-            builder
           end
-
-          Zuora::Soap::Utils::Envelope.xml nil, body
         end
       end
     end
