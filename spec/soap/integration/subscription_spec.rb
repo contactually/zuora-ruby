@@ -74,21 +74,14 @@ describe 'creates a subscription' do
     ]
   end
 
-  let(:subscription_data) do
-    Zuora::Soap::Object[
-      subscription: subscription,
-      rate_plan_data: rate_plan
-    ]
-  end
-
   let(:subscribe_call) do
     Zuora::Soap::Calls::Subscribe.new(
       account: account,
       payment_method: payment_method,
       bill_to_contact: contact,
       sold_to_contact: contact,
-      subscribe_options: subscribe_options,
-      subscription_data: subscription_data,
+      subscription: subscription,
+      rate_plan: rate_plan,
       token: 123
     )
   end
@@ -145,7 +138,6 @@ describe 'creates a subscription' do
     end
 
     ## Integration
-
     let(:username) { ENV['ZUORA_SANDBOX_USERNAME'] }
     let(:password) { ENV['ZUORA_SANDBOX_PASSWORD'] }
     let(:vcr_options) { { match_requests_on: [:path] } }

@@ -9,7 +9,8 @@ module Zuora
         property :bill_to_contact, required: true
         property :sold_to_contact
         property :subscribe_options
-        property :subscription_data, required: true
+        property :subscription
+        property :rate_plan
 
         SIMPLE_OBJECTS = [:account, :payment_method, :bill_to_contact].freeze
 
@@ -17,8 +18,8 @@ module Zuora
           Zuora::Soap::Utils::Envelope.authenticated_xml token do |builder|
             builder[:ns1].subscribe do
               builder[:ns1].subscribes do
-                build_simple_objects! builder
-                build_complex_objects! builder
+                build_simple_objects builder
+                build_complex_objects builder
               end
             end
           end
@@ -38,14 +39,20 @@ module Zuora
         end
 
         def build_complex_objects(builder)
+          builder[:ns1].SubscribeOptions do
+            Zuora::Soap::Utils::Envelope.build_fields(builder, :ns1, subscribe_options)
+          end if subscribe_options
+
           builder[:ns1].SubscriptionData do
             builder[:ns1].Subscription do
-            end
+              Zuora::Soap::Utils::Envelope.build_fields(builder, :ns1, subscription)
+            end if subscription
 
             builder[:ns1].RatePlanData do
               builder[:ns1].RatePlan do
+                Zuora::Soap::Utils::Envelope.build_fields(builder, :ns1, rate_plan)
               end
-            end
+            end if rate_plan
           end
         end
       end
