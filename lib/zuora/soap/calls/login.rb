@@ -1,9 +1,15 @@
 module Zuora
   module Soap
     module Calls
-      module Login
+      class Login < Hashie::Dash
+        # @params [String] username
+        # @params [String] password
+        property :username, required: true
+        property :password, required: true
+
         # Generates Login Envelope XML builder
-        def self.xml_builder(username, password)
+        # @return [Nokogiri::XML::Builder]
+        def xml_builder
           body = lambda do |builder|
             builder[:ns1].login do
               builder[:ns1].username(username)

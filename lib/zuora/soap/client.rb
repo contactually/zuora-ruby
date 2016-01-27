@@ -35,45 +35,15 @@ module Zuora
       # Makes auth request, handles response
       # @return [Faraday::Response]
       def authenticate!
-        auth_response(
-          request(
-            Zuora::Soap::Calls::Login.xml_builder(
-              @username,
-              @password
-            )
-          )
+        login_call = Zuora::Soap::Calls::Login.new(
+          username: @username,
+          password: @password
         )
+        auth_response = request login_call.xml_builder
+        handle_auth_response auth_response
       rescue Object => e
         raise SoapConnectionError, e
       end
-
-      Z_OBJECTS = [:Refund, :BillRun].freeze
-
-      # Dynamically generates methods that create zobject xml
-      Z_OBJECTS.each do |z_object_name|
-        object_name = z_object_name.to_s.underscore
-        create_xml_method_name = "create_#{object_name}_xml"
-        create_request_method_name = "create_#{object_name}!"
-
-        # Generates XML builder for given Z-object using data
-        # @params [Hash] data - hash of data for the new z-object
-        define_method(create_xml_method_name) do |data = {}|
-          Zuora::Soap::Calls::Create.xml_builder(
-            @session_token,
-            z_object_name,
-            data
-          )
-        end
-
-        # Fires a create ___ request sending XML envelope for Z-Object
-        # @params [Hash] data - hash of data for the new z-object
-        # @return [Faraday::Response]
-        define_method(create_request_method_name) do |data = {}|
-          request send(create_xml_method_name, data)
-        end
-      end
-
-      private
 
       # Fire a request
       # @param [Xml] body - an object responding to .xml
@@ -88,11 +58,40 @@ module Zuora
         end
       end
 
+      Z_OBJECTS = [:Refund, :BillRun].freeze
+
+      # Dynamically generates methods that create zobject xml
+      Z_OBJECTS.each do |z_object_name|
+        object_name = z_object_name.to_s.underscore
+        create_xml_method_name = "create_#{object_name}_xml"
+        create_request_method_name = "create_#{object_name}!"
+
+        # Generates XML builder for given Z-object using data
+        # @params [Hash] data - hash of data for the new z-object
+        define_method(create_xml_method_name) do |data = {}|
+          create_call = Zuora::Soap::Calls::Create.new(
+            token: @session_token,
+            object_type: z_object_name,
+            data: data
+          )
+          create_call.xml_builder
+        end
+
+        # Fires a create ___ request sending XML envelope for Z-Object
+        # @params [Hash] data - hash of data for the new z-object
+        # @return [Faraday::Response]
+        define_method(create_request_method_name) do |data = {}|
+          request send(create_xml_method_name, data)
+        end
+      end
+
+      private
+
       # Handle auth response, setting session
       # @params [Faraday::Response]
       # @return [Faraday::Response]
       # @throw [SoapErrorResponse]
-      def auth_response(response)
+      def handle_auth_response(response)
         if response.status == 200
           @session_token = extract_session_token response
         else

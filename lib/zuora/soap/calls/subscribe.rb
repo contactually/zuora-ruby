@@ -12,7 +12,7 @@ module Zuora
         property :subscription_data, required: true
 
         def xml_builder
-          Zuora::Soap::Utils::Envelope.authenticated_xml @token do |b|
+          Zuora::Soap::Utils::Envelope.authenticated_xml token do |b|
             b[:ns2].subscribe do
               b[:ns2].subscribes do
                 b[:ns2].Account do

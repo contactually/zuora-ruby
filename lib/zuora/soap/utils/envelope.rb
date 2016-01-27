@@ -19,7 +19,7 @@ module Zuora
 
         # Takes a body, and returns an envelope with session token merged in
         # @param [Callable] body - function of body
-        # @return [Nokogiri::Xml::Builder]
+        # @return [Nokogiri::XML::Builder]
         def self.authenticated_xml(token, &body)
           failure_message = 'Session token not set. Did you call authenticate?'
           fail failure_message unless token.present?

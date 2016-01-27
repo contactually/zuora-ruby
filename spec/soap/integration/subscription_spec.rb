@@ -75,18 +75,82 @@ describe 'creates a subscription' do
     ]
   end
 
-  let(:subscribe_request) do
-    Zuora::Soap::Object[
+  let(:subscribe_call) do
+    Zuora::Soap::Calls::Subscribe.new(
       account: account,
       payment_method: payment_method,
       bill_to_contact: contact,
       sold_to_contact: contact,
       subscribe_options: subscribe_options,
-      subscription_data: subscription_data
-    ]
+      subscription_data: subscription_data,
+      token: 123
+    )
   end
 
-  let(:subscribe_call_envelope) do
-    # TODO: Create
+  let(:subscribe_call_xml_builder) do
+    subscribe_call.xml_builder
+  end
+
+  let(:subscribe_call_xml) do
+    subscribe_call_xml_builder.to_xml
+  end
+
+  let(:subscribe_call_xml_parsed) do
+    Nokogiri::XML(subscribe_call_xml)
+  end
+
+  let(:subscribes_selector) do
+    %w(//soapenv:Envelope
+       soapenv:Body
+       ns2:subscribe
+       ns2:subscribes
+    )
+  end
+
+  let(:has_element) do
+    lambda do |element_name|
+      selector = subscribes_selector.push(element_name).join('/')
+
+      subscribe_call_xml_parsed
+        .xpath(selector)
+        .present?
+    end
+  end
+
+  context 'with valid data' do
+    it 'successfully constructs .subscribe() call' do
+      expect { subscribe_call }.to_not raise_exception
+    end
+
+    it 'returns object that is serializable as XML' do
+      expect(subscribe_call_xml_builder).to respond_to(:to_xml)
+    end
+
+    %w(Account PaymentMethod BillToContact
+       PaymentMethod RatePlanData SubscriptionData).each do |object_name|
+      it "contains object #{object_name}" do
+        expect(has_element.call("ns2:#{object_name}")).to be_truthy
+      end
+    end
+
+    ## Integration
+
+    let(:username) { ENV['ZUORA_SANDBOX_USERNAME'] }
+    let(:password) { ENV['ZUORA_SANDBOX_PASSWORD'] }
+    let(:vcr_options) { { match_requests_on: [:path] } }
+    let(:client) { Zuora::Soap::Client.new(username, password, true) }
+
+    ## Authentication
+    let!(:auth_response) do
+      VCR.use_cassette('soap_authentication', match_requests_on: [:path]) do
+        client.authenticate!
+      end
+    end
+
+    it 'succcessfully executes request' do
+      VCR.use_cassette('subscribe_success', match_requests_on: [:path]) do
+        expect(client.request(subscribe_call_xml_builder).status).to eq 200
+      end
+    end
   end
 end
