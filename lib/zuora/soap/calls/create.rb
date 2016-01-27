@@ -8,13 +8,13 @@ module Zuora
         property :object_type, required: true
         property :data, required: true
 
-        # Generates a SOAP envelope for given Zuora object
-        # of `type`, having `fields`, with `data`
-        # @return [Nokogiri::XML::Builder] - SOAP envelope
+        # Generates a function that takes a builder
+        # and adds object of `type`, having `fields`, with `data`
+        # @return [Callable] - function of builder
         def xml_builder
-          lambda do |b|
-            b[:ns1].create do
-              b[:ns1].zObjects('xsi:type' => "ns2:#{object_type}") do
+          lambda do |builder|
+            builder[:ns1].create do
+              builder[:ns1].zObjects('xsi:type' => "ns2:#{object_type}") do
                 Zuora::Soap::Utils::Envelope.build_fields(:ns1, data)
               end
             end

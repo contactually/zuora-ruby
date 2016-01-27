@@ -7,8 +7,8 @@ module Zuora
         property :username, required: true
         property :password, required: true
 
-        # Generates Login Envelope XML builder
-        # @return [Nokogiri::XML::Builder]
+        # Generates a function that adds login fields to a buidler
+        # @return [Callable] builder - a function of builder
         def xml_builder
           lambda do |builder|
             builder[:ns1].login do

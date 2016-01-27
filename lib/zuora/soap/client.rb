@@ -57,8 +57,12 @@ module Zuora
         end
       end
 
+      # The primary interface via which users should make SOAP requests.
+      # client.call :create, object_name: :BillRun, data: {...}
+      # client.call :subscribe, account: {...}, sold_to_contact: {...}
+      # @param [Symbol] call_name - one of :create, :subscribe, :amend, :update
+      # @return [Faraday:Response] - response
       def call!(call_name, *args)
-        # Lambda taking a builder
         factory = call_factory(call_name)
         xml_builder = factory.new(*args).xml_builder
         request_data = envelope_for call_name, xml_builder

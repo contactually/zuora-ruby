@@ -12,6 +12,8 @@ module Zuora
 
         SIMPLE_OBJECTS = [:account, :payment_method, :bill_to_contact].freeze
 
+        # Generates a function that adds login fields to a buidler
+        # @return [Callable] function of builder
         def xml_builder
           lambda do |builder|
             builder[:ns1].subscribe do
@@ -25,6 +27,8 @@ module Zuora
 
         private
 
+        # Builds the non-complex / non-nested part of the subscribe request
+        # @param [Nokogiri::XML::Builder] builder
         def build_simple_objects(builder)
           SIMPLE_OBJECTS.each do |obj_name|
             obj = send obj_name
@@ -36,6 +40,8 @@ module Zuora
           end
         end
 
+        # Builds the complex, nested part of the subscribe request
+        # @param [Nokogiri::XML::Builder] builder
         def build_complex_objects(builder)
           build_object(builder, :SubscribeOptions, subscribe_options)
           builder[:ns1].SubscriptionData do
