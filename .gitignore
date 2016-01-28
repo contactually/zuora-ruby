@@ -10,3 +10,4 @@
 .env
 .byebug_history
 zuora-ruby*.gem
+xml-debug/
