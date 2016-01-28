@@ -7,12 +7,12 @@ http_interactions:
       encoding: UTF-8
       string: |
         <?xml version="1.0"?>
-        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://api.zuora.com/" xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:api="http://api.zuora.com/" xmlns:obj="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
           <soapenv:Body>
-            <ns1:login>
-              <ns1:username>engineering+dev@contactually.com</ns1:username>
-              <ns1:password><ZUORA_SANDBOX_PASSWORD></ns1:password>
-            </ns1:login>
+            <api:login>
+              <api:username>engineering+dev@contactually.com</api:username>
+              <api:password><ZUORA_SANDBOX_PASSWORD></api:password>
+            </api:login>
           </soapenv:Body>
         </soapenv:Envelope>
     headers:
@@ -34,13 +34,13 @@ http_interactions:
       Content-Type:
       - text/xml;charset=UTF-8
       Expires:
-      - Wed, 27 Jan 2016 20:50:32 GMT
+      - Thu, 28 Jan 2016 18:29:29 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Wed, 27 Jan 2016 20:50:32 GMT
+      - Thu, 28 Jan 2016 18:29:29 GMT
       Content-Length:
       - '623'
       Connection:
@@ -48,7 +48,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><ns1:loginResponse
-        xmlns:ns1="http://api.zuora.com/"><ns1:result><ns1:Session>VYOLUFFJihnFDokJkVNX2a0EaoP3_r6z0J3V5r4SwkznLYg-OcDp0D0yPodFVbjsQ5tR6rspCRhCNVTtrGGM0-m8rE8xBr2K_XSCi2BVGSrnHydDOmt8TrOsP0N5bWM44tBzRsr_tgQVZJVk-w9clHcsWDAYx0j85NYPH6nd1pdYpc3ZYEPnCtWPRUA-ucmTE9Xa38YBKfza2_QyerfQSr-j2PlgZxXlT4zpBBHMJO6vcVensClKwgAmtcgSjbKp</ns1:Session><ns1:ServerUrl>https://apisandbox.zuora.com/apps/services/a/74.0</ns1:ServerUrl></ns1:result></ns1:loginResponse></soapenv:Body></soapenv:Envelope>
+        xmlns:ns1="http://api.zuora.com/"><ns1:result><ns1:Session>_ECIDL75agH150KQaumt80piLVn3Wb_hPc7olLeU7dWEaJ1YNbTiooV7evqL42-7lKqRdbOkv_xuVrg11EhoD24zTHbzc-C_zsoRxIfaYtavJVnUIC19f3E50zJkVnPduGBMmmPhzlSZ9057qNlKOho9jRVJ-p3373xDBZ8UPHF9RR9j7Krs7D7N4xvEtD3Go6RtqZ7Pu4A9d97pomnIXq6FD3prpN3fealj21-Ap6KIZi111D9kzjsnHh6inQ97</ns1:Session><ns1:ServerUrl>https://apisandbox.zuora.com/apps/services/a/74.0</ns1:ServerUrl></ns1:result></ns1:loginResponse></soapenv:Body></soapenv:Envelope>
     http_version: 
-  recorded_at: Wed, 27 Jan 2016 20:50:32 GMT
+  recorded_at: Thu, 28 Jan 2016 18:29:29 GMT
 recorded_with: VCR 3.0.1

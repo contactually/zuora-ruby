@@ -10,7 +10,7 @@ describe Zuora::Client do
   let(:client) { Zuora::Client.new(username, password, true) }
 
   let(:soap_success_xpath) do
-    '/soapenv:Envelope/soapenv:Body/ns1:createResponse/ns1:result/ns1:Success'
+    '/soapenv:Envelope/soapenv:Body/api:createResponse/api:result/api:Success'
   end
 
   ## AUTHENTICATION

@@ -12,8 +12,8 @@ module Zuora
   SANDBOX_URL = 'https://apisandbox-api.zuora.com/rest/v1/'.freeze
   NAMESPACES = {
     'xmlns:soapenv' => 'http://schemas.xmlsoap.org/soap/envelope/',
-    'xmlns:ns1' => 'http://api.zuora.com/',
-    'xmlns:ns2' => 'http://object.api.zuora.com/',
+    'xmlns:api' => 'http://api.zuora.com/',
+    'xmlns:obj' => 'http://object.api.zuora.com/',
     'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance'
   }.freeze
 end

@@ -24,8 +24,8 @@ module Zuora
         fail failure_message unless token.present?
 
         header = lambda do |builder|
-          builder[:ns1].SessionHeader do
-            builder[:ns1].session(token)
+          builder[:api].SessionHeader do
+            builder[:api].session(token)
           end
           builder
         end
@@ -52,8 +52,8 @@ module Zuora
       # @return nil
       def self.build_objects(builder, type, objects)
         objects.each do |object|
-          builder[:ns1].zObjects('xsi:type' => "ns2:#{type}") do
-            Zuora::Utils::Envelope.build_fields(:ns1, object)
+          builder[:api].zObjects('xsi:type' => "obj:#{type}") do
+            Zuora::Utils::Envelope.build_fields(builder, :obj, object)
           end
         end
       end

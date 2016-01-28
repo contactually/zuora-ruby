@@ -14,8 +14,8 @@ module Zuora
 
     SOAP_API_URI = '/apps/services/a/74.0'.freeze
     SESSION_TOKEN_XPATH =
-      %w(//soapenv:Envelope soapenv:Body ns1:loginResponse
-         ns1:result ns1:Session).join('/').freeze
+      %w(//soapenv:Envelope soapenv:Body api:loginResponse
+         api:result api:Session).join('/').freeze
 
     # Creates a connection instance.
     # Makes an initial SOAP request to fetch session token.

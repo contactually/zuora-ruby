@@ -8,9 +8,9 @@ describe 'creates a subscription' do
   let(:soap_success_xpath) do
     %w(/soapenv:Envelope
        soapenv:Body
-       ns1:subscribeResponse
-       ns1:result
-       ns1:Success).join('/')
+       api:subscribeResponse
+       api:result
+       api:Success).join('/')
   end
 
   let(:account) do
@@ -68,7 +68,7 @@ describe 'creates a subscription' do
       contract_acceptance_date: '2016-07-03',
       contract_effective_date: '2016-07-03',
       initial_term: 12,
-      name: 'A-S00000020090703080757',
+      name: 'A-S00000020090703080859',
       renewal_term: 12,
       service_activation_date: '2016-07-03',
       term_start_date: '2016-07-03',

@@ -13,7 +13,7 @@ module Zuora
         fail 'objects must respond to :each' unless objects.respond_to?(:each)
 
         lambda do |builder|
-          builder[:ns1].update do
+          builder[:api].update do
             Zuora::Utils::Envelope.build_objects builder, type, objects
           end
         end

@@ -10,9 +10,9 @@ module Zuora
       # @return [Callable] builder - a function of builder
       def xml_builder
         lambda do |builder|
-          builder[:ns1].login do
-            builder[:ns1].username(username)
-            builder[:ns1].password(password)
+          builder[:api].login do
+            builder[:api].username(username)
+            builder[:api].password(password)
           end
         end
       end
