@@ -17,7 +17,7 @@
 
 Create a client
 ```ruby
-client = Zuora::Soap::Client.new(<username>, <password>)
+client = Zuora::Client.new(<username>, <password>)
 ```
 
 

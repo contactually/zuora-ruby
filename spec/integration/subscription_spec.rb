@@ -1,192 +1,125 @@
 require 'spec_helper'
 
-describe 'creates/updates a subscription' do
-  let(:username) { ENV['ZUORA_SANDBOX_USERNAME'] }
-  let(:password) { ENV['ZUORA_SANDBOX_PASSWORD'] }
-  let(:client) { Zuora::Client.new username, password, true }
+describe 'creates a subscription' do
+  # https://knowledgecenter.zuora.com/BC_Developers/SOAP_API/E1_SOAP_API_Object_Reference/Contact
 
-  context 'when creating a new subscription' do
-    let(:account_id) { '2c92c0fa525e25d50152611a674074a2' }
-    let(:product_rate_plan_id) { '2c92c0f950fa763f01510cbb937812dd' }
-    let(:subscription) do
-      build(
-        :subscription,
-        account_key: account_id,
-        term_type: 'EVERGREEN',
-        contract_effective_date: Date.today,
-        service_activation_date: Date.today,
-        auto_renew: true,
-        subscribe_to_rate_plans: [
-          {
-            product_rate_plan_id: product_rate_plan_id
-          }
-        ]
-      )
-    end
+  let(:customer_email) { 'customer@email.com' }
 
-    context 'with valid data' do
-      let(:cassette) { 'create_subscription_success' }
-
-      it 'creates a new subscription' do
-        VCR.use_cassette(cassette, match_requests_on: [:path]) do
-          response = client.post('/rest/v1/subscriptions', subscription)
-          expect(response.body['success']).to be_truthy
-          expect(response.body['subscriptionId'].present?).to be_truthy
-        end
-      end
-    end
-
-    context 'with invalid data' do
-      let(:cassette) { 'create_subscription_failure' }
-      let(:product_rate_plan_id) { 'INVALID_ID' }
-
-      it 'returns an error' do
-        VCR.use_cassette(cassette, match_requests_on: [:path]) do
-          response = client.post('/rest/v1/subscriptions', subscription)
-          expect(response.body['success']).to be_falsey
-          expect(response.body['subscriptionId'].present?).to be_falsey
-        end
-      end
-    end
+  let(:soap_success_xpath) do
+    %w(/soapenv:Envelope
+       soapenv:Body
+       ns1:subscribeResponse
+       ns1:result
+       ns1:Success).join('/')
   end
 
-  context 'when updating a subscription rate plan' do
-    let(:subscription_id) { '2c92c0fb525e37ea01526120f38f73db' }
-    let(:rate_plan_id) { '2c92c0fb525e37ea01526120f37f73d9' }
-    let(:subscription) do
-      build(
-        :subscription,
-        invoice_collect: true,
-        apply_credit_balance: true,
-        remove: [
-          {
-            rate_plan_id: rate_plan_id,
-            contract_effective_date: Date.today
-          }
-        ],
-        add: [
-          {
-            product_rate_plan_id: '2c92c0f850fa443e01510cbb557e3cf8',
-            contract_effective_date: Date.today
-          }
-        ]
-      )
-    end
-    let(:url) { "/rest/v1/subscriptions/#{subscription_id}" }
-
-    context 'with valid data' do
-      let(:cassette) { 'update_subscription_rate_plan_success' }
-
-      it 'creates a new subscription' do
-        VCR.use_cassette(cassette, match_requests_on: [:path]) do
-          response = client.put(url, subscription)
-          expect(response.body['success']).to be_truthy
-          expect(response.body['subscriptionId'].present?).to be_truthy
-        end
-      end
-    end
-
-    context 'with invalid data' do
-      let(:cassette) { 'update_subscription_rate_plan_failure' }
-      let(:product_rate_plan_id) { 'INVALID_ID' }
-
-      it 'returns an error' do
-        VCR.use_cassette(cassette, match_requests_on: [:path]) do
-          response = client.put(url, subscription)
-          expect(response.body['success']).to be_falsey
-          expect(response.body['subscriptionId'].present?).to be_falsey
-        end
-      end
-    end
+  let(:account) do
+    Zuora::Object[
+      auto_pay: false,
+      batch: 'Batch1',
+      bill_cycle_day: 1,
+      currency: 'USD',
+      name: 'Some name',
+      payment_term: 'Due Upon Receipt',
+      status: 'Draft',
+      account_name: customer_email
+    ]
   end
 
-  context 'when updating a subscription quantity' do
-    let(:subscription_id) { '2c92c0fa525e261a01526127f6416c8b' }
-    let(:rate_plan_id) { '2c92c0fa525e261a01526127f6496c8f' }
-    let(:rate_plan_charge_id) { '2c92c0fa525e261a01526127f6496c90' }
-    let(:subscription) do
-      build(
-        :subscription,
-        invoice_collect: true,
-        apply_credit_balance: true,
-        update: [
-          {
-            rate_plan_id: rate_plan_id,
-            contract_effective_date: Date.today,
-            charge_update_details: [
-              {
-                rate_plan_charge_id: rate_plan_charge_id,
-                quantity: '2'
-              }
-            ]
-          }
-        ]
-      )
-    end
-    let(:url) { "/rest/v1/subscriptions/#{subscription_id}" }
+  let(:payment_method) do
+    Zuora::Object[
+      type: 'CreditCard',
+      use_default_retry_rule: false,
 
-    context 'with valid data' do
-      let(:cassette) { 'update_subscription_quantity_success' }
+      credit_card_number: '4242424242424242',
+      credit_card_type: 'Visa',
+      credit_card_address_1: '',
+      credit_card_address_2: '',
+      credit_card_state: 'MD',
+      credit_card_city: 'Silver Spring',
+      credit_card_country: 'USA',
+      credit_card_postal_code: 20_101,
+      credit_card_security_code: 123,
 
-      it 'creates a new subscription' do
-        VCR.use_cassette(cassette, match_requests_on: [:path]) do
-          response = client.put(url, subscription)
-          expect(response.body['success']).to be_truthy
-          expect(response.body['subscriptionId'].present?).to be_truthy
-        end
-      end
-    end
-
-    context 'with invalid data' do
-      let(:cassette) { 'update_subscription_quantity_failure' }
-      let(:rate_plan_charge_id) { 'INVALID_ID' }
-
-      it 'returns an error' do
-        VCR.use_cassette(cassette, match_requests_on: [:path]) do
-          response = client.put(url, subscription)
-          expect(response.body['success']).to be_falsey
-          expect(response.body['subscriptionId'].present?).to be_falsey
-        end
-      end
-    end
+      credit_card_expiration_month: 2,
+      credit_card_expiration_year: 2017,
+      credit_card_holder_name: 'Enoch Hall',
+    ]
   end
 
-  context 'when canceling a subscription' do
-    let(:subscription_id) { '2c92c0fb525e37e7015261ea7f220aae' }
-    let(:subscription) do
-      build(
-        :subscription,
-        cancellation_policy: 'SpecificDate',
-        cancellation_effective_date: Date.today,
-        invoice_collect: false
-      )
-    end
-    let(:url) { "/rest/v1/subscriptions/#{subscription_id}/cancel" }
+  let(:contact) do
+    Zuora::Object[
+      first_name: 'John',
+      last_name: 'Smith',
+      work_email: customer_email
+    ]
+  end
 
-    context 'with valid data' do
-      let(:cassette) { 'cancel_subscription_success' }
+  let(:subscribe_options) do
+    Zuora::Object[
+      generate_invoice: false,
+      process_payments: false
+    ]
+  end
 
-      it 'creates a new subscription' do
-        VCR.use_cassette(cassette, match_requests_on: [:path]) do
-          response = client.put(url, subscription)
-          expect(response.body['success']).to be_truthy
-          expect(response.body['subscriptionId'].present?).to be_truthy
-          expect(response.body['cancelledDate'].present?).to be_truthy
-        end
+  let(:subscription) do
+    Zuora::Object[
+      auto_renew: true,
+      contract_acceptance_date: '2016-07-03',
+      contract_effective_date: '2016-07-03',
+      initial_term: 12,
+      name: 'A-S00000020090703080757',
+      renewal_term: 12,
+      service_activation_date: '2016-07-03',
+      term_start_date: '2016-07-03',
+      term_type: 'EVERGREEN'
+    ]
+  end
+
+  let(:rate_plan) do
+    Zuora::Object[
+      product_rate_plan_id: '2c92c0f950fa763f01510cbb937812dd'
+    ]
+  end
+
+  let(:subscribe_data) do
+    {
+      account: account,
+      payment_method: payment_method,
+      bill_to_contact: contact,
+      sold_to_contact: contact,
+      subscription: subscription,
+      rate_plan: rate_plan
+    }
+  end
+
+  context 'with valid data' do
+    ## Integration
+    let(:username) { ENV['ZUORA_SANDBOX_USERNAME'] }
+    let(:password) { ENV['ZUORA_SANDBOX_PASSWORD'] }
+    let(:vcr_options) { { match_requests_on: [:path] } }
+    let(:client) { Zuora::Client.new(username, password, true) }
+
+    ## Authentication
+    let!(:auth_response) do
+      VCR.use_cassette('soap_authentication', match_requests_on: [:path]) do
+        client.authenticate!
       end
     end
 
-    context 'with invalid data' do
-      let(:cassette) { 'cancel_subscription_failure' }
-      let(:subscription_id) { 'INVALID_ID' }
+    let(:subscribe_response) { client.call!(:subscribe, subscribe_data) }
+    let(:subscribe_body_xml) { Nokogiri::XML(subscribe_response.body) }
 
-      it 'returns an error' do
-        VCR.use_cassette(cassette, match_requests_on: [:path]) do
-          response = client.put(url, subscription)
-          expect(response.body['success']).to be_falsey
-          expect(response.body['subscriptionId'].present?).to be_falsey
-          expect(response.body['cancelledDate'].present?).to be_falsey
-        end
+    it 'successfully executes subscribe request' do
+      VCR.use_cassette('subscribe_success', match_requests_on: [:path]) do
+        expect(subscribe_response.status).to eq 200
+
+        expect(
+          subscribe_body_xml.xpath(
+            soap_success_xpath,
+            Zuora::NAMESPACES
+          ).text
+        ).to eq 'true'
       end
     end
   end
