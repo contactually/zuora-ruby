@@ -4,7 +4,9 @@ require 'nokogiri'
 describe Zuora::Soap::Client do
   let(:username) { ENV['ZUORA_SANDBOX_USERNAME'] }
   let(:password) { ENV['ZUORA_SANDBOX_PASSWORD'] }
-  let(:vcr_options) { { match_requests_on: [:path] } }
+  let(:vcr_options) do
+    { match_requests_on: [:path] }
+  end
   let(:client) { Zuora::Soap::Client.new(username, password, true) }
 
   let(:soap_success_xpath) do
