@@ -1,6 +1,6 @@
 module Zuora
   module Calls
-    class Amend < Hashie::Dash
+    class Delete < Hashie::Dash
       def xml_builder
       end
     end

@@ -33,7 +33,7 @@ module Zuora
         xml(header, body)
       end
 
-      # Calls field name
+      # Builds multiple fields
       # @param [Nokogiri::XML::Builder] builder
       # @param [Symbol] namespace
       # @param [Hash] object
@@ -42,6 +42,19 @@ module Zuora
         object.each do |key, value|
           zuora_field_name = to_zuora_key(key)
           builder[namespace].send(zuora_field_name, value) if value
+        end
+      end
+
+      # Builds multiple objects
+      # @param [Nokogiri::XML::Builder] builder
+      # @param [Symbol] type
+      # @param [Array[Hash]] objects
+      # @return nil
+      def self.build_objects(builder, type, objects)
+        objects.each do |object|
+          builder[:ns1].zObjects('xsi:type' => "ns2:#{type}") do
+            Zuora::Utils::Envelope.build_fields(:ns1, object)
+          end
         end
       end
 

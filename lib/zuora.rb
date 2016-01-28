@@ -10,11 +10,6 @@ require 'hashie'
 module Zuora
   API_URL = 'https://api.zuora.com/rest/v1/'.freeze
   SANDBOX_URL = 'https://apisandbox-api.zuora.com/rest/v1/'.freeze
-end
-
-require_relative 'zuora/version'
-
-module Zuora
   NAMESPACES = {
     'xmlns:soapenv' => 'http://schemas.xmlsoap.org/soap/envelope/',
     'xmlns:ns1' => 'http://api.zuora.com/',
@@ -23,9 +18,13 @@ module Zuora
   }.freeze
 end
 
+require_relative 'zuora/version'
 require_relative 'zuora/utils/envelope'
 require_relative 'zuora/client'
 require_relative 'zuora/object'
-require_relative 'zuora/calls/login'
-require_relative 'zuora/calls/subscribe'
+require_relative 'zuora/calls/amend'
 require_relative 'zuora/calls/create'
+require_relative 'zuora/calls/generate'
+require_relative 'zuora/calls/login'
+require_relative 'zuora/calls/query'
+require_relative 'zuora/calls/subscribe'

@@ -27,11 +27,11 @@ Execute a SOAP request. Currently only  `:create` and `:subscribe` are supported
 
  ```ruby
 response = client.call! :create,
-  object_type: :BillRun,
-  data: { 
+  type: :BillRun,
+  objects: [{ 
     invoice_date: '2016-03-01',
     target_date: '2016-03-01'
-  }
+  }]
     
 ```
 
