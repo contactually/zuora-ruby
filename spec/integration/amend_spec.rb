@@ -31,8 +31,8 @@ describe 'makes amends' do
   ######################
   [
     { type: :AddProduct, factory: [:amendment, :new_product] },
-    { type: :RemoveProduct, factory: [:amendment, :remove_product] },
-    { type: :UpdateProduct, factory: [:amendment, :update_product] }
+    # { type: :RemoveProduct, factory: [:amendment, :remove_product] },
+    # { type: :UpdateProduct, factory: [:amendment, :update_product] }
   ].each do |obj|
     type, factory = obj.values_at :type, :factory
     type_underscore = type.to_s.underscore
