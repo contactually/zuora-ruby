@@ -49,6 +49,19 @@ describe 'create' do
         it 'request is successfully executed' do
           expect(status).to eq 'true'
         end
+
+        describe 'wrapped response' do
+          let(:wrapped_response) { Zuora::Response.new(response) }
+          it 'should work' do
+            expect(
+              wrapped_response
+              .body
+              .create_response
+              .result
+              .success
+            ).to eq('true')
+          end
+        end
       end
 
       context 'with bad data' do
