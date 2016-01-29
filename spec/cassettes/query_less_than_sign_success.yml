@@ -1,0 +1,115 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://apisandbox.zuora.com/apps/services/a/74.0
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0"?>
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:api="http://api.zuora.com/" xmlns:obj="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <soapenv:Header>
+            <api:SessionHeader>
+              <api:session>v0Naatc9CDFJ9R1MjVkthJ382ZzwdqTDtfuXLN2CV4by_-6if7Vr31Xdd0oOkJxVQ31oLCnSdw_X7jV5JcZof7d1vnivUlpBKeKb8dldBIonS8DNQb7uVQ8s0_rDLL91SGamD1GRvXKcYan-aOSXZnrrvySvfG3zYYXj16HYC-LBHfYSNPzlBEN8xFxKIEr8LxhSLBVLiotY_Kfqdyyih_MkQEX9_r8v8Yj3pEwNJTO9pqlgBymtt59ypJOXEUIg</api:session>
+            </api:SessionHeader>
+          </soapenv:Header>
+          <soapenv:Body>
+            <api:query>
+              <api:queryString>
+                  SELECT Id
+                  FROM Subscription
+                  WHERE subscriptionStartDate &lt; '2016-01-29'
+                </api:queryString>
+            </api:query>
+          </soapenv:Body>
+        </soapenv:Envelope>
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - text/xml
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - Zuora App
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Expires:
+      - Fri, 29 Jan 2016 16:05:21 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Fri, 29 Jan 2016 16:05:21 GMT
+      Content-Length:
+      - '5568'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><ns1:queryResponse
+        xmlns:ns1="http://api.zuora.com/"><ns1:result><ns1:done>true</ns1:done><ns1:queryLocator
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="1" /><ns1:records
+        xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:type="ns2:Subscription"><ns2:Id>2c92c0f85269083b01527e8c7c6639c5</ns2:Id></ns1:records><ns1:records
+        xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:type="ns2:Subscription"><ns2:Id>2c92c0f8528211140152839495ad7224</ns2:Id></ns1:records><ns1:records
+        xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:type="ns2:Subscription"><ns2:Id>2c92c0f85282111401528aae35873346</ns2:Id></ns1:records><ns1:records
+        xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:type="ns2:Subscription"><ns2:Id>2c92c0f9528221550152838aec264b50</ns2:Id></ns1:records><ns1:records
+        xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:type="ns2:Subscription"><ns2:Id>2c92c0f95282215b0152884fddfd3c52</ns2:Id></ns1:records><ns1:records
+        xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:type="ns2:Subscription"><ns2:Id>2c92c0f95282215b01528a27de2742fe</ns2:Id></ns1:records><ns1:records
+        xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:type="ns2:Subscription"><ns2:Id>2c92c0f8521b459501521db290145cc6</ns2:Id></ns1:records><ns1:records
+        xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:type="ns2:Subscription"><ns2:Id>2c92c0f8521b459a01521e4e0db102e3</ns2:Id></ns1:records><ns1:records
+        xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:type="ns2:Subscription"><ns2:Id>2c92c0f8521b459a01521e537f1d23cb</ns2:Id></ns1:records><ns1:records
+        xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:type="ns2:Subscription"><ns2:Id>2c92c0f8521b460201521d88313a127e</ns2:Id></ns1:records><ns1:records
+        xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:type="ns2:Subscription"><ns2:Id>2c92c0f8521b460201521ded42185503</ns2:Id></ns1:records><ns1:records
+        xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:type="ns2:Subscription"><ns2:Id>2c92c0f8521b460201521ea96363377d</ns2:Id></ns1:records><ns1:records
+        xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:type="ns2:Subscription"><ns2:Id>2c92c0f85239914801523df5127c6d9b</ns2:Id></ns1:records><ns1:records
+        xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:type="ns2:Subscription"><ns2:Id>2c92c0f9521b4f3e01521dcc744916ad</ns2:Id></ns1:records><ns1:records
+        xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:type="ns2:Subscription"><ns2:Id>2c92c0f9521b4f3e01521e4d888b11c5</ns2:Id></ns1:records><ns1:records
+        xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:type="ns2:Subscription"><ns2:Id>2c92c0f9521b4f3e01521e5f2fe35256</ns2:Id></ns1:records><ns1:records
+        xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:type="ns2:Subscription"><ns2:Id>2c92c0f9521b4f3f01521e50baac7a20</ns2:Id></ns1:records><ns1:records
+        xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:type="ns2:Subscription"><ns2:Id>2c92c0f9521b4f4301521cfda795237e</ns2:Id></ns1:records><ns1:records
+        xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:type="ns2:Subscription"><ns2:Id>2c92c0f9521b4f4301521de043f00419</ns2:Id></ns1:records><ns1:records
+        xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:type="ns2:Subscription"><ns2:Id>2c92c0f9521b4f4301521e57b3030a8e</ns2:Id></ns1:records><ns1:records
+        xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:type="ns2:Subscription"><ns2:Id>2c92c0f95239b14601523dddb8c04f05</ns2:Id></ns1:records><ns1:records
+        xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:type="ns2:Subscription"><ns2:Id>2c92c0f95239b14601523df13e2e5d03</ns2:Id></ns1:records><ns1:records
+        xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:type="ns2:Subscription"><ns2:Id>2c92c0f95239b14f01523dd39db36105</ns2:Id></ns1:records><ns1:records
+        xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:type="ns2:Subscription"><ns2:Id>2c92c0f95243555b015255d33bad7da6</ns2:Id></ns1:records><ns1:records
+        xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:type="ns2:Subscription"><ns2:Id>2c92c0f95239b14e0152416188ac48a2</ns2:Id></ns1:records><ns1:records
+        xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:type="ns2:Subscription"><ns2:Id>2c92c0f95239b14f015241418e593aa5</ns2:Id></ns1:records><ns1:size>26</ns1:size></ns1:result></ns1:queryResponse></soapenv:Body></soapenv:Envelope>
+    http_version: 
+  recorded_at: Fri, 29 Jan 2016 16:05:23 GMT
+recorded_with: VCR 3.0.1

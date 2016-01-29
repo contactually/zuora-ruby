@@ -62,7 +62,7 @@ module Zuora
     # @param [Symbol] call_name - one of :create, :subscribe, :amend, :update
     # @return [Faraday:Response] - response
     def call!(call_name, *args)
-      factory = call_factory(call_name)
+      factory = Zuora::Dispatcher.send call_name
       xml_builder = factory.new(*args).xml_builder
       request_data = envelope_for call_name, xml_builder
       request! request_data
@@ -81,22 +81,6 @@ module Zuora
         Zuora::Utils::Envelope.authenticated_xml(@session_token) do |b|
           xml_builder_modifier.call b
         end
-      end
-    end
-
-    # Maps a SOAP call name and args to its coresponding class.
-    # @params [Symbol] call name
-    # @return [Faraday::Response]
-    # @throw [SoapErrorResponse]
-    def call_factory(call_name)
-      case call_name
-      when :create then Zuora::Calls::Create
-      when :login then Zuora::Calls::Login
-      when :subscribe then Zuora::Calls::Subscribe
-      when :amend then Zuora::Calls::Amend
-      else
-        fail "Unknown SOAP API call name: #{call_name}.
-              Must be one of :create, :login, subscribe, :amend, :delete."
       end
     end
 
