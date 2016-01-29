@@ -29,6 +29,9 @@ require_relative 'zuora/client'
 require_relative 'zuora/object'
 require_relative 'zuora/dispatcher'
 require_relative 'zuora/response'
+
+require_relative 'zuora/calls/upsert'
+
 require_relative 'zuora/calls/amend'
 require_relative 'zuora/calls/create'
 require_relative 'zuora/calls/delete'
