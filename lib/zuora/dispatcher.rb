@@ -27,6 +27,10 @@ module Zuora
         Zuora::Calls::Query
       end
 
+      def delete
+        Zuora::Calls::Delete
+      end
+
       def method_missing
         fail "Unknown SOAP API call name: #{call_name}.
               Must be one of :create, :login, subscribe, :amend, :delete."

@@ -1,0 +1,59 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://apisandbox.zuora.com/apps/services/a/74.0
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0"?>
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:api="http://api.zuora.com/" xmlns:obj="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+          <soapenv:Header>
+            <api:SessionHeader>
+              <api:session>v0Naatc9CDFJ9R1MjVkthJ382ZzwdqTDtfuXLN2CV4by_-6if7Vr31Xdd0oOkJxVQ31oLCnSdw_X7jV5JcZof7d1vnivUlpBKeKb8dldBIonS8DNQb7uVQ8s0_rDLL91SGamD1GRvXKcYan-aOSXZnrrvySvfG3zYYXj16HYC-LBHfYSNPzlBEN8xFxKIEr8LxhSLBVLiotY_Kfqdyyih_MkQEX9_r8v8Yj3pEwNJTO9pqlgBymtt59ypJOXEUIg</api:session>
+            </api:SessionHeader>
+          </soapenv:Header>
+          <soapenv:Body>
+            <api:delete>
+              <api:type>Subscription</api:type>
+              <api:ids>2c92c0f9528db6aa01528e3f2b704734</api:ids>
+            </api:delete>
+          </soapenv:Body>
+        </soapenv:Envelope>
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - text/xml
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - Zuora App
+      Content-Type:
+      - text/xml;charset=UTF-8
+      Expires:
+      - Fri, 29 Jan 2016 16:37:53 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Fri, 29 Jan 2016 16:37:53 GMT
+      Content-Length:
+      - '342'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><ns1:deleteResponse
+        xmlns:ns1="http://api.zuora.com/"><ns1:result><ns1:id>2c92c0f9528db6aa01528e3f2b704734</ns1:id><ns1:success>true</ns1:success></ns1:result></ns1:deleteResponse></soapenv:Body></soapenv:Envelope>
+    http_version: 
+  recorded_at: Fri, 29 Jan 2016 16:37:53 GMT
+recorded_with: VCR 3.0.1
