@@ -20,7 +20,7 @@ describe Zuora::Client do
   end
 
   it 'receives successful auth response' do
-    expect(auth_response.status).to eq 200
+    expect(auth_response.raw.status).to eq 200
   end
 
   it 'sets client auth token' do

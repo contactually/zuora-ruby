@@ -45,15 +45,17 @@ module Zuora
 
     # Fire a request
     # @param [Xml] body - an object responding to .xml
-    # @return [Faraday::Response]
+    # @return [Zuora::Response]
     def request!(body)
       fail 'body must support .to_xml' unless body.respond_to? :to_xml
 
-      connection.post do |request|
+      raw_response = connection.post do |request|
         request.url SOAP_API_URI
         request.headers['Content-Type'] = 'text/xml'
         request.body = body.to_xml
       end
+
+      Zuora::Response.new(raw_response)
     end
 
     # The primary interface via which users should make SOAP requests.
@@ -89,7 +91,7 @@ module Zuora
     # @return [Faraday::Response]
     # @throw [SoapErrorResponse]
     def handle_auth_response(response)
-      if response.status == 200
+      if response.raw.status == 200
         @session_token = extract_session_token response
       else
         message = 'Unable to connect with provided credentials'
@@ -102,7 +104,7 @@ module Zuora
     # for use in subsequent requests
     # @param [Faraday::Response] response - response to auth request
     def extract_session_token(response)
-      Nokogiri::XML(response.body).xpath(
+      Nokogiri::XML(response.raw.body).xpath(
         SESSION_TOKEN_XPATH, Zuora::NAMESPACES
       ).text
     end

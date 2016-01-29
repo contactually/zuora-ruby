@@ -38,11 +38,11 @@ describe 'creates a subscription' do
     end
 
     let(:subscribe_response) { client.call!(:subscribe, subscribe_data) }
-    let(:subscribe_body_xml) { Nokogiri::XML(subscribe_response.body) }
+    let(:subscribe_body_xml) { Nokogiri::XML(subscribe_response.raw.body) }
 
     it 'successfully executes subscribe request' do
       VCR.use_cassette('subscribe_success', match_requests_on: [:path]) do
-        expect(subscribe_response.status).to eq 200
+        expect(subscribe_response.raw.status).to eq 200
 
         expect(
           subscribe_body_xml.xpath(

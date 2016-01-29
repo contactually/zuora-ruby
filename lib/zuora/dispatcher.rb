@@ -33,7 +33,8 @@ module Zuora
 
       def method_missing
         fail "Unknown SOAP API call name: #{call_name}.
-              Must be one of :create, :login, subscribe, :amend, :delete."
+              Must be one of :create, :update, :login,
+              subscribe, :amend, or :delete."
       end
     end
   end

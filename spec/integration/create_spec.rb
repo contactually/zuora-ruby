@@ -37,13 +37,13 @@ describe 'create' do
         end
 
         let(:status) do
-          Nokogiri::XML(response.body)
-            .xpath(success_xpath, Zuora::RESPONSE_NAMESPACES)
-            .text
+          Nokogiri::XML(response.raw.body).xpath(
+            success_xpath, Zuora::RESPONSE_NAMESPACES
+          ).text
         end
 
         it 'request is successfully received' do
-          expect(response.status).to eq 200
+          expect(response.raw.status).to eq 200
         end
 
         it 'request is successfully executed' do
@@ -51,10 +51,11 @@ describe 'create' do
         end
 
         describe 'wrapped response' do
-          let(:wrapped_response) { Zuora::Response.new(response) }
           it 'should work' do
             expect(
-              wrapped_response
+              response
+              .to_h
+              .envelope
               .body
               .create_response
               .result
@@ -73,13 +74,13 @@ describe 'create' do
         end
 
         let(:status) do
-          Nokogiri::XML(response.body)
-            .xpath(success_xpath, Zuora::RESPONSE_NAMESPACES)
-            .text
+          Nokogiri::XML(response.raw.body).xpath(
+            success_xpath, Zuora::RESPONSE_NAMESPACES
+          ).text
         end
 
         it 'request is successfully received' do
-          expect(response.status).to eq 200
+          expect(response.raw.status).to eq 200
         end
 
         it 'request is fails to execute' do

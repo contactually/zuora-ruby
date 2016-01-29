@@ -15,17 +15,7 @@ module Zuora
     def to_h
       doc = Nokogiri::XML raw.body
       hash = Hash.from_xml doc.to_xml
-      Hashie::Mash.new(symbolize_keys_deep hash)
-    end
-
-    # @return [Hashie::Mash]
-    def envelope
-      to_h.envelope
-    end
-
-    # @return [Hashie::Mash]
-    def body
-      envelope.body
+      Hashie::Mash.new(symbolize_keys_deep(hash))
     end
 
     private
@@ -42,7 +32,7 @@ module Zuora
     # @param [String] hash
     # @return [Hash]
     def symbolize_keys_deep(hash)
-      return hash unless h.is_a?(Hash)
+      return hash unless hash.is_a?(Hash)
       Hash[
         hash.map do |k, v|
           [symbolize_key(k), symbolize_keys_deep(v)]

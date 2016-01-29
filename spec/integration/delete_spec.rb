@@ -44,13 +44,13 @@ describe 'creates a subscription' do
             client.call!(:delete, type: type, ids: ids)
           end
         end
-        let(:response_body) { Nokogiri::XML(response.body) }
+        let(:response_body) { Nokogiri::XML(response.raw.body) }
         let(:success) do
           response_body.xpath(success_xpath, Zuora::RESPONSE_NAMESPACES)
         end
 
         it 'request is succesfully received' do
-          expect(response.status).to eq 200
+          expect(response.raw.status).to eq 200
         end
 
         it 'is successfully executed' do

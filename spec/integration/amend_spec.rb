@@ -8,9 +8,9 @@ describe 'makes amends' do
 
   let(:xpath_text) do
     lambda do |response, xpath|
-      Nokogiri::XML(response.body)
-        .xpath(xpath, Zuora::RESPONSE_NAMESPACES)
-        .text
+      Nokogiri::XML(response.body).xpath(
+        xpath, Zuora::RESPONSE_NAMESPACES
+      ).text
     end
   end
 
@@ -50,8 +50,8 @@ describe 'makes amends' do
       end
 
       it 'has successful response' do
-        expect(add_product_amend_response.status).to eq 200
-        expect(xpath_text.call(add_product_amend_response, xpath)).to eq 'true'
+        expect(add_product_amend_response.raw.status).to eq 200
+        expect(xpath_text[add_product_amend_response.raw, xpath]).to eq 'true'
       end
     end
   end
