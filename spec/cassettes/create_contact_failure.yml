@@ -10,12 +10,12 @@ http_interactions:
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:api="http://api.zuora.com/" xmlns:obj="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
           <soapenv:Header>
             <api:SessionHeader>
-              <api:session>_ECIDL75agH150KQaumt80piLVn3Wb_hPc7olLeU7dWEaJ1YNbTiooV7evqL42-7lKqRdbOkv_xuVrg11EhoD24zTHbzc-C_zsoRxIfaYtavJVnUIC19f3E50zJkVnPduGBMmmPhzlSZ9057qNlKOho9jRVJ-p3373xDBZ8UPHF9RR9j7Krs7D7N4xvEtD3Go6RtqZ7Pu4A9d97pomnIXq6FD3prpN3fealj21-Ap6KIZi111D9kzjsnHh6inQ97</api:session>
+              <api:session>s-fs3YIbf3oHJTv_l6mJuJoIRkDQ9OHq0Rq3v3n3nnXyOJWjiD6S7hAs0TWuiHo_VG2PsnpHPk2slDNgvbCNLPvJzDenSidg24MS63QSbZGVPjbjV62zLVgQuL5HsEr5FbzxJbyFqooojOysQ1ynmtKjLMiMcFByKfIjBHoIgKWra7v8aB4loAyefZWhVV5Th3_CPYFUGHx9a1qCdbG-m9HcFgOFdilGv0nwlOD557BMDZD9wArUP_8CPkZgyUlw</api:session>
             </api:SessionHeader>
           </soapenv:Header>
           <soapenv:Body>
             <api:create>
-              <api:zObjects xsi:type="obj:BillRun"/>
+              <api:zObjects xsi:type="obj:Contact"/>
             </api:create>
           </soapenv:Body>
         </soapenv:Envelope>
@@ -38,22 +38,22 @@ http_interactions:
       Content-Type:
       - text/xml;charset=UTF-8
       Expires:
-      - Thu, 28 Jan 2016 18:29:30 GMT
+      - Fri, 29 Jan 2016 03:35:44 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Thu, 28 Jan 2016 18:29:30 GMT
+      - Fri, 29 Jan 2016 03:35:44 GMT
       Content-Length:
-      - '435'
+      - '422'
       Connection:
       - keep-alive
     body:
       encoding: UTF-8
-      string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><ns1:createResponse
-        xmlns:ns1="http://api.zuora.com/"><ns1:result><ns1:Errors><ns1:Code>MISSING_REQUIRED_VALUE</ns1:Code><ns1:Message>InvoiceDate
-        and TargetDate are required fields</ns1:Message></ns1:Errors><ns1:Success>false</ns1:Success></ns1:result></ns1:createResponse></soapenv:Body></soapenv:Envelope>
+      string: '<?xml version=''1.0'' encoding=''UTF-8''?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><ns1:createResponse
+        xmlns:ns1="http://api.zuora.com/"><ns1:result><ns1:Errors><ns1:Code>MISSING_REQUIRED_VALUE</ns1:Code><ns1:Message>Missing
+        required value: AccountId</ns1:Message></ns1:Errors><ns1:Success>false</ns1:Success></ns1:result></ns1:createResponse></soapenv:Body></soapenv:Envelope>'
     http_version: 
-  recorded_at: Thu, 28 Jan 2016 18:29:30 GMT
+  recorded_at: Fri, 29 Jan 2016 03:35:44 GMT
 recorded_with: VCR 3.0.1

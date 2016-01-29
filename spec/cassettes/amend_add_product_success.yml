@@ -10,7 +10,7 @@ http_interactions:
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:api="http://api.zuora.com/" xmlns:obj="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
           <soapenv:Header>
             <api:SessionHeader>
-              <api:session>cAsWTv8yws-madBwHd3p_pQhgJaAKbfrT9z8m9MM1bQiUtfqGF4xV6TvfG_s8gl8knt_HUBbEdKxdzgM1yubTFh3Ir0z3voE81q7dpI--J21n0DF5lNJ3_LJQRzVPpHRKQqfJ-HeiN1lS0DaByn4SNGopVGdb_AljXSTvaJjK-qp0Y3ThGBWb94gHlo68sv4Q_tDuDDsxy5RAE0ojPJzO56iTnfgdTNlxJ_RU-STJ8o9jwm-TUgCIyPSCQHbbreV</api:session>
+              <api:session>s-fs3YIbf3oHJTv_l6mJuJoIRkDQ9OHq0Rq3v3n3nnXyOJWjiD6S7hAs0TWuiHo_VG2PsnpHPk2slDNgvbCNLPvJzDenSidg24MS63QSbZGVPjbjV62zLVgQuL5HsEr5FbzxJbyFqooojOysQ1ynmtKjLMiMcFByKfIjBHoIgKWra7v8aB4loAyefZWhVV5Th3_CPYFUGHx9a1qCdbG-m9HcFgOFdilGv0nwlOD557BMDZD9wArUP_8CPkZgyUlw</api:session>
             </api:SessionHeader>
           </soapenv:Header>
           <soapenv:Body>
@@ -63,13 +63,13 @@ http_interactions:
       Content-Type:
       - text/xml;charset=UTF-8
       Expires:
-      - Fri, 29 Jan 2016 03:35:40 GMT
+      - Fri, 29 Jan 2016 03:36:31 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Fri, 29 Jan 2016 03:35:40 GMT
+      - Fri, 29 Jan 2016 03:36:31 GMT
       Content-Length:
       - '573'
       Connection:
@@ -77,8 +77,8 @@ http_interactions:
     body:
       encoding: UTF-8
       string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><ns1:amendResponse
-        xmlns:ns1="http://api.zuora.com/"><ns1:results><ns1:AmendmentIds>2c92c0f95282215b01528b735f7e1abe</ns1:AmendmentIds><ns1:SubscriptionId>2c92c0f95282215b01528b735fc81ac8</ns1:SubscriptionId><ns1:Success>true</ns1:Success><ns1:TotalDeltaMrr>59.000000000</ns1:TotalDeltaMrr><ns1:TotalDeltaTcv
+        xmlns:ns1="http://api.zuora.com/"><ns1:results><ns1:AmendmentIds>2c92c0f95282214e01528b7427c84956</ns1:AmendmentIds><ns1:SubscriptionId>2c92c0f95282214e01528b7428174961</ns1:SubscriptionId><ns1:Success>true</ns1:Success><ns1:TotalDeltaMrr>59.000000000</ns1:TotalDeltaMrr><ns1:TotalDeltaTcv
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="1" /></ns1:results></ns1:amendResponse></soapenv:Body></soapenv:Envelope>
     http_version: 
-  recorded_at: Fri, 29 Jan 2016 03:35:40 GMT
+  recorded_at: Fri, 29 Jan 2016 03:36:31 GMT
 recorded_with: VCR 3.0.1
