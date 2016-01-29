@@ -41,7 +41,7 @@ module Zuora
       def self.build_fields(builder, namespace, object = {})
         object.each do |key, value|
           zuora_field_name = to_zuora_key(key)
-          builder[namespace].send(zuora_field_name, value) if value
+          builder[namespace].send(zuora_field_name, value) unless value.nil?
         end
       end
 

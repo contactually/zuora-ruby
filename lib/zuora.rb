@@ -16,6 +16,11 @@ module Zuora
     'xmlns:obj' => 'http://object.api.zuora.com/',
     'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance'
   }.freeze
+
+  RESPONSE_NAMESPACES = NAMESPACES.merge(
+    'xmlns:ns1' => 'http://api.zuora.com/',
+    'xmlns:ns2' => 'http://object.api.zuora.com/'
+  ).freeze
 end
 
 require_relative 'zuora/version'

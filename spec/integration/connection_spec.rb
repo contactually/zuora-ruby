@@ -49,7 +49,7 @@ describe Zuora::Client do
 
     let(:create_bill_run_success_status) do
       Nokogiri::XML(create_bill_run_success_response.body).xpath(
-        soap_success_xpath, Zuora::NAMESPACES
+        soap_success_xpath, Zuora::RESPONSE_NAMESPACES
       ).text
     end
 
@@ -61,7 +61,7 @@ describe Zuora::Client do
 
     let(:create_bill_run_failure_status) do
       Nokogiri::XML(create_bill_run_failure_response.body).xpath(
-        soap_success_xpath, Zuora::NAMESPACES
+        soap_success_xpath, Zuora::RESPONSE_NAMESPACES
       ).text
     end
 

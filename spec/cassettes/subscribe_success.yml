@@ -10,13 +10,14 @@ http_interactions:
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:api="http://api.zuora.com/" xmlns:obj="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
           <soapenv:Header>
             <api:SessionHeader>
-              <api:session>_ECIDL75agH150KQaumt80piLVn3Wb_hPc7olLeU7dWEaJ1YNbTiooV7evqL42-7lKqRdbOkv_xuVrg11EhoD24zTHbzc-C_zsoRxIfaYtavJVnUIC19f3E50zJkVnPduGBMmmPhzlSZ9057qNlKOho9jRVJ-p3373xDBZ8UPHF9RR9j7Krs7D7N4xvEtD3Go6RtqZ7Pu4A9d97pomnIXq6FD3prpN3fealj21-Ap6KIZi111D9kzjsnHh6inQ97</api:session>
+              <api:session>WVLHsaHLXFyIhvCNY3jDn548Ein-UhEjnkfUK3U1_QGnKy5Vf8M4cS-lBhqXBvdpFV3XePrcdhJ15m9e_HyemkROr1U_5XwR44vJwgI3IY4PsP-RW2Lz3Dw5bEolTyzAtltBiAo6hGZCekNPoALlo-2lk4pPhK2OWzQqr3TCwmwMeHBokG_CoTsm7dCu4f2qwr1AHGkf9yteBWUtOtT-Y8P06VAqMh4nWeVwHG-Mh_f4NJv7oct0iVQkfhIhVqKn</api:session>
             </api:SessionHeader>
           </soapenv:Header>
           <soapenv:Body>
             <api:subscribe>
               <api:subscribes>
                 <api:Account>
+                  <obj:AutoPay>false</obj:AutoPay>
                   <obj:Batch>Batch1</obj:Batch>
                   <obj:BillCycleDay>1</obj:BillCycleDay>
                   <obj:Currency>USD</obj:Currency>
@@ -27,6 +28,7 @@ http_interactions:
                 </api:Account>
                 <api:PaymentMethod>
                   <obj:Type>CreditCard</obj:Type>
+                  <obj:UseDefaultRetryRule>true</obj:UseDefaultRetryRule>
                   <obj:CreditCardNumber>4242424242424242</obj:CreditCardNumber>
                   <obj:CreditCardType>Visa</obj:CreditCardType>
                   <obj:CreditCardAddress1/>
@@ -51,7 +53,7 @@ http_interactions:
                     <obj:ContractAcceptanceDate>2016-07-03</obj:ContractAcceptanceDate>
                     <obj:ContractEffectiveDate>2016-07-03</obj:ContractEffectiveDate>
                     <obj:InitialTerm>12</obj:InitialTerm>
-                    <obj:Name>A-S00000020090703080859</obj:Name>
+                    <obj:Name>A-S00000020090703080860</obj:Name>
                     <obj:RenewalTerm>12</obj:RenewalTerm>
                     <obj:ServiceActivationDate>2016-07-03</obj:ServiceActivationDate>
                     <obj:TermStartDate>2016-07-03</obj:TermStartDate>
@@ -86,13 +88,13 @@ http_interactions:
       Content-Type:
       - text/xml;charset=UTF-8
       Expires:
-      - Thu, 28 Jan 2016 18:29:36 GMT
+      - Thu, 28 Jan 2016 23:39:38 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Thu, 28 Jan 2016 18:29:36 GMT
+      - Thu, 28 Jan 2016 23:39:38 GMT
       Content-Length:
       - '699'
       Connection:
@@ -100,9 +102,9 @@ http_interactions:
     body:
       encoding: UTF-8
       string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><ns1:subscribeResponse
-        xmlns:ns1="http://api.zuora.com/"><ns1:result><ns1:AccountId>2c92c0f8528211140152897f65c508a3</ns1:AccountId><ns1:AccountNumber>A00000150</ns1:AccountNumber><ns1:InvoiceResult
-        /><ns1:SubscriptionId>2c92c0f8528211140152897f6e070906</ns1:SubscriptionId><ns1:SubscriptionNumber>A-S00000020090703080859</ns1:SubscriptionNumber><ns1:Success>true</ns1:Success><ns1:TotalMrr>59.000000000</ns1:TotalMrr><ns1:TotalTcv
+        xmlns:ns1="http://api.zuora.com/"><ns1:result><ns1:AccountId>2c92c0f95282215501528a9b3ca309cb</ns1:AccountId><ns1:AccountNumber>A00000154</ns1:AccountNumber><ns1:InvoiceResult
+        /><ns1:SubscriptionId>2c92c0f95282215501528a9b494c0a48</ns1:SubscriptionId><ns1:SubscriptionNumber>A-S00000020090703080860</ns1:SubscriptionNumber><ns1:Success>true</ns1:Success><ns1:TotalMrr>59.000000000</ns1:TotalMrr><ns1:TotalTcv
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="1" /></ns1:result></ns1:subscribeResponse></soapenv:Body></soapenv:Envelope>
     http_version: 
-  recorded_at: Thu, 28 Jan 2016 18:29:36 GMT
+  recorded_at: Thu, 28 Jan 2016 23:39:38 GMT
 recorded_with: VCR 3.0.1

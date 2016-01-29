@@ -3,7 +3,7 @@ module Zuora
     class Generate < Hashie::Dash
       property :objects, required: true
 
-      OBJECT_TYPE = :Invoice.freeze
+      OBJECT_TYPE = :Invoice
 
       # Generates a function that takes a builder
       # and updates object(s) of type.

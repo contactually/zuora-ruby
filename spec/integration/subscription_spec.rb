@@ -29,7 +29,7 @@ describe 'creates a subscription' do
   let(:payment_method) do
     Zuora::Object[
       type: 'CreditCard',
-      use_default_retry_rule: false,
+      use_default_retry_rule: true,
 
       credit_card_number: '4242424242424242',
       credit_card_type: 'Visa',
@@ -68,7 +68,7 @@ describe 'creates a subscription' do
       contract_acceptance_date: '2016-07-03',
       contract_effective_date: '2016-07-03',
       initial_term: 12,
-      name: 'A-S00000020090703080859',
+      name: 'A-S00000020090703080860',
       renewal_term: 12,
       service_activation_date: '2016-07-03',
       term_start_date: '2016-07-03',
@@ -117,7 +117,7 @@ describe 'creates a subscription' do
         expect(
           subscribe_body_xml.xpath(
             soap_success_xpath,
-            Zuora::NAMESPACES
+            Zuora::RESPONSE_NAMESPACES
           ).text
         ).to eq 'true'
       end
