@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'factory_girl'
 
 describe 'makes amends' do
   let(:xpath) do
@@ -27,19 +28,31 @@ describe 'makes amends' do
     end
   end
 
-  let(:add_product_amend_response) do
-    VCR.use_cassette('amend_add_product_success', vcr_options) do
-      client.call!(
-        :amend,
-        amendments: build(:amendment),
-        amend_options: build(:amend_options),
-        preview_options: build(:preview_options)
-      )
-    end
-  end
+  ######################
+  [
+    { type: :AddProduct, factory: [:amendment, :new_product] },
+    { type: :RemoveProduct, factory: [:amendment, :remove_product] },
+    { type: :UpdateProduct, factory: [:amendment, :update_product] }
+  ].each do |obj|
+    type, factory = obj.values_at :type, :factory
+    type_underscore = type.to_s.underscore
 
-  it 'has successful response' do
-    expect(add_product_amend_response.status).to eq 200
-    expect(xpath_text.call(add_product_amend_response, xpath)).to eq 'true'
+    describe "#{type} amendment" do
+      let(:add_product_amend_response) do
+        VCR.use_cassette("amend_#{type_underscore}_success", vcr_options) do
+          client.call!(
+            :amend,
+            amendments: build(*factory),
+            amend_options: build(:amend_options),
+            preview_options: build(:preview_options)
+          )
+        end
+      end
+
+      it 'has successful response' do
+        expect(add_product_amend_response.status).to eq 200
+        expect(xpath_text.call(add_product_amend_response, xpath)).to eq 'true'
+      end
+    end
   end
 end

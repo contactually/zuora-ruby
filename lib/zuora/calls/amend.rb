@@ -37,7 +37,7 @@ module Zuora
           builder[:api].send(field) { build_nodes builder, value, child_ns }
         else
           # Child
-          builder[child_ns].send(field).call(value)
+          builder[child_ns].send(field, value)
         end
       end
 
