@@ -1,8 +1,8 @@
 module Zuora
   module Calls
-    class Create < Zuora::Calls::Upsert
+    class Update < Zuora::Calls::Upsert
       def call_name
-        :create
+        :update
       end
     end
   end

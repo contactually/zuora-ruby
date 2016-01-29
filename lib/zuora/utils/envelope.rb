@@ -24,8 +24,8 @@ module Zuora
         fail failure_message unless token.present?
 
         header = lambda do |builder|
-          builder[:ns1].SessionHeader do
-            builder[:ns1].session(token)
+          builder[:api].SessionHeader do
+            builder[:api].session(token)
           end
           builder
         end
@@ -33,7 +33,7 @@ module Zuora
         xml(header, body)
       end
 
-      # Calls field name
+      # Builds multiple fields
       # @param [Nokogiri::XML::Builder] builder
       # @param [Symbol] namespace
       # @param [Hash] object
@@ -41,7 +41,20 @@ module Zuora
       def self.build_fields(builder, namespace, object = {})
         object.each do |key, value|
           zuora_field_name = to_zuora_key(key)
-          builder[namespace].send(zuora_field_name, value) if value
+          builder[namespace].send(zuora_field_name, value) unless value.nil?
+        end
+      end
+
+      # Builds multiple objects
+      # @param [Nokogiri::XML::Builder] builder
+      # @param [Symbol] type
+      # @param [Array[Hash]] objects
+      # @return nil
+      def self.build_objects(builder, type, objects)
+        objects.each do |object|
+          builder[:api].zObjects('xsi:type' => "obj:#{type}") do
+            Zuora::Utils::Envelope.build_fields(builder, :obj, object)
+          end
         end
       end
 

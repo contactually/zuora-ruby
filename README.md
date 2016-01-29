@@ -27,11 +27,11 @@ Execute a SOAP request. Currently only  `:create` and `:subscribe` are supported
 
  ```ruby
 response = client.call! :create,
-  object_type: :BillRun,
-  data: { 
+  type: :BillRun,
+  objects: [{ 
     invoice_date: '2016-03-01',
     target_date: '2016-03-01'
-  }
+  }]
     
 ```
 
@@ -39,19 +39,19 @@ This would generate SOAP XML, make, and return an authenticated SOAP request.
 
 ```xml
     <?xml version="1.0"?>
-    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://api.zuora.com/" xmlns:ns2="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:api="http://api.zuora.com/" xmlns:obj="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
       <soapenv:Header>
-        <ns1:SessionHeader>
-          <ns1:session><!-- SESSION TOKEN HERE --></ns1:session>
-        </ns1:SessionHeader>
+        <api:SessionHeader>
+          <api:session><!-- SESSION TOKEN HERE --></api:session>
+        </api:SessionHeader>
       </soapenv:Header>
       <soapenv:Body>
-        <ns1:create>
-          <ns1:zObjects xsi:type="ns2:BillRun">
-            <ns2:InvoiceDate>2016-03-01</ns2:InvoiceDate>
-            <ns2:TargetDate>2016-03-01</ns2:TargetDate>
-          </ns1:zObjects>
-        </ns1:create>
+        <api:create>
+          <api:zObjects xsi:type="obj:BillRun">
+            <obj:InvoiceDate>2016-03-01</obj:InvoiceDate>
+            <obj:TargetDate>2016-03-01</obj:TargetDate>
+          </api:zObjects>
+        </api:create>
       </soapenv:Body>
     </soapenv:Envelope>
 ```
@@ -66,12 +66,12 @@ response.body
 <?xml version="1.0" encoding="UTF-8"?>
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
   <soapenv:Body>
-    <ns1:createResponse xmlns:ns1="http://api.zuora.com/">
-      <ns1:result>
-        <ns1:Id>2c92c0f9526913e301526a7863df4647</ns1:Id>
-        <ns1:Success>true</ns1:Success>
-      </ns1:result>
-    </ns1:createResponse>
+    <api:createResponse xmlns:api="http://api.zuora.com/">
+      <api:result>
+        <api:Id>2c92c0f9526913e301526a7863df4647</api:Id>
+        <api:Success>true</api:Success>
+      </api:result>
+    </api:createResponse>
   </soapenv:Body>
 </soapenv:Envelope>
 ```
@@ -81,7 +81,7 @@ This XML body, in turn, could be parsed with Nokogiri for further work.
 ```ruby
 response_xml = Nokogiri::XML(response.body)
 success = response_xml.xpath(
- '/soapenv/Envelope/soapenv:Body/ns1:createResponse/ns1:result/ns1:Success'
+ '/soapenv/Envelope/soapenv:Body/api:createResponse/api:result/api:Success'
  ).text == 'true'
 ```
 
