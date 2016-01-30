@@ -15,7 +15,7 @@ require 'factory_girl'
 FactoryGirl.definition_file_paths = ['spec/factories']
 FactoryGirl.find_definitions
 # Short hand factory girl syntax
-include FactoryGirl::Syntax::Methods
+# include FactoryGirl::Syntax::Methods
 
 require 'irb'
 IRB.start
