@@ -42,9 +42,11 @@ module Zuora
       # Builds the complex, nested part of the subscribe request
       # @param [Nokogiri::XML::Builder] builder
       def build_complex_objects(builder)
-        build_object(builder, :SubscribeOptions, subscribe_options)
+        builder[:api].SubscribeOptions do
+          Zuora::Utils::Envelope.build_fields(builder, :api, subscribe_options)
+        end if subscribe_options
+
         builder[:api].SubscriptionData do
-          build_object(builder, :SubscribeOptions, subscribe_options)
           build_object(builder, :Subscription, subscription)
           builder[:api].RatePlanData do
             build_object(builder, :RatePlan, rate_plan)
