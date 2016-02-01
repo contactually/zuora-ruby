@@ -10,7 +10,7 @@ http_interactions:
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:api="http://api.zuora.com/" xmlns:obj="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
           <soapenv:Header>
             <api:SessionHeader>
-              <api:session>v0Naatc9CDFJ9R1MjVkthJ382ZzwdqTDtfuXLN2CV4by_-6if7Vr31Xdd0oOkJxVQ31oLCnSdw_X7jV5JcZof7d1vnivUlpBKeKb8dldBIonS8DNQb7uVQ8s0_rDLL91SGamD1GRvXKcYan-aOSXZnrrvySvfG3zYYXj16HYC-LBHfYSNPzlBEN8xFxKIEr8LxhSLBVLiotY_Kfqdyyih_MkQEX9_r8v8Yj3pEwNJTO9pqlgBymtt59ypJOXEUIg</api:session>
+              <api:session>yYR0CKfjF6yOF3HfGUwHlwEY-va2xtKjLizZeGf0M9WoJ9kb5-iz7aNquacAVdop5CDOe-YmJNGRle5yUE9TpGrtQqZUqNyWBf0E9i23q8ntqH-CVgyZEs_Zy9Yzi-RlKh5NDE4rpIIDV4r62namSua-MQTILHnKXalZWXqYPNV0btirvSxa1NCqDIbVhV3gvbw46cWz0mNkqHe99tJdF1f2QiULGRMRHyvFGLy6nqtGo2MgF0HZsNklaP3PQ1NX</api:session>
             </api:SessionHeader>
           </soapenv:Header>
           <soapenv:Body>
@@ -25,6 +25,7 @@ http_interactions:
                   <obj:PaymentTerm>Due Upon Receipt</obj:PaymentTerm>
                   <obj:Status>Draft</obj:Status>
                   <obj:AccountName>Faker::Name Account</obj:AccountName>
+                  <obj:StripeCustomerId__c>cus_3bA2Ojilz1GYVU</obj:StripeCustomerId__c>
                 </api:Account>
                 <api:PaymentMethod>
                   <obj:Type>CreditCard</obj:Type>
@@ -43,9 +44,9 @@ http_interactions:
                   <obj:CreditCardHolderName>Enoch Hall</obj:CreditCardHolderName>
                 </api:PaymentMethod>
                 <api:BillToContact>
-                  <obj:FirstName>Burley</obj:FirstName>
-                  <obj:LastName>Aufderhar</obj:LastName>
-                  <obj:WorkEmail>caesar@brakus.co</obj:WorkEmail>
+                  <obj:FirstName>Dusty</obj:FirstName>
+                  <obj:LastName>Padberg</obj:LastName>
+                  <obj:WorkEmail>lavada_breitenberg@turcotte.net</obj:WorkEmail>
                   <obj:AccountId>2c92c0f85282111401528b73648b76fc</obj:AccountId>
                 </api:BillToContact>
                 <api:SubscriptionData>
@@ -54,7 +55,7 @@ http_interactions:
                     <obj:ContractAcceptanceDate>2016-07-03</obj:ContractAcceptanceDate>
                     <obj:ContractEffectiveDate>2016-07-03</obj:ContractEffectiveDate>
                     <obj:InitialTerm>12</obj:InitialTerm>
-                    <obj:Name>A-S00000020090703080866</obj:Name>
+                    <obj:Name>A-S00000020090703080869</obj:Name>
                     <obj:RenewalTerm>12</obj:RenewalTerm>
                     <obj:ServiceActivationDate>2016-07-03</obj:ServiceActivationDate>
                     <obj:TermStartDate>2016-07-03</obj:TermStartDate>
@@ -89,13 +90,13 @@ http_interactions:
       Content-Type:
       - text/xml;charset=UTF-8
       Expires:
-      - Fri, 29 Jan 2016 16:37:30 GMT
+      - Mon, 01 Feb 2016 14:45:48 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Fri, 29 Jan 2016 16:37:30 GMT
+      - Mon, 01 Feb 2016 14:45:48 GMT
       Content-Length:
       - '699'
       Connection:
@@ -103,9 +104,9 @@ http_interactions:
     body:
       encoding: UTF-8
       string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><ns1:subscribeResponse
-        xmlns:ns1="http://api.zuora.com/"><ns1:result><ns1:AccountId>2c92c0f9528db6aa01528e3f23604728</ns1:AccountId><ns1:AccountNumber>A00000163</ns1:AccountNumber><ns1:InvoiceResult
-        /><ns1:SubscriptionId>2c92c0f9528db6aa01528e3f2b704734</ns1:SubscriptionId><ns1:SubscriptionNumber>A-S00000020090703080866</ns1:SubscriptionNumber><ns1:Success>true</ns1:Success><ns1:TotalMrr>59.000000000</ns1:TotalMrr><ns1:TotalTcv
+        xmlns:ns1="http://api.zuora.com/"><ns1:result><ns1:AccountId>2c92c0f8528dab8f01529d4bf0d74e5f</ns1:AccountId><ns1:AccountNumber>A00000188</ns1:AccountNumber><ns1:InvoiceResult
+        /><ns1:SubscriptionId>2c92c0f8528dab8f01529d4bfc674e67</ns1:SubscriptionId><ns1:SubscriptionNumber>A-S00000020090703080869</ns1:SubscriptionNumber><ns1:Success>true</ns1:Success><ns1:TotalMrr>59.000000000</ns1:TotalMrr><ns1:TotalTcv
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="1" /></ns1:result></ns1:subscribeResponse></soapenv:Body></soapenv:Envelope>
     http_version: 
-  recorded_at: Fri, 29 Jan 2016 16:37:30 GMT
+  recorded_at: Mon, 01 Feb 2016 14:45:48 GMT
 recorded_with: VCR 3.0.1

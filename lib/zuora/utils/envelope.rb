@@ -1,6 +1,8 @@
 module Zuora
   module Utils
     module Envelope
+      CUSTOM_FIELD_STRING = '__c'.freeze
+
       # @param [Callable] header - optional function of builder, rtns builder
       # @param [Callable] body  - optional function of builder, rtns builder
       def self.xml(header, body)
@@ -58,14 +60,25 @@ module Zuora
         end
       end
 
-      # Converts from Zuora key format to Ruby format
-      # @param [Symbol] key - e.g. :some_key_name
-      # @return [Symbol] - e.g. :SomeKeyName
+      # Converts from Ruby to Zuora key format.
+      # @param [Symbol] key - e.g. :some_key_name or :some_key_name__c
+      # @return [Symbol] - e.g. :SomeKeyName or :SomeKeyName__c
       def self.to_zuora_key(key)
-        transform_sym key, :camelize
+        custom_field_matcher = Regexp.new CUSTOM_FIELD_STRING
+        matches = custom_field_matcher.match(key.to_s)
+        suffix = ''
+
+        if matches
+          key = key.to_s[0...-3].to_sym
+          suffix = CUSTOM_FIELD_STRING
+        end
+
+        key = transform_sym key, :camelize
+
+        [key.to_s, suffix].join.to_sym
       end
 
-      # Converts from Ruby to Zuora key format
+      # Converts from Zuora key format to Ruby format.
       # @param [Symbol] key  e.g. :SomeKeyName
       # @return [Symbol] - e.g. :some_key_name
       def self.from_zuora_key(key)
