@@ -8,6 +8,7 @@ FactoryGirl.define do
     payment_term 'Due Upon Receipt'
     status 'Draft'
     account_name { "#{Faker::Name} Account" }
+    stripe_customer_id__c 'cus_3bA2Ojilz1GYVU'
 
     initialize_with { attributes }
   end
