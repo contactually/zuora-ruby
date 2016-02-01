@@ -29,15 +29,22 @@ module Zuora
     end
 
     # Recursively transforms a hash
-    # @param [String] hash
+    # @param [Hash] hash
     # @return [Hash]
     def symbolize_keys_deep(hash)
       return hash unless hash.is_a?(Hash)
-      Hash[
-        hash.map do |k, v|
-          [symbolize_key(k), symbolize_keys_deep(v)]
+
+      Hash[hash.map do |key, value|
+        # if value is array, loop each element and recursively symbolize keys
+        if value.is_a? Array
+          value = value.map { |element| symbolize_keys_deep(element) }
+          # if value is hash, recursively symbolize keys
+        elsif value.is_a? Hash
+          value = symbolize_keys_deep(value)
         end
-      ]
+
+        [symbolize_key(key), value]
+      end]
     end
   end
 end
