@@ -1,6 +1,6 @@
 module Zuora
   module Errors
-    class RequiredValue < StandardError
+    class InvalidValue < StandardError
       attr_reader :response
 
       def initialize(msg = nil, response = nil)

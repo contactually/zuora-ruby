@@ -8,7 +8,7 @@ describe 'create' do
   let!(:client) { Zuora::Client.new(username, password, true) }
 
   let!(:auth_response) do
-    VCR.use_cassette('authentication', match_requests_on: [:path]) do
+    VCR.use_cassette('authentication_success', match_requests_on: [:path]) do
       client.authenticate!
     end
   end
@@ -29,9 +29,9 @@ describe 'create' do
            api:createResponse/api:result/api:Success).join
 
       context 'with good data' do
+        let(:cassette) { "create_#{type.to_s.underscore}_success" }
         let(:response) do
-          cassette_name = "create_#{type.to_s.underscore}_success"
-          VCR.use_cassette(cassette_name, vcr_options) do
+          VCR.use_cassette(cassette, vcr_options) do
             client.call!(:create, type: type, objects: [build(*factory)])
           end
         end
@@ -75,7 +75,7 @@ describe 'create' do
         end
 
         it 'raises an exception' do
-          expect { subject }.to raise_error(Zuora::Errors::RequiredValue)
+          expect { subject }.to raise_error(Zuora::Errors::InvalidValue)
         end
 
         it 'includes the full response on the error that gets raised' do

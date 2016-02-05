@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'factory_girl'
 
 describe 'makes amends' do
   let(:xpath) do
@@ -23,7 +22,7 @@ describe 'makes amends' do
   end
 
   before do
-    VCR.use_cassette('authentication', vcr_options) do
+    VCR.use_cassette('authentication_success', vcr_options) do
       client.authenticate!
     end
   end

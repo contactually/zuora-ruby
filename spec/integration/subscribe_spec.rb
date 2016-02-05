@@ -32,7 +32,7 @@ describe 'creates a subscription' do
 
     ## Authentication
     let!(:auth_response) do
-      VCR.use_cassette('authentication', match_requests_on: [:path]) do
+      VCR.use_cassette('authentication_success', match_requests_on: [:path]) do
         client.authenticate!
       end
     end

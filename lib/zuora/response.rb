@@ -23,12 +23,12 @@ module Zuora
     def handle_errors(hash)
       errors = []
 
-      hash.each do |_key, value|
+      hash.each do |key, value|
         if value.is_a?(Hash) || value.is_a?(Array)
           handle_errors(value)
         else
           next if value.blank?
-          errors << value if ERROR_STRINGS.any? { |str| value.to_s.match(str) }
+          errors << value if error?(key, value)
         end
       end
 
@@ -36,6 +36,13 @@ module Zuora
     end
 
     private
+
+    # @param [String|Symbol] key
+    # @param [String] value
+    def error?(key, value)
+      ERROR_STRINGS.any? { |str| value.to_s.match(str) } ||
+        key.to_s.downcase == 'message'
+    end
 
     # Given a key, convert to symbol, removing XML namespace, if any.
     # @param [String] key - a key, either "abc" or "abc:def"
@@ -67,7 +74,7 @@ module Zuora
     # @param [Array] errors
     def raise_errors(errors)
       error_string = errors.join(',')
-      error = Zuora::Errors::RequiredValue.new(error_string, to_h)
+      error = Zuora::Errors::InvalidValue.new(error_string, to_h)
       fail error
     end
   end
