@@ -3,34 +3,33 @@ require 'spec_helper'
 describe Zuora::Response do
   describe '#handle_errors' do
     let(:response_hash) do
-      {
-        'envelope' => {
-          'xmlns:soapenv' => 'http://schemas.xmlsoap.org/soap/envelope/',
-          'body' => {
-            'subscribe_response' => {
-              'xmlns:ns1' => 'http://api.zuora.com/',
-              'result' => {
-                'account_id' => {
-                  'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
-                  'xsi:nil' => '1'
-                },
-                'account_number' => {
-                  'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
-                  'xsi:nil' => '1'
-                },
-                'errors' => {
-                  'code' => 'INVALID_VALUE',
-                  'message' =>
-                    'Can not process payments if Payment Method is null'
-                },
-                'invoice_id' => {
-                  'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
-                  'xsi:nil' => '1'
-                }
+      { 'envelope' =>
+          {
+            'soapenv' => 'http://schemas.xmlsoap.org/soap/envelope/',
+            'body' => {
+              'create_response' => {
+                'ns1' => 'http://api.zuora.com/',
+                'result' => [
+                  {
+                    'errors' => {
+                      'code' => 'INVALID_VALUE',
+                      'message' =>
+                        'The Invoice Item can only be adjusted toward zero.'
+                    },
+                    'success' => 'false'
+                  },
+                  {
+                    'errors' => {
+                      'code' => 'INVALID_VALUE',
+                      'message' =>
+                        'The Invoice Item can only be adjusted toward zero.'
+                    },
+                    'success' => 'false'
+                  }
+                ]
               }
             }
           }
-        }
       }
     end
     let(:response) { Zuora::Response.new(Faraday::Response.new) }

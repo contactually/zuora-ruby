@@ -24,10 +24,11 @@ module Zuora
       errors = []
 
       hash.each do |key, value|
-        if value.is_a?(Hash) || value.is_a?(Array)
+        if value.is_a?(Hash)
           handle_errors(value)
+        elsif value.is_a?(Array)
+          value.each { |v| handle_errors(v) }
         else
-          next if value.blank?
           errors << value if error?(key, value)
         end
       end
@@ -41,7 +42,7 @@ module Zuora
     # @param [String] value
     def error?(key, value)
       ERROR_STRINGS.any? { |str| value.to_s.match(str) } ||
-        key.to_s.downcase == 'message'
+        key.to_s.casecmp('message').zero?
     end
 
     # Given a key, convert to symbol, removing XML namespace, if any.
