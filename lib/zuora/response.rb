@@ -41,7 +41,7 @@ module Zuora
     # @param [String] value
     def error?(key, value)
       ERROR_STRINGS.any? { |str| value.to_s.match(str) } ||
-        key.to_s.downcase == 'message'
+        key.to_s.casecmp('message').zero?
     end
 
     # Given a key, convert to symbol, removing XML namespace, if any.
