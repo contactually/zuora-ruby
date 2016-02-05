@@ -24,6 +24,7 @@ module Zuora
 end
 
 require_relative 'zuora/version'
+require_relative 'zuora/errors'
 require_relative 'zuora/utils/envelope'
 require_relative 'zuora/client'
 require_relative 'zuora/object'

@@ -55,7 +55,11 @@ module Zuora
         request.body = body.to_xml
       end
 
-      Zuora::Response.new(raw_response)
+      response = Zuora::Response.new(raw_response)
+
+      response.handle_errors(response.to_h)
+
+      response
     end
 
     # The primary interface via which users should make SOAP requests.
@@ -73,8 +77,8 @@ module Zuora
     private
 
     # Generate envelope for request
-    # @param [Symbol] call name - one of the supported calls (see #call)
-    # @param [Callable] builder_modifier - function taking a builder
+    # @param [Symbol] call_name - one of the supported calls (see #call)
+    # @param [Callable] xml_builder_modifier - function taking a builder
     # @return [Nokogiri::XML::Builder]
     def envelope_for(call_name, xml_builder_modifier)
       if call_name == :login
@@ -104,9 +108,7 @@ module Zuora
     # for use in subsequent requests
     # @param [Faraday::Response] response - response to auth request
     def extract_session_token(response)
-      Nokogiri::XML(response.raw.body).xpath(
-        SESSION_TOKEN_XPATH, Zuora::NAMESPACES
-      ).text
+      response.to_h.envelope.body.login_response.result.session
     end
 
     # Initializes a connection using api_url

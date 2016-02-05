@@ -53,22 +53,17 @@ describe 'create' do
         describe 'wrapped response' do
           it 'should work' do
             expect(
-              response
-              .to_h
-              .envelope
-              .body
-              .create_response
-              .result
-              .success
+              response.to_h.envelope.body.create_response.result.success
             ).to eq('true')
           end
         end
       end
 
-      context 'with bad data' do
-        let(:response) do
-          cassette_name = "create_#{type.to_s.underscore}_failure"
-          VCR.use_cassette(cassette_name, vcr_options) do
+      context 'with missing data' do
+        let(:cassette) { "create_#{type.to_s.underscore}_failure" }
+
+        subject do
+          VCR.use_cassette(cassette, vcr_options) do
             client.call!(:create, type: type, objects: [{}])
           end
         end
@@ -79,12 +74,16 @@ describe 'create' do
           ).text
         end
 
-        it 'request is successfully received' do
-          expect(response.raw.status).to eq 200
+        it 'raises an exception' do
+          expect { subject }.to raise_error(Zuora::Errors::RequiredValue)
         end
 
-        it 'request is fails to execute' do
-          expect(status).to eq 'false'
+        it 'includes the full response on the error that gets raised' do
+          begin
+            subject
+          rescue => e
+            expect(e.response).to_not be_nil
+          end
         end
       end
     end
