@@ -2,6 +2,7 @@ require 'active_support/core_ext/hash/conversions'
 
 module Zuora
   class Response
+    ERROR_STRINGS = ['Missing required value', 'are required fields'].freeze
     attr_reader :raw
 
     # @param [Faraday::Response]
@@ -16,6 +17,22 @@ module Zuora
       doc = Nokogiri::XML raw.body
       hash = Hash.from_xml doc.to_xml
       Hashie::Mash.new(symbolize_keys_deep(hash))
+    end
+
+    # @param [Hash] hash
+    def handle_errors(hash)
+      errors = []
+
+      hash.each do |_key, value|
+        if value.is_a?(Hash) || value.is_a?(Array)
+          handle_errors(value)
+        else
+          next if value.blank?
+          errors << value if ERROR_STRINGS.any? { |str| value.to_s.match(str) }
+        end
+      end
+
+      raise_errors(errors) if errors.present?
     end
 
     private
@@ -45,6 +62,13 @@ module Zuora
 
         [symbolize_key(key), value]
       end]
+    end
+
+    # @param [Array] errors
+    def raise_errors(errors)
+      error_string = errors.join(',')
+      error = Zuora::Errors::RequiredValue.new(error_string, to_h)
+      fail error
     end
   end
 end
