@@ -54,3 +54,7 @@ Metrics/ClassLength:
 
 Style/EachWithObject:
   Enabled: false
+
+Metrics/MethodLength:
+  Max: 15
+  Enabled: true

@@ -28,8 +28,8 @@ module Zuora
           handle_errors(value)
         elsif value.is_a?(Array)
           value.each { |v| handle_errors(v) }
-        else
-          errors << value if error?(key, value)
+        elsif error?(key, value)
+          errors << value
         end
       end
 
