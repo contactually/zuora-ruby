@@ -8,5 +8,11 @@ module Zuora
         super(msg)
       end
     end
+
+    class InvalidCredentials < StandardError
+    end
+
+    class SoapConnectionError < StandardError
+    end
   end
 end

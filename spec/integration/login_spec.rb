@@ -9,21 +9,33 @@ describe Zuora::Client do
   end
   let!(:client) { Zuora::Client.new(username, password, true) }
 
-  let!(:auth_response) do
-    VCR.use_cassette('authentication', match_requests_on: [:path]) do
-      client.authenticate!
+  context 'with correct credentials' do
+    let!(:auth_response) do
+      VCR.use_cassette('authentication_success', match_requests_on: [:path]) do
+        client.authenticate!
+      end
+    end
+
+    it 'receives successful auth response' do
+      expect(auth_response.raw.status).to eq 200
+    end
+
+    it 'sets client auth token' do
+      expect(client.session_token).to_not be_nil
     end
   end
 
-  let(:soap_success_xpath) do
-    '/soapenv:Envelope/soapenv:Body/api:createResponse/api:result/api:Success'
-  end
+  context 'with incorrect credentials' do
+    let(:username) { 'INVALID_USERNAME' }
 
-  it 'receives successful auth response' do
-    expect(auth_response.raw.status).to eq 200
-  end
+    subject do
+      VCR.use_cassette('authentication_failure', match_requests_on: [:path]) do
+        client.authenticate!
+      end
+    end
 
-  it 'sets client auth token' do
-    expect(client.session_token).to_not be_nil
+    it 'raises invalid credentials error' do
+      expect { subject }.to raise_error(Zuora::Errors::InvalidCredentials)
+    end
   end
 end
