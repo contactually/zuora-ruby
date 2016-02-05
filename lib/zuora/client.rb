@@ -3,12 +3,6 @@ require 'faraday_middleware'
 require 'nokogiri'
 
 module Zuora
-  # Unable to connect. Check username / password
-  SoapConnectionError = Class.new StandardError
-
-  # Non-success response
-  SoapErrorResponse = Class.new StandardError
-
   class Client
     attr_accessor :session_token
 
@@ -40,7 +34,7 @@ module Zuora
 
       handle_auth_response auth_response
     rescue Object => e
-      raise SoapConnectionError, e
+      raise Zuora::Errors::SoapConnectionError, e
     end
 
     # Fire a request
@@ -93,13 +87,13 @@ module Zuora
     # Handle auth response, setting session
     # @params [Faraday::Response]
     # @return [Faraday::Response]
-    # @throw [SoapErrorResponse]
+    # @throw [Zuora::Errors::InvalidCredentials]
     def handle_auth_response(response)
       if response.raw.status == 200
         @session_token = extract_session_token response
       else
         message = 'Unable to connect with provided credentials'
-        fail SoapErrorResponse, message
+        fail Zuora::Errors::InvalidCredentials, message
       end
       response
     end
