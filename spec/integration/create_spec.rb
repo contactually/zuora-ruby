@@ -5,11 +5,11 @@ describe 'create' do
   let(:vcr_options) do
     { match_requests_on: [:path] }
   end
-  let!(:client) { Zuora::Client.new(username, password, true) }
+  let(:client) { Zuora::Client.new(username, password, true) }
 
   let!(:auth_response) do
     VCR.use_cassette('authentication_success', match_requests_on: [:path]) do
-      client.authenticate!
+      client
     end
   end
 

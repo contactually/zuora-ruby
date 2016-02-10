@@ -1,7 +1,7 @@
 module Zuora
   module Rest
-    API_URL = 'https://api.zuora.com/rest/v1/'
-    SANDBOX_URL = 'https://apisandbox-api.zuora.com/rest/v1/'
+    API_URL = 'https://api.zuora.com/rest/v1/'.freeze
+    SANDBOX_URL = 'https://apisandbox-api.zuora.com/rest/v1/'.freeze
 
     # Unable to connect. Check username / password
     ConnectionError = Class.new StandardError

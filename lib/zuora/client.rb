@@ -23,18 +23,7 @@ module Zuora
       @username = username
       @password = password
       @sandbox = sandbox
-    end
-
-    # Makes auth request, handles response
-    # @return [Faraday::Response]
-    def authenticate!
-      auth_response = call! :login,
-        username: @username,
-        password: @password
-
-      handle_auth_response auth_response
-    rescue Object => e
-      raise Zuora::Errors::SoapConnectionError, e
+      authenticate!
     end
 
     # Fire a request
@@ -69,6 +58,18 @@ module Zuora
     end
 
     private
+
+    # Makes auth request, handles response
+    # @return [Faraday::Response]
+    def authenticate!
+      auth_response = call! :login,
+        username: @username,
+        password: @password
+
+      handle_auth_response auth_response
+    rescue Object => e
+      raise Zuora::Errors::SoapConnectionError, e
+    end
 
     # Generate envelope for request
     # @param [Symbol] call_name - one of the supported calls (see #call)

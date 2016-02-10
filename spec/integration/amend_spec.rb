@@ -23,7 +23,7 @@ describe 'makes amends' do
 
   before do
     VCR.use_cassette('authentication_success', vcr_options) do
-      client.authenticate!
+      client
     end
   end
 

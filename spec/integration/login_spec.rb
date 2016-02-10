@@ -7,20 +7,21 @@ describe Zuora::Client do
   let(:vcr_options) do
     { match_requests_on: [:path] }
   end
-  let!(:client) { Zuora::Client.new(username, password, true) }
+  let(:client) { Zuora::Client.new(username, password, true) }
 
   context 'with correct credentials' do
-    let!(:auth_response) do
+    let(:auth_response) do
       VCR.use_cassette('authentication_success', match_requests_on: [:path]) do
-        client.authenticate!
+        client
       end
     end
 
     it 'receives successful auth response' do
-      expect(auth_response.raw.status).to eq 200
+      expect { auth_response }.to_not raise_exception
     end
 
     it 'sets client auth token' do
+      auth_response
       expect(client.session_token).to_not be_nil
     end
   end
@@ -30,7 +31,7 @@ describe Zuora::Client do
 
     subject do
       VCR.use_cassette('authentication_failure', match_requests_on: [:path]) do
-        client.authenticate!
+        client
       end
     end
 
