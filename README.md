@@ -120,6 +120,11 @@ response = client.call! :subscribe,
     - No object-level validations; relies on Zuora's own responses
     - See integration specs for full interface
     
+* **[0.4.0 2016-02-10]** Improves interface and feedback loop between developer and Zuora servers.
+  - Allow flexible submission of parameters to the API.  Let Zuora's API handle validation instead of performing in the client.
+  - Adds integration specs to cover base functionality
+  - Adds exception raising to match servier-side exceptions such as missing required fields, invalid data, etc.
+
 # Commit rights
 Anyone who has a patch accepted may request commit rights. Please do so inside the pull request post-merge.
 
