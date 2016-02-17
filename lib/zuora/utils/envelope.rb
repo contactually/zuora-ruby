@@ -8,12 +8,8 @@ module Zuora
       def self.xml(header, body)
         Nokogiri::XML::Builder.new do |builder|
           builder[:soapenv].Envelope(Zuora::NAMESPACES) do
-            builder[:soapenv].Header do
-              header.call builder
-            end if header
-            builder[:soapenv].Body do
-              body.call builder
-            end if body
+            builder[:soapenv].Header { header.call builder } if header
+            builder[:soapenv].Body { body.call builder } if body
           end
         end
       end
@@ -26,9 +22,7 @@ module Zuora
         fail failure_message unless token.present?
 
         header = lambda do |builder|
-          builder[:api].SessionHeader do
-            builder[:api].session(token)
-          end
+          builder[:api].SessionHeader { builder[:api].session(token) }
           builder
         end
 

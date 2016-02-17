@@ -114,11 +114,8 @@ module Zuora
 
     # @return [String] - SOAP url based on @sandbox
     def api_url
-      if @sandbox
-        'https://apisandbox.zuora.com/apps/services/a/74.0'
-      else
-        'https://api.zuora.com/apps/services/a/74.0'
-      end
+      host_prefix = @sandbox ? 'sandbox' : ''
+      "https://api#{host_prefix}.zuora.com/apps/services/a/74.0"
     end
   end
 end
