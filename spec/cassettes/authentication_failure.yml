@@ -34,17 +34,14 @@ http_interactions:
       Content-Type:
       - text/xml;charset=UTF-8
       Expires:
-      - Fri, 05 Feb 2016 16:20:59 GMT
+      - Thu, 18 Feb 2016 15:06:28 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Fri, 05 Feb 2016 16:20:59 GMT
-      Transfer-Encoding:
-      - chunked
+      - Thu, 18 Feb 2016 15:06:28 GMT
       Connection:
-      - Transfer-Encoding
       - close
     body:
       encoding: UTF-8
@@ -53,5 +50,5 @@ http_interactions:
         login. User name and password do not match.</faultstring><detail><fns:LoginFault><fns:FaultCode>INVALID_VALUE</fns:FaultCode><fns:FaultMessage>Invalid
         login. User name and password do not match.</fns:FaultMessage></fns:LoginFault></detail></soapenv:Fault></soapenv:Body></soapenv:Envelope>
     http_version: 
-  recorded_at: Fri, 05 Feb 2016 16:20:59 GMT
+  recorded_at: Thu, 18 Feb 2016 15:06:29 GMT
 recorded_with: VCR 3.0.1

@@ -59,6 +59,8 @@ module Zuora
 
     # Makes auth request, handles response
     # @return [Faraday::Response]
+    # @param [String] username
+    # @param [String] password
     def authenticate!(username, password)
       auth_response = call! :login,
         username: username,

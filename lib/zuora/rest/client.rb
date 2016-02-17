@@ -34,51 +34,42 @@ module Zuora
 
       # @param [String] url - URL of request
       # @return [Faraday::Response] A response, with .headers, .status & .body
-      def get(url)
-        @connection.get do |req|
-          set_request_headers! req, url
+      [:get, :delete].each do |method|
+        define_method(method) do |url|
+          response = @connection.send(method) do |req|
+            set_request_headers! req, url
+          end
+          fail_or_response(response)
         end
       end
 
-      # @param [String] url - URL for HTTP POST request
+      # @param [String] url - URL for HTTP POST / PUT request
       # @param [Params] params - Data to be sent in request body
       # @return [Faraday::Response] A response, with .headers, .status & .body
-      def post(url, params)
-        response = @connection.post do |req|
-          set_request_headers! req, url
-          req.body = JSON.generate params
+      [:post, :put].each do |method|
+        define_method method do |url, params|
+          response = @connection.send(method) do |req|
+            set_request_headers! req, url
+            req.body = JSON.generate params
+          end
+          fail_or_response(response)
         end
-
-        response
-        # if response.body['success']
-        #  return response
-        # else
-        #  raise ErrorResponse.new(response)
-        # end
-      end
-
-      # @param [String] url - URL for HTTP PUT request
-      # @param [Params] params - Data to be sent in request body
-      # @return [Faraday::Response] A response, with .headers, .status & .body
-      def put(url, params)
-        response = @connection.put do |req|
-          set_request_headers! req, url
-          req.body = JSON.generate params
-        end
-
-        response
-        # if response.body['success']
-        #  return response
-        # else
-        #  raise ErrorResponse.new(response)
-        # end
       end
 
       private
 
+      # @param [Faraday::Response] response
+      # @throw [ErrorResponse] if unsuccessful
+      # @return [Faraady::Response]
+      def fail_or_response(response)
+        success = response.body['success'] && response.status == 200
+        fail(ErrorResponse, response) unless success
+        response
+      end
+
       # @param [Faraday::Request] req - Faraday::Request builder
-      # @param [String] username -
-      # @param [String] password -
+      # @param [String] username
+      # @param [String] password
       def set_auth_request_headers!(req, username, password)
         req.url '/rest/v1/connections'
         req.headers['apiAccessKeyId'] = username
@@ -87,8 +78,7 @@ module Zuora
       end
 
       # @param [Faraday::Request] request - Faraday Request builder
-      # @param [String] url - Relative URL for HTTP requst
-      # @return [Nil]
+      # @param [String] url - Relative URL for HTTP request
       def set_request_headers!(request, url)
         request.url url
         request.headers['Content-Type'] = 'application/json'
@@ -107,13 +97,9 @@ module Zuora
       end
 
       # @param [Boolean] sandbox - Use the sandbox url?
-      # @return [String] the API url
+      # @return [String] url
       def api_url(sandbox)
-        if sandbox
-          Zuora::Rest::SANDBOX_URL
-        else
-          Zuora::Rest::API_URL
-        end
+        sandbox ? Zuora::Rest::SANDBOX_URL : Zuora::Rest::API_URL
       end
     end
   end
