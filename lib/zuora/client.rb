@@ -20,10 +20,8 @@ module Zuora
     # @param [Boolean] sandbox
     # @return [Zuora::SoapClient]
     def initialize(username, password, sandbox = true)
-      @username = username
-      @password = password
       @sandbox = sandbox
-      authenticate!
+      authenticate!(username, password)
     end
 
     # Fire a request
@@ -61,10 +59,10 @@ module Zuora
 
     # Makes auth request, handles response
     # @return [Faraday::Response]
-    def authenticate!
+    def authenticate!(username, password)
       auth_response = call! :login,
-        username: @username,
-        password: @password
+        username: username,
+        password: password
 
       handle_auth_response auth_response
     rescue Object => e
