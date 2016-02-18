@@ -131,7 +131,7 @@ response = client.call! :subscribe,
   - Errors are thrown for unsuccessful responses
   - Internal refactorings: does not store username and password as instance vars for cleaner logging
   - API Change: Previously, the SOAP client was constructed and authenticated in a subsequent step. In this release, `Zuora::Client#authenticate!` is a private method and is called on initialization.
-    
+  - Query call: now with arity-1 and arity-3 versions, pass a ZOQL query as string or as data.
 
 # Commit rights
 Anyone who has a patch accepted may request commit rights. Please do so inside the pull request post-merge.
