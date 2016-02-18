@@ -19,10 +19,10 @@ describe 'creates a subscription' do
     let(:username) { ENV['ZUORA_SANDBOX_USERNAME'] }
     let(:password) { ENV['ZUORA_SANDBOX_PASSWORD'] }
     let(:vcr_options) { { match_requests_on: [:path] } }
-    let(:client) { Zuora::Client.new(username, password, true) }
+    let(:client) { Zuora::Soap::Client.new(username, password, true) }
 
     let!(:auth_response) do
-      VCR.use_cassette('authentication_success', match_requests_on: [:path]) do
+      VCR.use_cassette('soap/authentication_success') do
         client
       end
     end
@@ -38,7 +38,7 @@ describe 'creates a subscription' do
       describe "successfully executes #{name} .delete() request" do
         let(:response) do
           VCR.use_cassette(
-            "delete_#{name}_success",
+            "soap/delete_#{name}_success",
             match_requests_on: [:path]
           ) do
             client.call!(:delete, type: type, ids: ids)

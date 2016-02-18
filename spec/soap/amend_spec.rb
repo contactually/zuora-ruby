@@ -15,9 +15,10 @@ describe 'makes amends' do
 
   let(:username) { ENV['ZUORA_SANDBOX_USERNAME'] }
   let(:password) { ENV['ZUORA_SANDBOX_PASSWORD'] }
-  let(:client) { Zuora::Client.new(username, password, true) }
+  let(:client) { Zuora::Soap::Client.new(username, password, true) }
   let(:vcr_options) { { match_requests_on: [:path] } }
-  before { VCR.use_cassette('authentication_success', vcr_options) { client } }
+  let(:cassette) { 'soap/authentication_success' }
+  before { VCR.use_cassette(cassette, vcr_options) { client } }
 
   ######################
   [
@@ -30,7 +31,8 @@ describe 'makes amends' do
 
     describe "#{type} amendment" do
       let(:add_product_amend_response) do
-        VCR.use_cassette("amend_#{type_underscore}_success", vcr_options) do
+        cassette = "soap/amend_#{type_underscore}_success"
+        VCR.use_cassette(cassette, vcr_options) do
           client.call!(
             :amend,
             amendments: build(*factory),

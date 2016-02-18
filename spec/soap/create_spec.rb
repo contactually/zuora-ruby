@@ -5,10 +5,10 @@ describe 'create' do
   let(:vcr_options) do
     { match_requests_on: [:path] }
   end
-  let(:client) { Zuora::Client.new(username, password, true) }
+  let(:client) { Zuora::Soap::Client.new(username, password, true) }
 
   let!(:auth_response) do
-    VCR.use_cassette('authentication_success', match_requests_on: [:path]) do
+    VCR.use_cassette('soap/authentication_success') do
       client
     end
   end
@@ -29,7 +29,7 @@ describe 'create' do
            api:createResponse/api:result/api:Success).join
 
       context 'with good data' do
-        let(:cassette) { "create_#{type.to_s.underscore}_success" }
+        let(:cassette) { "soap/create_#{type.to_s.underscore}_success" }
         let(:response) do
           VCR.use_cassette(cassette, vcr_options) do
             client.call!(:create, type: type, objects: [build(*factory)])
@@ -60,7 +60,7 @@ describe 'create' do
       end
 
       context 'with missing data' do
-        let(:cassette) { "create_#{type.to_s.underscore}_failure" }
+        let(:cassette) { "soap/create_#{type.to_s.underscore}_failure" }
 
         subject do
           VCR.use_cassette(cassette, vcr_options) do

@@ -7,11 +7,11 @@ describe Zuora::Client do
   let(:vcr_options) do
     { match_requests_on: [:path] }
   end
-  let(:client) { Zuora::Client.new(username, password, true) }
+  let(:client) { Zuora::Soap::Client.new(username, password, true) }
 
   context 'with correct credentials' do
     let(:auth_response) do
-      VCR.use_cassette('authentication_success', match_requests_on: [:path]) do
+      VCR.use_cassette('soap/authentication_success') do
         client
       end
     end
@@ -30,7 +30,7 @@ describe Zuora::Client do
     let(:username) { 'INVALID_USERNAME' }
 
     subject do
-      VCR.use_cassette('authentication_failure', match_requests_on: [:path]) do
+      VCR.use_cassette('soap/authentication_failure') do
         client
       end
     end
