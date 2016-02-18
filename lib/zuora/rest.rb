@@ -7,7 +7,15 @@ module Zuora
     ConnectionError = Class.new StandardError
 
     # Non-success response
-    ErrorResponse = Class.new StandardError
+    class ErrorResponse < StandardError
+      attr_reader :response
+
+      def initialize(message = nil, response = nil)
+        super(message)
+        @response = response
+      end
+    end
   end
 end
+
 require_relative 'rest/client'

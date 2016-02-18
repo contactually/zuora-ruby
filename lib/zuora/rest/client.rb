@@ -63,7 +63,7 @@ module Zuora
       # @return [Faraady::Response]
       def fail_or_response(response)
         success = response.body['success'] && response.status == 200
-        fail(ErrorResponse, response) unless success
+        fail(ErrorResponse.new('Non-200', response)) unless success
         response
       end
 
