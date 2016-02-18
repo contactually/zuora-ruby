@@ -17,7 +17,6 @@ describe 'makes amends' do
   let(:password) { ENV['ZUORA_SANDBOX_PASSWORD'] }
   let(:client) { Zuora::Client.new(username, password, true) }
   let(:vcr_options) { { match_requests_on: [:path] } }
-
   before { VCR.use_cassette('authentication_success', vcr_options) { client } }
 
   ######################

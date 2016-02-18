@@ -47,6 +47,21 @@ describe 'creates a subscription' do
           FROM Subscription
           WHERE subscriptionStartDate > '#{(Date.today - 10)}'
         )
+      },
+      {
+        name: :data_format,
+        query: [
+          [:id],
+          :subscription,
+          { subscription_start_date: (Date.today - 10) }
+        ]
+      },
+      {
+        name: :data_format_no_where_clauses,
+        query: [
+          [:id],
+          :subscription
+        ]
       }
     ].each do |test|
       name, query = test.values_at :name, :query
@@ -56,7 +71,7 @@ describe 'creates a subscription' do
             "query_#{name}_success",
             match_requests_on: [:path]
           ) do
-            client.call!(:query, query)
+            client.call!(:query, *(query.is_a?(Array) ? query : [query]))
           end
         end
         let(:response_body) { Nokogiri::XML(response.raw.body) }
