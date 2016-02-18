@@ -114,7 +114,7 @@ response = client.call! :subscribe,
      - Adds VCR for mocking out HTTP requests
      - Adds integration specs for `Subscribe` `create!` and `update!` and `Account` `create!` and `update!`
 
-* **[0.3.0 2016-1-28]** Focus on SOAP API, simpify client library feature set
+* **[0.3.0 2016-1-28]** Focus on SOAP API, simplify client library feature set
     - Implement SOAP API Client; it provides fuller functionality than REST 
     - Focus on constructing + composing hash-like Ruby objects into XML SOAP requests 
     - No object-level validations; relies on Zuora's own responses
@@ -124,6 +124,14 @@ response = client.call! :subscribe,
   - Allow flexible submission of parameters to the API.  Let Zuora's API handle validation instead of performing in the client.
   - Adds integration specs to cover base functionality
   - Adds exception raising to match servier-side exceptions such as missing required fields, invalid data, etc.
+
+* **[0.5.0 2016-02-18]** Adds back REST Client
+  - Adds integration specs to cover GET, POST, PUT, 
+  - Unlike SOAP client, keys are not auto-camelcased, and Farraday response is not wrapped since the body is Ruby
+  - Errors are thrown for unsuccessful responses
+  - Internal refactorings: does not store username and password as instance vars for cleaner logging
+  - API Change: Previously, the SOAP client was constructed and authenticated in a subsequent step. In this release, `Zuora::Client#authenticate!` is a private method and is called on initialization.
+    
 
 # Commit rights
 Anyone who has a patch accepted may request commit rights. Please do so inside the pull request post-merge.

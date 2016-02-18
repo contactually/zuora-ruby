@@ -1,0 +1,55 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://apisandbox-api.zuora.com/rest/v1/accounts
+    body:
+      encoding: UTF-8
+      string: '{"name":"Account Name","hpmCreditCardPaymentMethodId":"2c92c0f952e407170152f11b73e65d85","currency":"USD","billCycleDay":"1","billToContact":{"firstName":"Joe","lastName":"Schmoe","country":"USA"}}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/json
+      Cookie:
+      - ZSession=RmeipYqHIQQTnou14G0bP-HRT3xh84qud42RZYPoI3AK59Ei_9B7oh-mtrdop4PxG6VyQutkHee1cbnQLgKDLNISqM61gxGH6AxM2XVihZSwUfREDk0tPJzVUX_2MN6j1xYDMgaRvFeDgI_Zcol4dWZ-FDCEeGyzU9rl7Hb3pVZuzCsgr8K9lweg79653CPuRY8QTFZ-G7NRO4jJTdJPvfQxWtFWctAjsmXuwLhmxWPwdMplmAaP5ILEUWKG8phL;
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - Zuora App
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '165'
+      Expires:
+      - Wed, 17 Feb 2016 21:25:41 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Wed, 17 Feb 2016 21:25:41 GMT
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - ZSession=2juIQOmjUAQC-8lSlBrsNj5nswoPln4vHjBvg5pteOB3uFWPN-EP-6aQ8jx4UVlbKAWXeMoQawQL7EkXFgWSBLFu9BkPixQBFn8q8x5lESiVETdbDOJlQ7iMdo7vgDpiDckjuKnXm-eh7IYYBd3ctUPbRgD-nIQFlC87mJpHRXqsfo-yFhO3cfj-gRzbuZ9P8xCJHBSzmiDK6o9VA93cJqWg7UWBof9jKHUzaybqgzoxybOobe-mOcJts2wk9YhF;
+        Path=/; Secure; HttpOnly
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "success" : true,
+          "accountId" : "2c92c0fa52e3f6790152f11fd4fd1fcf",
+          "accountNumber" : "A00000369",
+          "paymentMethodId" : "2c92c0f952e407170152f11b73e65d85"
+        }
+    http_version: 
+  recorded_at: Wed, 17 Feb 2016 21:25:41 GMT
+recorded_with: VCR 3.0.1

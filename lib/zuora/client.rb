@@ -20,21 +20,8 @@ module Zuora
     # @param [Boolean] sandbox
     # @return [Zuora::SoapClient]
     def initialize(username, password, sandbox = true)
-      @username = username
-      @password = password
       @sandbox = sandbox
-    end
-
-    # Makes auth request, handles response
-    # @return [Faraday::Response]
-    def authenticate!
-      auth_response = call! :login,
-        username: @username,
-        password: @password
-
-      handle_auth_response auth_response
-    rescue Object => e
-      raise Zuora::Errors::SoapConnectionError, e
+      authenticate!(username, password)
     end
 
     # Fire a request
@@ -69,6 +56,20 @@ module Zuora
     end
 
     private
+
+    # Makes auth request, handles response
+    # @return [Faraday::Response]
+    # @param [String] username
+    # @param [String] password
+    def authenticate!(username, password)
+      auth_response = call! :login,
+        username: username,
+        password: password
+
+      handle_auth_response auth_response
+    rescue Object => e
+      raise Zuora::Errors::SoapConnectionError, e
+    end
 
     # Generate envelope for request
     # @param [Symbol] call_name - one of the supported calls (see #call)
@@ -115,11 +116,8 @@ module Zuora
 
     # @return [String] - SOAP url based on @sandbox
     def api_url
-      if @sandbox
-        'https://apisandbox.zuora.com/apps/services/a/74.0'
-      else
-        'https://api.zuora.com/apps/services/a/74.0'
-      end
+      host_prefix = @sandbox ? 'sandbox' : ''
+      "https://api#{host_prefix}.zuora.com/apps/services/a/74.0"
     end
   end
 end

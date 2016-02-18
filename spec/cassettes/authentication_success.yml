@@ -34,13 +34,13 @@ http_interactions:
       Content-Type:
       - text/xml;charset=UTF-8
       Expires:
-      - Mon, 01 Feb 2016 14:44:52 GMT
+      - Thu, 18 Feb 2016 15:06:27 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Mon, 01 Feb 2016 14:44:52 GMT
+      - Thu, 18 Feb 2016 15:06:27 GMT
       Content-Length:
       - '623'
       Connection:
@@ -48,7 +48,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><ns1:loginResponse
-        xmlns:ns1="http://api.zuora.com/"><ns1:result><ns1:Session>yYR0CKfjF6yOF3HfGUwHlwEY-va2xtKjLizZeGf0M9WoJ9kb5-iz7aNquacAVdop5CDOe-YmJNGRle5yUE9TpGrtQqZUqNyWBf0E9i23q8ntqH-CVgyZEs_Zy9Yzi-RlKh5NDE4rpIIDV4r62namSua-MQTILHnKXalZWXqYPNV0btirvSxa1NCqDIbVhV3gvbw46cWz0mNkqHe99tJdF1f2QiULGRMRHyvFGLy6nqtGo2MgF0HZsNklaP3PQ1NX</ns1:Session><ns1:ServerUrl>https://apisandbox.zuora.com/apps/services/a/74.0</ns1:ServerUrl></ns1:result></ns1:loginResponse></soapenv:Body></soapenv:Envelope>
+        xmlns:ns1="http://api.zuora.com/"><ns1:result><ns1:Session>5B5xP0lYytAWbrRmz5DeW2Zcj2yaG0ReK-t6pPrmxDGWQAGof4nCwUTGrtCDsEtwxAipvz3jStGyPjsNFhwtiweceH9PLnOoUfeIBdpFKb-wbR7qOdCj0LKQgoO3UMS8Ay-Wh68Twklfttm3FtGpRsegJX4zPsw5b7RfHYG6oSugPZt9JYORxrdndPbDLx5Qe6VEYL-dRrCxS56RsZ_h4j9dCwi3-0GlbsMudYRAn5NF03VGVCWVVY16jmBK8fwa</ns1:Session><ns1:ServerUrl>https://apisandbox.zuora.com/apps/services/a/74.0</ns1:ServerUrl></ns1:result></ns1:loginResponse></soapenv:Body></soapenv:Envelope>
     http_version: 
-  recorded_at: Mon, 01 Feb 2016 14:44:52 GMT
+  recorded_at: Thu, 18 Feb 2016 15:06:27 GMT
 recorded_with: VCR 3.0.1
