@@ -2,28 +2,66 @@
 [![Code Climate](https://codeclimate.com/repos/569444dfa3d810003a00313f/badges/416bae00acf65d690efe/gpa.svg)](https://codeclimate.com/repos/569444dfa3d810003a00313f/feed)
 [![Test Coverage](https://codeclimate.com/repos/569444dfa3d810003a00313f/badges/416bae00acf65d690efe/coverage.svg)](https://codeclimate.com/repos/569444dfa3d810003a00313f/coverage)
 
-# Zuora SOAP API Client
+# Zuora SOAP and REST API Client
 
 ## Features
-* HTTP client to Zuora SOAP API
+* HTTP client to Zuora SOAP and REST API
 * Authentication and session storage
 * SOAP XML request constructors from Ruby data
 * Light validation of top-level forms; field-level validation delegated to Zuora's responses.
 
 ## Usage
 
-
 ### Client
 
-Create a client
+Creating a client to both SOAP and REST API is easy:
 ```ruby
 client = Zuora::Client.new(<username>, <password>)
 ```
+This will cache the login credentials (don't worry, they're excluded from being logged). Upon using methods requiring SOAP or REST client, that client is lazily authenticated against the respective API. The resulting session is cached and used in subsequent requests.
 
+It's possible to use the clients directly:
+```ruby
+soap_client = Zuora::Soap::Client.new(<username>, <password>)
+rest_client = Zuora::Rest::Client.new(<username>, <password>)
+```
 
-Execute a SOAP request. Currently only  `:create` and `:subscribe` are supported
+### SOAP Calls
+Soap calls are made using the `call!` method. The argument structure varies depending on the SOAP method. See specs for exact interfaces.
 
-#### Create Example
+```ruby
+client.call! :create, type: :Invoice, objects: [{...}, {...}]
+client.call! :update, type: :Invoice, objects: [{...}, {...}]
+client.call! :delete, type: :Invoice, ids: [{...}, {...}]
+client.call! :generate, objects: [{...}, {...}]
+client.call! :query, "SELECT Notes FROM Account WHERE id = '1'"
+client.call! :query, [:notes], :Account, {id: 1}
+client.call! :amend, 
+  amendments: {...}, 
+  amend_options: {...}, 
+  preview_options: {} 
+client.call! :subscribe,
+  payment_method: {...}
+  bill_to_contact: {...}
+  sold_to_contact: {...}
+  subscribe_options: {...}
+  subscription: {...}
+  rate_plan: {...}
+```
+
+SOAP requests return a `Zuora::Response` object that parses the XML response into Ruby data via the `#to_h` method. The raw request is available via the `#raw` method.
+
+### REST
+```ruby
+client.get('/rest/v1/accounts/1')
+client.delete('/rest/v1/accounts/1')
+client.post('/rest/v1/accounts', notes: 'hello')
+client.put('/rest/v1/accounts/1', id: 1, notes: 'world')
+```
+
+REST requests return a Farraday::Response object, which has a `body` and `status`. See [Farraday](https://github.com/lostisland/faraday) docs for details. 
+
+#### SOAP Create Example
 
  ```ruby
 response = client.call! :create,
@@ -125,14 +163,13 @@ response = client.call! :subscribe,
   - Adds integration specs to cover base functionality
   - Adds exception raising to match servier-side exceptions such as missing required fields, invalid data, etc.
 
-* **[0.5.0 2016-02-18]** Adds back REST Client
-  - Adds integration specs to cover GET, POST, PUT, 
-  - Unlike SOAP client, keys are not auto-camelcased, and Farraday response is not wrapped since the body is Ruby
+* **[0.5.0 2016-02-18]** Uniform REST and SOAP client
+  - Generalizes the client to work for both REST and SOAP APIs. In practice, both are useful to access the gamut  of Zuora's operations. SOAP is better for fine-grained control, while REST is larger-grained and shifts the burden of transactions onto Zuora for certain operations.
+  - Adds integration specs to cover REST GET, POST, PUT, DELETE
   - Errors are thrown for unsuccessful responses
-  - Internal refactorings: does not store username and password as instance vars for cleaner logging
-  - API Change: Previously, the SOAP client was constructed and authenticated in a subsequent step. In this release, `Zuora::Client#authenticate!` is a private method and is called on initialization.
-  - Query call: now with arity-1 and arity-3 versions, pass a ZOQL query as string or as data.
-
+  - Prevents credentials from being logged
+  - SOAP Query call: now with arity-1 and arity-3 versions, pass a ZOQL query as string or as data. See docs and specs for details.
+ 
 # Commit rights
 Anyone who has a patch accepted may request commit rights. Please do so inside the pull request post-merge.
 

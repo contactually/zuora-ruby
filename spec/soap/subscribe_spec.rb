@@ -28,11 +28,11 @@ describe 'creates a subscription' do
     let(:username) { ENV['ZUORA_SANDBOX_USERNAME'] }
     let(:password) { ENV['ZUORA_SANDBOX_PASSWORD'] }
     let(:vcr_options) { { match_requests_on: [:path] } }
-    let(:client) { Zuora::Client.new(username, password, true) }
+    let(:client) { Zuora::Soap::Client.new(username, password, true) }
 
     ## Authentication
     let!(:auth_response) do
-      VCR.use_cassette('authentication_success', match_requests_on: [:path]) do
+      VCR.use_cassette('soap/authentication_success') do
         client
       end
     end
@@ -41,7 +41,7 @@ describe 'creates a subscription' do
     let(:subscribe_body_xml) { Nokogiri::XML(subscribe_response.raw.body) }
 
     it 'successfully executes subscribe request' do
-      VCR.use_cassette('subscribe_success', match_requests_on: [:path]) do
+      VCR.use_cassette('soap/subscribe_success') do
         expect(subscribe_response.raw.status).to eq 200
 
         expect(
