@@ -27,7 +27,7 @@ module Zuora
         if value.is_a?(Hash)
           handle_errors(value)
         elsif value.is_a?(Array)
-          value.each { |v| handle_errors(v) }
+          value.each { |v| handle_errors(v) unless v.is_a?(String) }
         elsif error?(key, value)
           errors << value
         end
