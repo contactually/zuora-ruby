@@ -4,3 +4,4 @@ module Zuora
 end
 
 require_relative 'soap/client'
+require_relative 'soap/z_object'
