@@ -11,9 +11,11 @@ module Zuora
         lambda do |builder|
           builder[:api].amend do
             builder[:api].requests do
-              build_object builder, :amendments, :obj
-              build_object builder, :amend_options, :api
-              build_object builder, :preview_options, :api
+              Array.wrap(amendments).each do |amendment|
+                build_object builder, :amendments, amendment, :obj
+              end
+              build_object builder, :amend_options, amend_options, :api
+              build_object builder, :preview_options, preview_options, :api
             end
           end
         end
@@ -55,8 +57,7 @@ module Zuora
       # @param [Symbol] property_name - name of a property on this object
       # @param [Symbol] child_ns - namespace of child node fields
       # @return nil
-      def build_object(builder, property_name, child_ns)
-        object = send property_name
+      def build_object(builder, property_name, object, child_ns)
         fail 'Objects must respond to each' unless object.respond_to?(:each)
         object_name = Zuora::Utils::Envelope.to_zuora_key property_name
         builder[:api].send(object_name) do
