@@ -29,15 +29,42 @@ module Zuora
         xml(header, body)
       end
 
-      # Builds multiple fields
+      # Builds one field using key and value. Treats value differently:
+      #   - Hash: recursively builds fields
+      #   - ZObject: builds a nested z object, building fields inside
+      #   - Nil: does nothing
+      #   - Else: builds the field node
+      # @param [Nokogiri::XML::Builder] builder
+      # @param [Symbol] namespace
+      # @param [Hash] key
+      # @param [Hash|Zuora::Soap::ZObject|NilClass|Object] value
+      # @return nil
+      def self.build_field(builder, namespace, key, value)
+        zuora_field_name = to_zuora_key(key)
+        build_fields_thunk = -> { build_fields builder, namespace, value }
+        case value
+        when Hash
+          builder[namespace].send(zuora_field_name) { build_fields_thunk[] }
+        when Zuora::Soap::ZObject
+          zuora_type = to_zuora_key(value.type)
+          xsi = { 'xsi:type' => "obj:#{zuora_type}" }
+          builder[:obj].send(zuora_field_name) do
+            builder[:api].send(zuora_type, xsi) { build_fields_thunk[] }
+          end
+        when NilClass
+        else
+          builder[namespace].send(zuora_field_name, value)
+        end
+      end
+
+      # Builds multiple fields in given object
       # @param [Nokogiri::XML::Builder] builder
       # @param [Symbol] namespace
       # @param [Hash] object
       # @return nil
       def self.build_fields(builder, namespace, object = {})
         object.each do |key, value|
-          zuora_field_name = to_zuora_key(key)
-          builder[namespace].send(zuora_field_name, value) unless value.nil?
+          build_field builder, namespace, key, value
         end
       end
 
