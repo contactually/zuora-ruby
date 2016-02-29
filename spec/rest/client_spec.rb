@@ -32,6 +32,22 @@ describe Zuora::Rest::Client do
       expect { client }.to_not raise_exception
     end
 
+    context 'with rate limiting' do
+      let(:client) do
+        VCR.use_cassette('rest/auth_success_rate_limited') do
+          Zuora::Rest::Client.new username, password, true
+        end
+      end
+
+      before do
+        Zuora::RETRY_WAITING_PERIOD = 0.1
+      end
+
+      it 'retries the request' do
+        expect { client }.to_not raise_exception
+      end
+    end
+
     let(:payment_method_id) { '2c92c0f952e407170152f11b73e65d85' }
 
     context 'with an account' do

@@ -33,10 +33,11 @@ module Zuora
           request.body = body.to_xml
         end
 
+        # Handle rate limiting
+        return handle_rate_limiting(body) if raw_response.status == 429
+
         response = Zuora::Response.new(raw_response)
-
         response.handle_errors(response.to_h)
-
         response
       end
 
@@ -53,6 +54,13 @@ module Zuora
       end
 
       private
+
+      # @param [Xml] body
+      # @return [Zuora::Response]
+      def handle_rate_limiting(body)
+        sleep(Zuora::RETRY_WAITING_PERIOD)
+        request!(body)
+      end
 
       # Makes auth request, handles response
       # @return [Faraday::Response]
