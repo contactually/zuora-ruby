@@ -24,6 +24,22 @@ describe Zuora::Client do
       auth_response
       expect(client.session_token).to_not be_nil
     end
+
+    context 'with rate ling' do
+      let(:auth_response) do
+        VCR.use_cassette('soap/authentication_success_rate_limit') do
+          client
+        end
+      end
+
+      before do
+        Zuora::RETRY_WAITING_PERIOD = 0.1
+      end
+
+      it 'retries the request' do
+        expect { auth_response }.to_not raise_exception
+      end
+    end
   end
 
   context 'with incorrect credentials' do

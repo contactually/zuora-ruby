@@ -24,9 +24,13 @@ module Zuora
           set_auth_request_headers! req, username, password
         end
 
-        if response.status == 200
+        case response.status
+        when 200
           @auth_cookie = response.headers['set-cookie'].split(' ')[0]
           @connection = conn
+        when 429
+          sleep(Zuora::RETRY_WAITING_PERIOD)
+          return initialize(username, password, sandbox)
         else
           fail Zuora::Rest::ConnectionError, response.body['reasons']
         end
@@ -39,6 +43,10 @@ module Zuora
           response = @connection.send(method) do |req|
             set_request_headers! req, url
           end
+
+          # Handle rate limiting
+          return handle_rate_limiting(method, url) if response.status == 429
+
           fail_or_response(response)
         end
       end
@@ -52,15 +60,33 @@ module Zuora
             set_request_headers! req, url
             req.body = JSON.generate params
           end
+
+          # Handle rate limiting
+          if response.status == 429
+            return handle_rate_limiting(method, url, params)
+          end
+
           fail_or_response(response)
         end
       end
 
       private
 
+      # @param [String] method
+      # @param [String] url
+      # @param [Hash] params
+      def handle_rate_limiting(method, url, params = nil)
+        sleep(Zuora::RETRY_WAITING_PERIOD)
+        if params.present?
+          send(method, url, params)
+        else
+          send(method, url)
+        end
+      end
+
       # @param [Faraday::Response] response
       # @throw [ErrorResponse] if unsuccessful
-      # @return [Faraady::Response]
+      # @return [Faraday::Response]
       def fail_or_response(response)
         success = response.body['success'] && response.status == 200
         fail(ErrorResponse.new('Non-200', response)) unless success

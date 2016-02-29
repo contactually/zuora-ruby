@@ -33,17 +33,17 @@ http_interactions:
       Content-Length:
       - '22'
       Expires:
-      - Fri, 19 Feb 2016 15:53:48 GMT
+      - Mon, 29 Feb 2016 14:43:33 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Fri, 19 Feb 2016 15:53:48 GMT
+      - Mon, 29 Feb 2016 14:43:33 GMT
       Connection:
       - keep-alive
       Set-Cookie:
-      - ZSession=rsUjtZkiFKZ6UPxtYq5miox7IJWJTfe8F8onFDQcCKEiat5Zn8u_vJk4OU4IPJz2LUhJKfOpvqyYhQ2FADFuXXoJ56UwEJNt3NMsPFh_acjPY2bZ75r8RFbr8uu4Ml5v84TuHDrLpbdWOWJtYfckssv5qgknS_EdlcuzyqUuDrEVUliKEgA8Uk_-A_muyKzMOIC0jVW_wno8wiwxqn7jGLNbxTAThFVRecoddXeS_biYW5rXWCAasy16mpiIfZrK;
+      - ZSession=is_C_mSqMTzf0kzrrOUw8-fV1eTmPccGyYyr6C9xDz0Up-uRS3FaXncKUheu_EeSwGol9jnGPkAtYWX4iz084gwWFURAFc3SamtoXj8hQF6iWZpzSAKNchuNvQaRUUbMH6B-Qb_huAWY9yR855Z6OwfuCan3VHK9oKijQ5g2diVLmjHqVlD87ymvXQeGiq7EP61H-IFTX2MrBrsGpEKRneGZJgvTwlqm16B0qiPct_cJy8wxKVdpbQ6mQ_3ZPdEY;
         Path=/; Secure; HttpOnly
     body:
       encoding: UTF-8
@@ -51,6 +51,6 @@ http_interactions:
         {
           "success" : true
         }
-    http_version:
-  recorded_at: Fri, 19 Feb 2016 15:53:48 GMT
+    http_version: 
+  recorded_at: Mon, 29 Feb 2016 14:43:33 GMT
 recorded_with: VCR 3.0.1

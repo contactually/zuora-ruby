@@ -21,6 +21,8 @@ module Zuora
     'xmlns:ns1' => 'http://api.zuora.com/',
     'xmlns:ns2' => 'http://object.api.zuora.com/'
   ).freeze
+
+  RETRY_WAITING_PERIOD = 120 # seconds
 end
 
 require_relative 'zuora/version'
