@@ -48,7 +48,7 @@ module Zuora
         when Zuora::Soap::ZObject
           zuora_type = to_zuora_key(value.type)
           xsi = { 'xsi:type' => "obj:#{zuora_type}" }
-          builder[:obj].send(zuora_field_name) do
+          builder[:api].send(zuora_field_name) do
             builder[:api].send(zuora_type, xsi) { build_fields_thunk[] }
           end
         when NilClass

@@ -34,7 +34,7 @@ describe Zuora::Utils::Envelope do
     let(:parsed_xml) { Nokogiri::XML(generated_xml) }
 
     xpath_selectors = %w(
-      //obj:ProductRatePlanChargeTierData/api:ProductRatePlanChargeTier
+      //api:ProductRatePlanChargeTierData/api:ProductRatePlanChargeTier
       //api:ProductRatePlanChargeTier/obj:DiscountPercentage
       //api:ProductRatePlanChargeTier/obj:Id
     )
