@@ -37,7 +37,11 @@ module Zuora
         return handle_rate_limiting(body) if raw_response.status == 429
 
         response = Zuora::Response.new(raw_response)
-        response.handle_errors(response.to_h)
+        begin
+          response.handle_errors(response.to_h)
+        rescue => e
+          return handle_lock_competition(e, body)
+        end
         response
       end
 
@@ -62,14 +66,22 @@ module Zuora
         request!(body)
       end
 
+      def handle_lock_competition(error, body)
+        if error.message.match(/(Operation failed due to a lock competition)/i)
+          handle_rate_limiting(body)
+        else
+          raise error
+        end
+      end
+
       # Makes auth request, handles response
       # @return [Faraday::Response]
       # @param [String] username
       # @param [String] password
       def authenticate!(username, password)
         auth_response = call! :login,
-          username: username,
-          password: password
+                              username: username,
+                              password: password
 
         handle_auth_response auth_response
       rescue Object => e
