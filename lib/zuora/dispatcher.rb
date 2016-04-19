@@ -27,6 +27,10 @@ module Zuora
         Zuora::Calls::Query
       end
 
+      def query_more
+        Zuora::Calls::QueryMore
+      end
+
       def delete
         Zuora::Calls::Delete
       end

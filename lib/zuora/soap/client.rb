@@ -67,10 +67,10 @@ module Zuora
       end
 
       def handle_lock_competition(error, body)
-        if error.message.match(/(Operation failed due to a lock competition)/i)
+        if error.message =~ /(Operation failed due to a lock competition)/i
           handle_rate_limiting(body)
         else
-          raise error
+          fail error
         end
       end
 
@@ -80,8 +80,8 @@ module Zuora
       # @param [String] password
       def authenticate!(username, password)
         auth_response = call! :login,
-                              username: username,
-                              password: password
+          username: username,
+          password: password
 
         handle_auth_response auth_response
       rescue Object => e
