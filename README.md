@@ -139,7 +139,25 @@ response = client.call! :subscribe,
 ```
 
 # Changelog
-* **[0.1.0 - 2016-01-12]** Initial release 
+* **[0.5.0 2016-05-12]** Uniform REST and SOAP client
+  - Generalizes the client to work for both REST and SOAP APIs. In practice, both are useful to access the gamut  of Zuora's operations. SOAP is better for fine-grained control, while REST is larger-grained and shifts the burden of transactions onto Zuora for certain operations.
+  - Adds integration specs to cover REST GET, POST, PUT, DELETE
+  - Errors are thrown for unsuccessful responses
+  - Prevents credentials from being logged
+  - SOAP Query call: now with arity-1 and arity-3 versions, pass a ZOQL query as string or as data. See docs and specs for details.
+  - Add support for queryMore for result sets greater than 2000 in size
+
+* **[0.4.0 2016-02-10]** Improves interface and feedback loop between developer and Zuora servers.
+  - Allow flexible submission of parameters to the API.  Let Zuora's API handle validation instead of performing in the client.
+  - Adds integration specs to cover base functionality
+  - Adds exception raising to match servier-side exceptions such as missing required fields, invalid data, etc.
+
+* **[0.3.0 2016-1-28]** Focus on SOAP API, simplify client library feature set
+    - Implement SOAP API Client; it provides fuller functionality than REST 
+    - Focus on constructing + composing hash-like Ruby objects into XML SOAP requests 
+    - No object-level validations; relies on Zuora's own responses
+    - See integration specs for full interface
+
 * **[0.2.0] - 2016-01-14]** Models
      - Refactored client to clarify logic 
      - Replaces `ActiveRecord::Model` and `::Validations` with a base module that provides powerful and extensible facilities for modeling remote resources in Ruby. 
@@ -152,24 +170,8 @@ response = client.call! :subscribe,
      - Adds VCR for mocking out HTTP requests
      - Adds integration specs for `Subscribe` `create!` and `update!` and `Account` `create!` and `update!`
 
-* **[0.3.0 2016-1-28]** Focus on SOAP API, simplify client library feature set
-    - Implement SOAP API Client; it provides fuller functionality than REST 
-    - Focus on constructing + composing hash-like Ruby objects into XML SOAP requests 
-    - No object-level validations; relies on Zuora's own responses
-    - See integration specs for full interface
-    
-* **[0.4.0 2016-02-10]** Improves interface and feedback loop between developer and Zuora servers.
-  - Allow flexible submission of parameters to the API.  Let Zuora's API handle validation instead of performing in the client.
-  - Adds integration specs to cover base functionality
-  - Adds exception raising to match servier-side exceptions such as missing required fields, invalid data, etc.
+* **[0.1.0 - 2016-01-12]** Initial release 
 
-* **[0.5.0 2016-02-18]** Uniform REST and SOAP client
-  - Generalizes the client to work for both REST and SOAP APIs. In practice, both are useful to access the gamut  of Zuora's operations. SOAP is better for fine-grained control, while REST is larger-grained and shifts the burden of transactions onto Zuora for certain operations.
-  - Adds integration specs to cover REST GET, POST, PUT, DELETE
-  - Errors are thrown for unsuccessful responses
-  - Prevents credentials from being logged
-  - SOAP Query call: now with arity-1 and arity-3 versions, pass a ZOQL query as string or as data. See docs and specs for details.
- 
 # Commit rights
 Anyone who has a patch accepted may request commit rights. Please do so inside the pull request post-merge.
 
