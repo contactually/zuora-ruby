@@ -4,10 +4,10 @@ module Zuora
     SANDBOX_URL = 'https://apisandbox-api.zuora.com/rest/v1/'.freeze
 
     # Unable to connect. Check username / password
-    ConnectionError = Class.new StandardError
+    ConnectionError = Class.new Errors::GenericError
 
     # Non-success response
-    class ErrorResponse < StandardError
+    class ErrorResponse < Errors::GenericError
       attr_reader :response
 
       def initialize(message = nil, response = nil)
