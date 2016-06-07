@@ -1,6 +1,8 @@
 module Zuora
   module Errors
-    class InvalidValue < StandardError
+    GenericError = Class.new(StandardError)
+
+    class InvalidValue < GenericError
       attr_reader :response
 
       def initialize(msg = nil, response = nil)
@@ -9,10 +11,10 @@ module Zuora
       end
     end
 
-    class InvalidCredentials < StandardError
+    class InvalidCredentials < GenericError
     end
 
-    class SoapConnectionError < StandardError
+    class SoapConnectionError < GenericError
     end
   end
 end
