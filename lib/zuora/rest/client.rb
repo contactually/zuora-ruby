@@ -114,7 +114,7 @@ module Zuora
       # @param [String] url
       # @return [Faraday::Client]
       def connection(url)
-        Faraday.new(url, ssl: { verify: false }) do |conn|
+        Faraday.new(url, ssl: { verify: true }) do |conn|
           conn.request :json
           conn.response :json, content_type: /\bjson$/
           conn.use :instrumentation

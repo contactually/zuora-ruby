@@ -126,7 +126,7 @@ module Zuora
       # Initializes a connection using api_url
       # @return [Faraday::Connection]
       def connection
-        Faraday.new(api_url, ssl: { verify: false }) do |conn|
+        Faraday.new(api_url, ssl: { verify: true }) do |conn|
           conn.adapter Faraday.default_adapter
         end
       end
