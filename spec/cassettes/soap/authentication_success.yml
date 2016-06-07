@@ -10,7 +10,7 @@ http_interactions:
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:api="http://api.zuora.com/" xmlns:obj="http://object.api.zuora.com/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
           <soapenv:Body>
             <api:login>
-              <api:username>engineering+dev@contactually.com</api:username>
+              <api:username><ZUORA_SANDBOX_USERNAME></api:username>
               <api:password><ZUORA_SANDBOX_PASSWORD></api:password>
             </api:login>
           </soapenv:Body>
@@ -34,13 +34,13 @@ http_interactions:
       Content-Type:
       - text/xml;charset=UTF-8
       Expires:
-      - Tue, 19 Apr 2016 17:42:00 GMT
+      - Tue, 07 Jun 2016 01:35:14 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Tue, 19 Apr 2016 17:42:00 GMT
+      - Tue, 07 Jun 2016 01:35:14 GMT
       Content-Length:
       - '623'
       Connection:
@@ -48,7 +48,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: <?xml version='1.0' encoding='UTF-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><ns1:loginResponse
-        xmlns:ns1="http://api.zuora.com/"><ns1:result><ns1:Session>xoXhMFHyfEj4lhEaY_28fBI0nhNVmfZ7yMGeKm5XlE1CdoSDzT5i8XLghigRowdNil03o8mmmG7tvwixTTkbgUcGjWlBg_U6quk9cIl_NVjL2vX43FfjZakT-lDL8asUB7v921qmK7TN6p_4x_duxD3IG1GNva1V9bf0EHza2J40Ab0ijMaGZ-XXMDQhR_TFGYLyBtaC3s5f20TlTN33wqIy9XTEIxPVhfR3e6YqP0j6TL1i5a064K92VNxqeVqR</ns1:Session><ns1:ServerUrl>https://apisandbox.zuora.com/apps/services/a/74.0</ns1:ServerUrl></ns1:result></ns1:loginResponse></soapenv:Body></soapenv:Envelope>
+        xmlns:ns1="http://api.zuora.com/"><ns1:result><ns1:Session>KI_2zZ7Ui2VZVZKV55COCFwarxYa_Z86HngCvlSeQdG39JB6VCAUrYxuuSTkk_hVvh_6pFCXVOsoGsHxJZ9cKuNBw7P_xHAs5pNrv6Rr4mal5v3blhmNCJdyQOgI0tx75qc3GaMRe9_S4a6JMcdpjMi7PsxBjyXKnE4MyE-zOsEtlZ9RggOlGnPxoh44vxe_khyYnenZ1v7ZcJIxiOTgAdk1W_IyeZ8q00uRFsJq3hRhyEB5UGLXxVDdcWhQVIty</ns1:Session><ns1:ServerUrl>https://apisandbox.zuora.com/apps/services/a/74.0</ns1:ServerUrl></ns1:result></ns1:loginResponse></soapenv:Body></soapenv:Envelope>
     http_version: 
-  recorded_at: Tue, 19 Apr 2016 17:42:00 GMT
+  recorded_at: Tue, 07 Jun 2016 01:35:14 GMT
 recorded_with: VCR 3.0.1

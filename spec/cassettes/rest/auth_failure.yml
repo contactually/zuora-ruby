@@ -33,13 +33,13 @@ http_interactions:
       Content-Length:
       - '138'
       Expires:
-      - Fri, 19 Feb 2016 15:53:45 GMT
+      - Tue, 07 Jun 2016 01:34:54 GMT
       Cache-Control:
       - max-age=0, no-cache, no-store
       Pragma:
       - no-cache
       Date:
-      - Fri, 19 Feb 2016 15:53:45 GMT
+      - Tue, 07 Jun 2016 01:34:54 GMT
       Connection:
       - close
     body:
@@ -53,5 +53,5 @@ http_interactions:
           } ]
         }
     http_version: 
-  recorded_at: Fri, 19 Feb 2016 15:53:45 GMT
+  recorded_at: Tue, 07 Jun 2016 01:34:54 GMT
 recorded_with: VCR 3.0.1
