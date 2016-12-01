@@ -1,0 +1,16 @@
+# Notification Settings
+notifications:
+  email: false
+  slack:
+    rooms:
+      - contactually:SRVPHVd6mg8QNK0jDgfytYDg#product-notifications
+
+sudo: required
+dist: trusty
+language: ruby
+cache: bundler
+rvm:
+  - 2.3.1
+
+script:
+  - bundle exec rspec
