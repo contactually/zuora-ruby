@@ -1,6 +1,6 @@
 [![Circle CI](https://circleci.com/gh/contactually/zuora-ruby.svg?style=shield&circle-token=808be5d625e91e331bedb37a2fe94412bb3bc15e)](https://circleci.com/gh/contactually/zuora-ruby)
-[![Code Climate](https://codeclimate.com/repos/5706a3fb4f15bd726100652d/badges/4e4615baaec76fd16535/gpa.svg)](https://codeclimate.com/repos/569444dfa3d810003a00313f/feed)
-[![Test Coverage](https://codeclimate.com/repos/5706a3fb4f15bd726100652d/badges/4e4615baaec76fd16535/coverage.svg)](https://codeclimate.com/repos/569444dfa3d810003a00313f/coverage)
+[![Code Climate](https://codeclimate.com/github/contactually/zuora-ruby/badges/gpa.svg)](https://codeclimate.com/github/contactually/zuora-ruby)
+[![Test Coverage](https://codeclimate.com/github/contactually/zuora-ruby/badges/coverage.svg)](https://codeclimate.com/github/contactually/zuora-ruby/coverage)
 
 # Zuora SOAP and REST API Client
 
