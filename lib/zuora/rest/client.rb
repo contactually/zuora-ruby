@@ -89,7 +89,19 @@ module Zuora
       # @return [Faraday::Response]
       def fail_or_response(response)
         success = response.body['success'] && response.status == 200
-        fail(ErrorResponse.new('Non-200', response)) unless success
+        if response.status != 200
+          fail(ErrorResponse.new("HTTP Status #{response.status}", response))
+        elsif !response.body['success']
+          error = "Not successful."
+
+          if response.body["reasons"]
+            error += " " + response.body["reasons"].map do |reason|
+              "Error #{reason["code"]}: #{reason["message"]}"
+            end.join(", ")
+          end
+
+          fail(ErrorResponse.new(error, response))
+        end
         response
       end
 
