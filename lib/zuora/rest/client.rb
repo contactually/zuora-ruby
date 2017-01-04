@@ -95,9 +95,10 @@ module Zuora
           error = "Not successful."
 
           if response.body["reasons"]
-            error += " " + response.body["reasons"].map do |reason|
+            reasons = response.body["reasons"].map do |reason|
               "Error #{reason["code"]}: #{reason["message"]}"
-            end.join(", ")
+            end
+            errors += " " + reasons.join(", ")
           end
 
           fail(ErrorResponse.new(error, response))
