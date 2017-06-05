@@ -92,7 +92,7 @@ module Zuora
         if response.status != 200
           fail(ErrorResponse.new("HTTP Status #{response.status}", response))
         elsif !response.body['success']
-          error = "Not successful."
+          errors = "Not successful."
 
           if response.body["reasons"]
             reasons = response.body["reasons"].map do |reason|
@@ -101,7 +101,7 @@ module Zuora
             errors += " " + reasons.join(", ")
           end
 
-          fail(ErrorResponse.new(error, response))
+          fail(ErrorResponse.new(errors, response))
         end
         response
       end
