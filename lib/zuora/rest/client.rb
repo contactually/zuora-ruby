@@ -122,6 +122,7 @@ module Zuora
         request.url url
         request.headers['Content-Type'] = 'application/json'
         request.headers['Cookie'] = @auth_cookie
+        request.headers['zuora-version'] = ENV['ZUORA_API_VERSION'] if ENV['ZUORA_API_VERSION'].present?
       end
 
       # @param [String] url
