@@ -89,7 +89,20 @@ module Zuora
       # @return [Faraday::Response]
       def fail_or_response(response)
         success = response.body['success'] && response.status == 200
-        fail(ErrorResponse.new('Non-200', response)) unless success
+        if response.status != 200
+          fail(ErrorResponse.new("HTTP Status #{response.status}", response))
+        elsif !response.body['success']
+          errors = "Not successful."
+
+          if response.body["reasons"]
+            reasons = response.body["reasons"].map do |reason|
+              "Error #{reason["code"]}: #{reason["message"]}"
+            end
+            errors += " " + reasons.join(", ")
+          end
+
+          fail(ErrorResponse.new(errors, response))
+        end
         response
       end
 
@@ -109,6 +122,7 @@ module Zuora
         request.url url
         request.headers['Content-Type'] = 'application/json'
         request.headers['Cookie'] = @auth_cookie
+        request.headers['zuora-version'] = ENV['ZUORA_API_VERSION'] if ENV['ZUORA_API_VERSION'].present?
       end
 
       # @param [String] url
