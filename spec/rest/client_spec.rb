@@ -96,29 +96,33 @@ describe Zuora::Rest::Client do
       end
 
       describe 'GET' do
+        let(:error_text) do
+          "Not successful. Error 50000040: Cannot find entity by key: '2c92c0" \
+          "fa52e3f6790152f11fd4fd1fcfx'."
+        end
         it { expect { get_account }.to_not raise_error }
 
-        it "should raise a human-readable exception when an error happens" do
-	  VCR.use_cassette('rest/get_account_with_error') do
-	    expect {
-	      client.get "/rest/v1/accounts/#{account_id}x"
-	    }.to raise_error(
+        it 'should raise a human-readable exception when an error happens' do
+          VCR.use_cassette('rest/get_account_with_error') do
+            expect do
+              client.get "/rest/v1/accounts/#{account_id}x"
+            end.to raise_error(
               Zuora::Rest::ErrorResponse,
-              "Not successful. Error 50000040: Cannot find entity by key: '2c92c0fa52e3f6790152f11fd4fd1fcfx'."
+              error_text
             )
-	  end
-	end
+          end
+        end
 
-        it "should raise a an error with the HTTP status during an outage" do
-	  VCR.use_cassette('rest/get_account_500_error') do
-	    expect {
-	      client.get "/rest/v1/accounts/#{account_id}"
-	    }.to raise_error(
+        it 'should raise a an error with the HTTP status during an outage' do
+          VCR.use_cassette('rest/get_account_500_error') do
+            expect do
+              client.get "/rest/v1/accounts/#{account_id}"
+            end.to raise_error(
               Zuora::Rest::ErrorResponse,
-              "HTTP Status 500"
+              'HTTP Status 500'
             )
-	  end
-	end
+          end
+        end
       end
 
       describe 'DELETE' do

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Zuora
   module Rest
     API_URL = 'https://api.zuora.com/rest/v1/'.freeze
