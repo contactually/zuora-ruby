@@ -5,7 +5,7 @@ require 'json'
 
 module Zuora
   module Rest
-    class Client
+    class BulkClient < Client
       attr_reader :connection
 
       # Creates a connection instance.
@@ -16,8 +16,7 @@ module Zuora
       # @param [String] password
       # @param [Boolean] sandbox
       # @return [Zuora::Client] with .connection, .put, .post
-      def initialize(username, password, sandbox = false, modern_endpoint = false)
-        @modern_endpoint = modern_endpoint
+      def initialize(username, password, sandbox = false)
         base_url = api_url sandbox
         conn = connection base_url
 
@@ -31,9 +30,9 @@ module Zuora
           @connection = conn
         when 429
           sleep(Zuora::RETRY_WAITING_PERIOD)
-          return initialize(username, password, sandbox, modern_endpoint)
+          return initialize(username, password, sandbox)
         else
-          fail Zuora::Rest::ConnectionError, response.body['reasons']
+          fail Zuora::Rest::ConnectionError, response.body['Reasons']
         end
       end
 
@@ -91,17 +90,17 @@ module Zuora
       def fail_or_response(response)
         if response.status != 200
           fail(ErrorResponse.new("HTTP Status #{response.status}", response))
-        elsif !response.body['success']
-          errors = 'Not successful.'
-
-          if response.body['reasons']
-            reasons = response.body['reasons'].map do |reason|
-              "Error #{reason['code']}: #{reason['message']}"
+        elsif response.body.count > 0 && !response.body.first['Success']
+          message = 'Not successful.'
+          body = response.body.first
+          if body['Errors']
+            errors = body['Errors'].map do |error|
+              "Error #{error['Code']}: #{error['Message']}"
             end
-            errors += ' ' + reasons.join(', ')
+            message += ' ' + errors.join(', ')
           end
 
-          fail(ErrorResponse.new(errors, response))
+          fail(ErrorResponse.new(message, response))
         end
         response
       end
@@ -110,11 +109,7 @@ module Zuora
       # @param [String] username
       # @param [String] password
       def set_auth_request_headers!(req, username, password)
-        if use_modern_rest?
-          req.url '/v1/connections'
-        else
-          req.url '/rest/v1/connections'
-        end
+        req.url '/v1/connections'
         req.headers['apiAccessKeyId'] = username
         req.headers['apiSecretAccessKey'] = password
         req.headers['Content-Type'] = 'application/json'
@@ -146,16 +141,7 @@ module Zuora
       # @param [Boolean] sandbox - Use the sandbox url?
       # @return [String] url
       def api_url(sandbox)
-        if use_modern_rest?
-          sandbox ? Zuora::Rest::BETA_SANDBOX_URL : Zuora::Rest::BETA_API_URL
-        else
-          sandbox ? Zuora::Rest::SANDBOX_URL : Zuora::Rest::API_URL
-        end
-      end
-
-      # @return [Boolean]
-      def use_modern_rest?
-        @modern_endpoint == true
+        sandbox ? Zuora::Rest::BETA_SANDBOX_URL : Zuora::Rest::BETA_API_URL
       end
     end
   end
