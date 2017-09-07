@@ -23,4 +23,3 @@ module Zuora
 end
 
 require_relative 'rest/client'
-require_relative 'rest/bulk_client'

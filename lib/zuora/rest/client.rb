@@ -85,25 +85,57 @@ module Zuora
         end
       end
 
+
       # @param [Faraday::Response] response
       # @throw [ErrorResponse] if unsuccessful
       # @return [Faraday::Response]
       def fail_or_response(response)
         if response.status != 200
           fail(ErrorResponse.new("HTTP Status #{response.status}", response))
-        elsif !response.body['success']
-          errors = 'Not successful.'
-
-          if response.body['reasons']
-            reasons = response.body['reasons'].map do |reason|
-              "Error #{reason['code']}: #{reason['message']}"
-            end
-            errors += ' ' + reasons.join(', ')
+        elsif response.body.kind_of?(Array)
+          if !response.body.first['Success']
+            message = parse_legacy_error(response.body.first)
+            fail(ErrorResponse.new(message, response))
           end
-
-          fail(ErrorResponse.new(errors, response))
+        elsif response.body.kind_of?(Hash)
+          if response.body.key?('success') && !response.body['success']
+            message = parse_error(response.body)
+            fail(ErrorResponse.new(message, response))
+          elsif response.body.key?('Success') && !response.body['Success']
+            message = parse_legacy_error(response.body)
+            fail(ErrorResponse.new(message, response))
+          end
         end
         response
+      end
+
+      # For all REST API endpoints that are 2017+
+      # @param [Hash] body - the structure containing errors
+      # @return [String] message - human readable error message in string format
+      def parse_error(body)
+        message = ""
+        if body['reasons']
+          reasons = body['reasons'].map do |reason|
+            "Error #{reason['code']}: #{reason['message']}"
+          end
+          message += reasons.join(', ')
+        end
+        message
+      end
+
+      # For all REST API endpoints that use the SOAP api behind the scenes,
+      # such as ones starting with /v1/object/, the error formatting is different
+      # @param [Hash] body - the structure containing errors
+      # @return [String] human readable error message in string format
+      def parse_legacy_error(body)
+        message = ""
+        if body['Errors']
+          errors = body['Errors'].map do |error|
+            "Error #{error['Code']}: #{error['Message']}"
+          end
+          message += + errors.join(', ')
+        end
+        message
       end
 
       # @param [Faraday::Request] req - Faraday::Request builder

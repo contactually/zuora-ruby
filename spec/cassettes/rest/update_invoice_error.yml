@@ -1,0 +1,58 @@
+---
+http_interactions:
+- request:
+    method: put
+    uri: https://apisandbox-api.zuora.com/rest/v1/object/invoice/2c92c0945e550c38015e592bdbb57faf
+    body:
+      encoding: UTF-8
+      string: '{"Status": "Canceled"}'
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Content-Type:
+      - application/json
+      Cookie:
+      - ZSession=RmeipYqHIQQTnou14G0bP-HRT3xh84qud42RZYPoI3AK59Ei_9B7oh-mtrdop4PxG6VyQutkHee1cbnQLgKDLNISqM61gxGH6AxM2XVihZSwUfREDk0tPJzVUX_2MN6j1xYDMgaRvFeDgI_Zcol4dWZ-FDCEeGyzU9rl7Hb3pVZuzCsgr8K9lweg79653CPuRY8QTFZ-G7NRO4jJTdJPvfQxWtFWctAjsmXuwLhmxWPwdMplmAaP5ILEUWKG8phL;
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - Zuora App
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '222'
+      Expires:
+      - Wed, 17 Feb 2016 21:28:55 GMT
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Pragma:
+      - no-cache
+      Date:
+      - Wed, 17 Feb 2016 21:28:55 GMT
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - ZSession=YG5QhlbSDvnoFBk7KMpxsHscLvRhKEHOL7MJGMkv-8f9sJ2BZ0SeipU7TJk9ZgTl4dmI70TUr0rCO9DisGZwS4OPfaubPS6rcbKmVU2suXPXsRZf5QuoqsL023yOAHHwDwB08JGoltV_uCPdtaqOJYbmyvpRxJzvTGrh0khHX9UxjnY0taOC5Dv0EYBS8lHvjLDab-pnVTcK1IkmpqjfBlPkZeWkl_m_y7i8M23cCQ1E7Cc2sTpWQZJWjf3ydGWS;
+        Path=/; Secure; HttpOnly
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "Errors": [
+            {
+              "Code": "INVALID_ID",
+              "Message": "invalid id for update"
+            }
+          ],
+          "Success": false
+        }
+    http_version:
+  recorded_at: Wed, 17 Feb 2016 21:28:55 GMT
+recorded_with: VCR 3.0.1

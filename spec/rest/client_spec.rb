@@ -97,7 +97,7 @@ describe Zuora::Rest::Client do
 
       describe 'GET' do
         let(:error_text) do
-          "Not successful. Error 50000040: Cannot find entity by key: '2c92c0" \
+          "Error 50000040: Cannot find entity by key: '2c92c0" \
           "fa52e3f6790152f11fd4fd1fcfx'."
         end
         it { expect { get_account }.to_not raise_error }
@@ -127,6 +127,55 @@ describe Zuora::Rest::Client do
 
       describe 'DELETE' do
         it { expect { delete_payment_method }.to_not raise_error }
+      end
+
+      describe 'Invalid Requests' do
+        let(:invoice_id) { '2c92c0945e550c38015e592bdbb57faf' }
+        it 'should raise a an error when an invoice does not exist' do
+          VCR.use_cassette('rest/update_invoice_error') do
+            expect do
+              client.put "/rest/v1/object/invoice/#{invoice_id}",
+                {"Status": "Canceled"}
+            end.to raise_error(
+              Zuora::Rest::ErrorResponse,
+              'Error INVALID_ID: invalid id for update'
+            )
+          end
+        end
+
+        it 'should raise a an error when bad parameters for cancel present' do
+          VCR.use_cassette('rest/cancel_subscription_error') do
+            expect do
+              client.put "/rest/v1/subscriptions/1234567890/cancel",
+                {"cancellationEffectiveDate": "2019-05-31",
+                  "cancellationPolicy": "SpecificDate",
+                  "invoice": true,
+                  "collect": false}
+            end.to raise_error(
+              Zuora::Rest::ErrorResponse,
+              "Error 53200021: Invalid parameter(s): 'invoice,collect'."
+            )
+          end
+        end
+
+        it 'should raise a an error when bad parameters for cancel present' do
+          VCR.use_cassette('rest/update_account_error') do
+            expect do
+              client.put "/rest/v1/action/update",
+                {
+                  "objects":[{
+                    "Id":"2c93808457d787030157e0321fdf4fab",
+                    "DefaultPaymentMethodId":"2c93808457d787030157e03220ec4fad",
+                    "Status":"Active"
+                  }],
+                  "type":"Account"
+                }
+            end.to raise_error(
+              Zuora::Rest::ErrorResponse,
+              "Error INVALID_ID: invalid id for update"
+            )
+          end
+        end
       end
     end
   end
