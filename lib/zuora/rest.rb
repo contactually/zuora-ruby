@@ -4,8 +4,8 @@ module Zuora
     API_URL = 'https://api.zuora.com/rest/v1/'.freeze
     SANDBOX_URL = 'https://apisandbox-api.zuora.com/rest/v1/'.freeze
     # Newest endpoints for REST API calls
-    BETA_API_URL = 'https://rest.zuora.com/v1/'.freeze
-    BETA_SANDBOX_URL = 'https://rest.apisandbox.zuora.com/v1/'.freeze
+    NEWEST_API_URL = 'https://rest.zuora.com/v1/'.freeze
+    NEWEST_SANDBOX_URL = 'https://rest.apisandbox.zuora.com/v1/'.freeze
 
     # Unable to connect. Check username / password
     ConnectionError = Class.new Errors::GenericError

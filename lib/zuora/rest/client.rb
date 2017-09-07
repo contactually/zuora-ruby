@@ -179,7 +179,7 @@ module Zuora
       # @return [String] url
       def api_url(sandbox)
         if use_modern_rest?
-          sandbox ? Zuora::Rest::BETA_SANDBOX_URL : Zuora::Rest::BETA_API_URL
+          sandbox ? Zuora::Rest::NEWEST_SANDBOX_URL : Zuora::Rest::NEWEST_API_URL
         else
           sandbox ? Zuora::Rest::SANDBOX_URL : Zuora::Rest::API_URL
         end
