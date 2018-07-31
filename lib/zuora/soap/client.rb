@@ -4,7 +4,7 @@ module Zuora
     class Client
       attr_reader :session_token
 
-      SOAP_API_URI = '/apps/services/a/74.0'.freeze
+      SOAP_API_URI = '/apps/services/a/91.0'.freeze
       SESSION_TOKEN_XPATH =
         %w(//soapenv:Envelope soapenv:Body api:loginResponse
            api:result api:Session).join('/').freeze
@@ -135,7 +135,7 @@ module Zuora
       # @return [String] - SOAP url based on @sandbox
       def api_url
         host_prefix = @sandbox ? 'sandbox' : ''
-        "https://api#{host_prefix}.zuora.com/apps/services/a/74.0"
+        "https://api#{host_prefix}.zuora.com/apps/services/a/91.0"
       end
     end
   end
