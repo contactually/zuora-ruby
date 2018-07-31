@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://apisandbox.zuora.com/apps/services/a/74.0
+    uri: https://apisandbox.zuora.com/apps/services/a/91.0
     body:
       encoding: UTF-8
       string: |
@@ -49,6 +49,6 @@ http_interactions:
         xmlns:fns="http://fault.api.zuora.com/"><faultcode>fns:INVALID_VALUE</faultcode><faultstring>Invalid
         login. User name and password do not match.</faultstring><detail><fns:LoginFault><fns:FaultCode>INVALID_VALUE</fns:FaultCode><fns:FaultMessage>Invalid
         login. User name and password do not match.</fns:FaultMessage></fns:LoginFault></detail></soapenv:Fault></soapenv:Body></soapenv:Envelope>
-    http_version: 
+    http_version:
   recorded_at: Tue, 07 Jun 2016 01:35:17 GMT
 recorded_with: VCR 3.0.1

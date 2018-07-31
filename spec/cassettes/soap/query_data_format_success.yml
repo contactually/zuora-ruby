@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://apisandbox.zuora.com/apps/services/a/74.0
+    uri: https://apisandbox.zuora.com/apps/services/a/91.0
     body:
       encoding: UTF-8
       string: |
@@ -55,6 +55,6 @@ http_interactions:
         xmlns:ns1="http://api.zuora.com/"><ns1:result><ns1:done>true</ns1:done><ns1:queryLocator
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="1" /><ns1:records
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="1" /><ns1:size>0</ns1:size></ns1:result></ns1:queryResponse></soapenv:Body></soapenv:Envelope>
-    http_version: 
+    http_version:
   recorded_at: Thu, 18 Feb 2016 15:43:17 GMT
 recorded_with: VCR 3.0.1

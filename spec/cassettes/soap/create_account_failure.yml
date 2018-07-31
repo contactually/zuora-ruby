@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://apisandbox.zuora.com/apps/services/a/74.0
+    uri: https://apisandbox.zuora.com/apps/services/a/91.0
     body:
       encoding: UTF-8
       string: |
@@ -54,6 +54,6 @@ http_interactions:
       string: '<?xml version=''1.0'' encoding=''UTF-8''?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Body><ns1:createResponse
         xmlns:ns1="http://api.zuora.com/"><ns1:result><ns1:Errors><ns1:Code>MISSING_REQUIRED_VALUE</ns1:Code><ns1:Message>Missing
         required value: Name</ns1:Message></ns1:Errors><ns1:Success>false</ns1:Success></ns1:result></ns1:createResponse></soapenv:Body></soapenv:Envelope>'
-    http_version: 
+    http_version:
   recorded_at: Fri, 29 Jan 2016 03:35:42 GMT
 recorded_with: VCR 3.0.1
