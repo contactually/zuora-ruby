@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :amendment, class: Hash do
     contract_effective_date '2017-01-01'
     description 'Renewing at customer request'
