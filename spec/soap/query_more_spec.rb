@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 # https://knowledgecenter.zuora.com/DC_Developers/SOAP_API/E_SOAP_API_Calls/queryMore_call

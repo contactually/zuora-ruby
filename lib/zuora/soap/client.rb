@@ -1,13 +1,14 @@
 # frozen_string_literal: true
+
 module Zuora
   module Soap
     class Client
       attr_reader :session_token
 
-      SOAP_API_URI = '/apps/services/a/91.0'.freeze
+      SOAP_API_URI = '/apps/services/a/91.0'
       SESSION_TOKEN_XPATH =
-        %w(//soapenv:Envelope soapenv:Body api:loginResponse
-           api:result api:Session).join('/').freeze
+        %w[//soapenv:Envelope soapenv:Body api:loginResponse
+           api:result api:Session].join('/').freeze
 
       # Creates a connection instance.
       # Makes an initial SOAP request to fetch session token.
@@ -26,7 +27,7 @@ module Zuora
       # @param [Xml] body - an object responding to .xml
       # @return [Zuora::Response]
       def request!(body)
-        fail 'body must support .to_xml' unless body.respond_to? :to_xml
+        raise 'body must support .to_xml' unless body.respond_to? :to_xml
 
         raw_response = connection.post do |request|
           request.url SOAP_API_URI
@@ -40,7 +41,7 @@ module Zuora
         response = Zuora::Response.new(raw_response)
         begin
           response.handle_errors(response.to_h)
-        rescue => e
+        rescue StandardError => e
           return handle_lock_competition(e, body)
         end
         response
@@ -71,7 +72,7 @@ module Zuora
         if error.message =~ /(Operation failed due to a lock competition)/i
           handle_rate_limiting(body)
         else
-          fail error
+          raise error
         end
       end
 
@@ -112,7 +113,7 @@ module Zuora
           @session_token = extract_session_token response
         else
           message = 'Unable to connect with provided credentials'
-          fail Zuora::Errors::InvalidCredentials, message
+          raise Zuora::Errors::InvalidCredentials, message
         end
         response
       end

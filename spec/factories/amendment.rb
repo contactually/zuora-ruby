@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryGirl.define do
   factory :amendment, class: Hash do
     contract_effective_date '2017-01-01'

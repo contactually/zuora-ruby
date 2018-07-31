@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'creates a subscription' do
@@ -6,11 +8,11 @@ describe 'creates a subscription' do
   let(:customer_email) { 'customer@email.com' }
 
   let(:soap_success_xpath) do
-    %w(/soapenv:Envelope
+    %w[/soapenv:Envelope
        soapenv:Body
        api:subscribeResponse
        api:result
-       api:Success).join('/')
+       api:Success].join('/')
   end
 
   let(:subscribe_data) do

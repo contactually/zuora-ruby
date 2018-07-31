@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if ENV['CIRCLECI']
   require 'rspec_junit_formatter'
   require 'codeclimate-test-reporter'
@@ -41,8 +43,8 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
-    unless %w(ZUORA_SANDBOX_USERNAME ZUORA_SANDBOX_PASSWORD).all? { |k| ENV[k] }
-      fail 'Please set ZUORA_SANDBOX_USERNAME and ZUORA_SANDBOX_PASSWORD'
+    unless %w[ZUORA_SANDBOX_USERNAME ZUORA_SANDBOX_PASSWORD].all? { |k| ENV[k] }
+      raise 'Please set ZUORA_SANDBOX_USERNAME and ZUORA_SANDBOX_PASSWORD'
     end
   end
 end

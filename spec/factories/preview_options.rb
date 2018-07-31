@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryGirl.define do
   factory :preview_options, class: Hash do
     enable_preview_mode false

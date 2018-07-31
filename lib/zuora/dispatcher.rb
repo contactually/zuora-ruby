@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Zuora
   module Dispatcher
     # Maps a SOAP call name and args to its corresponding class.
@@ -40,7 +42,7 @@ module Zuora
       end
 
       def method_missing
-        fail "Unknown SOAP API call name: #{call_name}.
+        raise "Unknown SOAP API call name: #{call_name}.
               Must be one of :create, :update, :login,
               subscribe, :amend, or :delete."
       end

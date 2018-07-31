@@ -1,8 +1,9 @@
 # frozen_string_literal: true
+
 module Zuora
   module Utils
     module Envelope
-      CUSTOM_FIELD_STRING = '__c'.freeze
+      CUSTOM_FIELD_STRING = '__c'
 
       # @param [Callable] header - optional function of builder, rtns builder
       # @param [Callable] body  - optional function of builder, rtns builder
@@ -20,7 +21,7 @@ module Zuora
       # @return [Nokogiri::XML::Builder]
       def self.authenticated_xml(token, &body)
         failure_message = 'Session token not set. Did you call authenticate?'
-        fail failure_message unless token.present?
+        raise failure_message unless token.present?
 
         header = lambda do |builder|
           builder[:api].SessionHeader { builder[:api].session(token) }

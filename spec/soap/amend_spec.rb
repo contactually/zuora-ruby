@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'makes amends' do
@@ -22,7 +24,7 @@ describe 'makes amends' do
 
   ######################
   [
-    { type: :AddProduct, factory: [:amendment, :new_product] },
+    { type: :AddProduct, factory: %i[amendment new_product] },
     # { type: :RemoveProduct, factory: [:amendment, :remove_product] },
     # { type: :UpdateProduct, factory: [:amendment, :update_product] }
   ].each do |obj|

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Zuora
   module Calls
     class Amend < Hashie::Dash
@@ -58,7 +60,7 @@ module Zuora
       # @param [Symbol] child_ns - namespace of child node fields
       # @return nil
       def build_object(builder, property_name, object, child_ns)
-        fail 'Objects must respond to each' unless object.respond_to?(:each)
+        raise 'Objects must respond to each' unless object.respond_to?(:each)
         object_name = Zuora::Utils::Envelope.to_zuora_key property_name
         builder[:api].send(object_name) do
           build_nodes builder, object, child_ns

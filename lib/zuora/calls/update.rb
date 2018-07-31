@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Zuora
   module Calls
     class Update < Zuora::Calls::Upsert
