@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Zuora
   module Calls
     class Generate < Hashie::Dash
@@ -9,7 +11,7 @@ module Zuora
       # and updates object(s) of type.
       # @return [Callable] - function of builder
       def xml_builder
-        fail 'objects must respond to :each' unless objects.respond_to?(:each)
+        raise 'objects must respond to :each' unless objects.respond_to?(:each)
 
         lambda do |builder|
           builder[:api].generate do

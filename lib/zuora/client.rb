@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'faraday'
 require 'faraday_middleware'
 require 'nokogiri'
@@ -6,7 +8,7 @@ module Zuora
   class Client
     attr_accessor :session_token
 
-    INSTANCE_VARIABLE_LOG_BLACKLIST = [:@username, :@password].freeze
+    INSTANCE_VARIABLE_LOG_BLACKLIST = %i[@username @password].freeze
 
     def initialize(username, password, sandbox = true)
       @username = username
@@ -20,7 +22,7 @@ module Zuora
     end
 
     # Delegate REST methods to REST client
-    [:post, :put, :get, :delete].each do |method|
+    %i[post put get delete].each do |method|
       define_method(method) do |*args|
         rest_client.send(method, *args)
       end

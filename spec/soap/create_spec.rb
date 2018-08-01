@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 describe 'create' do
   let(:username) { ENV['ZUORA_SANDBOX_USERNAME'] }
@@ -18,15 +20,15 @@ describe 'create' do
     { type: :BillRun, factory: [:bill_run] },
     { type: :Contact, factory: [:contact] },
     { type: :Refund, factory: [:refund] },
-    { type: :Refund, factory: [:payment_method, :credit_card] }
+    { type: :Refund, factory: %i[payment_method credit_card] }
   ].each do |object|
     type, factory = object.values_at :type, :factory
 
     describe "create #{type}" do
       vcr_options = { match_requests_on: [:path] }
       success_xpath =
-        %w(/soapenv:Envelope/soapenv:Body/
-           api:createResponse/api:result/api:Success).join
+        %w[/soapenv:Envelope/soapenv:Body/
+           api:createResponse/api:result/api:Success].join
 
       context 'with good data' do
         let(:cassette) { "soap/create_#{type.to_s.underscore}_success" }
@@ -81,7 +83,7 @@ describe 'create' do
         it 'includes the full response on the error that gets raised' do
           begin
             subject
-          rescue => e
+          rescue StandardError => e
             expect(e.response).to_not be_nil
           end
         end

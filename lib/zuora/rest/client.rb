@@ -1,4 +1,6 @@
 # encoding: utf-8
+# frozen_string_literal: true
+
 require 'faraday'
 require 'faraday_middleware'
 require 'json'
@@ -32,13 +34,13 @@ module Zuora
           sleep(Zuora::RETRY_WAITING_PERIOD)
           return initialize(username, password, sandbox)
         else
-          fail Zuora::Rest::ConnectionError, response.body['reasons']
+          raise Zuora::Rest::ConnectionError, response.body['reasons']
         end
       end
 
       # @param [String] url - URL of request
       # @return [Faraday::Response] A response, with .headers, .status & .body
-      [:get, :delete].each do |method|
+      %i[get delete].each do |method|
         define_method(method) do |url|
           response = @connection.send(method) do |req|
             set_request_headers! req, url
@@ -54,7 +56,7 @@ module Zuora
       # @param [String] url - URL for HTTP POST / PUT request
       # @param [Params] params - Data to be sent in request body
       # @return [Faraday::Response] A response, with .headers, .status & .body
-      [:post, :put].each do |method|
+      %i[post put].each do |method|
         define_method method do |url, params|
           response = @connection.send(method) do |req|
             set_request_headers! req, url
@@ -89,7 +91,7 @@ module Zuora
       # @return [Faraday::Response]
       def fail_or_response(response)
         if response.status != 200
-          fail(ErrorResponse.new("HTTP Status #{response.status}", response))
+          raise(ErrorResponse.new("HTTP Status #{response.status}", response))
         elsif !response.body['success']
           errors = 'Not successful.'
 
@@ -100,7 +102,7 @@ module Zuora
             errors += ' ' + reasons.join(', ')
           end
 
-          fail(ErrorResponse.new(errors, response))
+          raise(ErrorResponse.new(errors, response))
         end
         response
       end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'active_support/core_ext/hash/conversions'
 
@@ -33,11 +35,11 @@ describe Zuora::Utils::Envelope do
 
     let(:parsed_xml) { Nokogiri::XML(generated_xml) }
 
-    xpath_selectors = %w(
+    xpath_selectors = %w[
       //api:ProductRatePlanChargeTierData/api:ProductRatePlanChargeTier
       //api:ProductRatePlanChargeTier/obj:DiscountPercentage
       //api:ProductRatePlanChargeTier/obj:Id
-    )
+    ]
 
     xpath_selectors.each do |selector|
       it "selector is not empty: \n #{selector}" do

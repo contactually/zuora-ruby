@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Zuora
   module Calls
     class Query < Hashie::Dash
@@ -35,17 +37,19 @@ module Zuora
       # @param [Symbol] table
       # @param [Hash] conditions
       def query_to_string(fields, table, conditions)
-        fail 'Fields must be an Array' unless fields.is_a?(Array)
-        fail 'Table must respond to :to_sym' unless table.respond_to?(:to_sym)
-        fail 'Conditions must be Array' if fields && !fields.is_a?(Array)
+        raise 'Fields must be an Array' unless fields.is_a?(Array)
+        raise 'Table must respond to :to_sym' unless table.respond_to?(:to_sym)
+        raise 'Conditions must be Array' if fields && !fields.is_a?(Array)
 
         key_fn = ->(key) { Zuora::Utils::Envelope.to_zuora_key(key) }
 
         select = fields.map { |field| key_fn[field] }.join(', ').to_s
         from = table.to_s
-        where = 'WHERE ' + conditions.map do |key, value|
-          "#{key_fn[key]} = '#{value}'"
-        end.join(' AND ') if conditions
+        if conditions
+          where = 'WHERE ' + conditions.map do |key, value|
+            "#{key_fn[key]} = '#{value}'"
+          end.join(' AND ')
+        end
 
         "SELECT #{select} FROM #{from} #{where}".strip.squeeze(' ')
       end

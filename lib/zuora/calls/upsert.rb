@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Zuora
   module Calls
     class Upsert < Hashie::Dash
@@ -9,14 +11,14 @@ module Zuora
       property :objects, required: true
 
       def call_name
-        fail 'This class is abstract. Subclassers must def :call_name'
+        raise 'This class is abstract. Subclassers must def :call_name'
       end
 
       # Generates a function that takes a builder
       # adds call of call_name and z-object(s) ogit rf type
       # @return [Callable] - function of builder
       def xml_builder
-        fail 'objects must respond to :each' unless objects.respond_to?(:each)
+        raise 'objects must respond to :each' unless objects.respond_to?(:each)
 
         lambda do |builder|
           builder[:api].send(call_name) do

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 if ENV['CIRCLECI']
   require 'rspec_junit_formatter'
   require 'codeclimate-test-reporter'
@@ -29,20 +31,20 @@ VCR.configure do |c|
   c.ignore_hosts 'codeclimate.com'
 end
 
-# FactoryGirl
-FactoryGirl.definition_file_paths = ['spec/factories']
-FactoryGirl.find_definitions
+# FactoryBot
+FactoryBot.definition_file_paths = ['spec/factories']
+FactoryBot.find_definitions
 
 # RSpec configuration
 RSpec.configure do |config|
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
 
   config.before(:each) do
-    unless %w(ZUORA_SANDBOX_USERNAME ZUORA_SANDBOX_PASSWORD).all? { |k| ENV[k] }
-      fail 'Please set ZUORA_SANDBOX_USERNAME and ZUORA_SANDBOX_PASSWORD'
+    unless %w[ZUORA_SANDBOX_USERNAME ZUORA_SANDBOX_PASSWORD].all? { |k| ENV[k] }
+      raise 'Please set ZUORA_SANDBOX_USERNAME and ZUORA_SANDBOX_PASSWORD'
     end
   end
 end

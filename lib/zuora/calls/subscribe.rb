@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Zuora
   module Calls
     class Subscribe < Hashie::Dash
@@ -10,7 +12,7 @@ module Zuora
       property :rate_plan
       property :rate_plan_charge
 
-      SIMPLE_OBJECTS = [:account, :payment_method, :bill_to_contact].freeze
+      SIMPLE_OBJECTS = %i[account payment_method bill_to_contact].freeze
 
       # Generates a function that adds login fields to a buidler
       # @return [Callable] function of builder
@@ -43,9 +45,11 @@ module Zuora
       # Builds the complex, nested part of the subscribe request
       # @param [Nokogiri::XML::Builder] builder
       def build_complex_objects(builder)
-        builder[:api].SubscribeOptions do
-          Zuora::Utils::Envelope.build_fields(builder, :api, subscribe_options)
-        end if subscribe_options
+        if subscribe_options
+          builder[:api].SubscribeOptions do
+            Zuora::Utils::Envelope.build_fields(builder, :api, subscribe_options)
+          end
+        end
 
         builder[:api].SubscriptionData do
           build_object(builder, :Subscription, subscription)
@@ -63,9 +67,11 @@ module Zuora
       # [Symbol] type
       # [Hash] data
       def build_object(builder, type, data)
-        builder[:api].send(type) do
-          build_fields builder, data
-        end if data
+        if data
+          builder[:api].send(type) do
+            build_fields builder, data
+          end
+        end
       end
 
       # [Nokogiri::XML::Builder] builder

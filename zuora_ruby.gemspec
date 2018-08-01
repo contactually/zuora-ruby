@@ -1,4 +1,6 @@
-lib = File.expand_path('../lib', __FILE__)
+# frozen_string_literal: true
+
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'zuora/version'
 
@@ -18,7 +20,7 @@ Gem::Specification.new do |spec|
   if spec.respond_to?(:metadata)
     spec.metadata['allowed_push_host'] = 'https://rubygems.org'
   else
-    fail 'RubyGems 2.0 or newer is required to prevent public gem pushes.'
+    raise 'RubyGems 2.0 or newer is required to prevent public gem pushes.'
   end
 
   spec.files = `git ls-files -z`.split("\x0").reject do |f|
@@ -33,20 +35,20 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'dotenv'
   spec.add_runtime_dependency 'faraday'
   spec.add_runtime_dependency 'faraday_middleware'
-  spec.add_runtime_dependency 'nokogiri', '~> 1.6'
   spec.add_runtime_dependency 'hashie', '~> 3.4'
+  spec.add_runtime_dependency 'nokogiri', '~> 1.6'
 
   # Development
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'byebug'
   spec.add_development_dependency 'codeclimate-test-reporter'
-  spec.add_development_dependency 'factory_girl', '~> 4.0'
+  spec.add_development_dependency 'factory_bot'
   spec.add_development_dependency 'faker'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'rspec-its'
   spec.add_development_dependency 'rspec_junit_formatter', '0.2.2'
-  spec.add_development_dependency 'rubocop', '0.36.0'
-  spec.add_development_dependency 'webmock', '~> 1.22'
+  spec.add_development_dependency 'rubocop', '~> 0.36'
   spec.add_development_dependency 'vcr'
+  spec.add_development_dependency 'webmock', '~> 1.22'
 end

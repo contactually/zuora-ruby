@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'byebug'
 
 module SchemaModel
@@ -135,7 +137,7 @@ module SchemaModel
 
       passes_validation = begin
                             valid.call(value)
-                          rescue
+                          rescue StandardError
                             false
                           end
       passes_validation ? nil : 'is invalid'

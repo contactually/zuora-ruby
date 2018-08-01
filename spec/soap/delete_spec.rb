@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'creates a subscription' do
@@ -6,11 +8,11 @@ describe 'creates a subscription' do
   let(:customer_email) { 'customer@email.com' }
 
   let(:success_xpath) do
-    %w(/soapenv:Envelope
+    %w[/soapenv:Envelope
        soapenv:Body
        ns1:deleteResponse
        ns1:result
-       ns1:success).join('/')
+       ns1:success].join('/')
   end
 
   let(:query) { 'SELECT Id FROM BillRun' }
