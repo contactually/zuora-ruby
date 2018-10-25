@@ -133,7 +133,7 @@ module Zuora
           errors = body['Errors'].map do |error|
             "Error #{error['Code']}: #{error['Message']}"
           end
-          message += + errors.join(', ')
+          message += errors.join(', ')
         end
         message
       end
