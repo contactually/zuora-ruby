@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Zuora::Response do
@@ -29,8 +31,7 @@ describe Zuora::Response do
                 ]
               }
             }
-          }
-      }
+          } }
     end
     let(:response) { Zuora::Response.new(Faraday::Response.new) }
 

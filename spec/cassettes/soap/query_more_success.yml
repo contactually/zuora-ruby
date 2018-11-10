@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://apisandbox.zuora.com/apps/services/a/74.0
+    uri: https://apisandbox.zuora.com/apps/services/a/91.0
     body:
       encoding: UTF-8
       string: |
@@ -4058,7 +4058,7 @@ http_interactions:
   recorded_at: Tue, 19 Apr 2016 17:42:01 GMT
 - request:
     method: post
-    uri: https://apisandbox.zuora.com/apps/services/a/74.0
+    uri: https://apisandbox.zuora.com/apps/services/a/91.0
     body:
       encoding: UTF-8
       string: |

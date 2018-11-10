@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 # encoding: utf-8
+# frozen_string_literal: true
 
 require 'bundler/setup'
 require 'zuora'
@@ -12,10 +13,10 @@ require 'zuora'
 # Pry.start
 
 require 'factory_girl'
-FactoryGirl.definition_file_paths = ['spec/factories']
-FactoryGirl.find_definitions
+FactoryBot.definition_file_paths = ['spec/factories']
+FactoryBot.find_definitions
 # Short hand factory girl syntax
-# include FactoryGirl::Syntax::Methods
+# include FactoryBot::Syntax::Methods
 
 require 'irb'
 IRB.start

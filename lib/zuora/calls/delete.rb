@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Zuora
   module Calls
     class Delete < Hashie::Dash
@@ -5,7 +7,7 @@ module Zuora
       property :ids, required: true
 
       def xml_builder
-        fail 'Must be Enumerable' unless ids.respond_to? :each
+        raise 'Must be Enumerable' unless ids.respond_to? :each
         lambda do |builder|
           builder[:api].delete do
             builder[:api].type type

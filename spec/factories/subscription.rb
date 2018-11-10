@@ -1,4 +1,6 @@
-FactoryGirl.define do
+# frozen_string_literal: true
+
+FactoryBot.define do
   factory :subscription, class: Hash do
     auto_renew true
     contract_acceptance_date '2016-07-03'

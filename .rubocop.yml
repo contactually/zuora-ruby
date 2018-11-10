@@ -1,3 +1,5 @@
+inherit_from: .rubocop_todo.yml
+
 AllCops:
   Exclude:
     - 'db/**/*'
@@ -28,7 +30,7 @@ Style/AlignParameters:
     - with_fixed_indentation
 
 Style/CaseIndentation:
-  IndentWhenRelativeTo: end
+  EnforcedStyle: end
   SupportedStyles:
     - case
     - end

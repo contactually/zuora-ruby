@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'active_support/core_ext/hash/conversions'
 
 module Zuora
@@ -76,7 +78,7 @@ module Zuora
     def raise_errors(errors)
       error_string = errors.join(',')
       error = Zuora::Errors::InvalidValue.new(error_string, to_h)
-      fail error
+      raise error
     end
   end
 end

@@ -9,8 +9,8 @@ require 'active_support/core_ext/string'
 require 'hashie'
 
 module Zuora
-  API_URL = 'https://api.zuora.com/rest/v1/'.freeze
-  SANDBOX_URL = 'https://apisandbox-api.zuora.com/rest/v1/'.freeze
+  API_URL = 'https://api.zuora.com/rest/v1/'
+  SANDBOX_URL = 'https://apisandbox-api.zuora.com/rest/v1/'
   NAMESPACES = {
     'xmlns:soapenv' => 'http://schemas.xmlsoap.org/soap/envelope/',
     'xmlns:api' => 'http://api.zuora.com/',
