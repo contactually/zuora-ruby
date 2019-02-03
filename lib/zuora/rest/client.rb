@@ -18,7 +18,8 @@ module Zuora
       # @param [String] password
       # @param [Boolean] sandbox
       # @return [Zuora::Client] with .connection, .put, .post
-      def initialize(username, password, sandbox = false)
+      def initialize(username, password, sandbox = false, modern_endpoint = false)
+        @modern_endpoint = modern_endpoint
         base_url = api_url sandbox
         conn = connection base_url
 
@@ -32,7 +33,7 @@ module Zuora
           @connection = conn
         when 429
           sleep(Zuora::RETRY_WAITING_PERIOD)
-          return initialize(username, password, sandbox)
+          return initialize(username, password, sandbox, modern_endpoint)
         else
           raise Zuora::Rest::ConnectionError, response.body['reasons']
         end
@@ -86,32 +87,68 @@ module Zuora
         end
       end
 
+
       # @param [Faraday::Response] response
       # @throw [ErrorResponse] if unsuccessful
       # @return [Faraday::Response]
       def fail_or_response(response)
         if response.status != 200
           raise(ErrorResponse.new("HTTP Status #{response.status}", response))
-        elsif !response.body['success']
-          errors = 'Not successful.'
-
-          if response.body['reasons']
-            reasons = response.body['reasons'].map do |reason|
-              "Error #{reason['code']}: #{reason['message']}"
-            end
-            errors += ' ' + reasons.join(', ')
+        elsif response.body.kind_of?(Array)
+          if !response.body.first['Success']
+            message = parse_legacy_error(response.body.first)
+            raise(ErrorResponse.new(message, response))
           end
-
-          raise(ErrorResponse.new(errors, response))
+        elsif response.body.kind_of?(Hash)
+          if response.body.key?('success') && !response.body['success']
+            message = parse_error(response.body)
+            raise(ErrorResponse.new(message, response))
+          elsif response.body.key?('Success') && !response.body['Success']
+            message = parse_legacy_error(response.body)
+            raise(ErrorResponse.new(message, response))
+          end
         end
         response
+      end
+
+      # For all REST API endpoints that are 2017+
+      # @param [Hash] body - the structure containing errors
+      # @return [String] message - human readable error message in string format
+      def parse_error(body)
+        message = ""
+        if body['reasons']
+          reasons = body['reasons'].map do |reason|
+            "Error #{reason['code']}: #{reason['message']}"
+          end
+          message += reasons.join(', ')
+        end
+        message
+      end
+
+      # For all REST API endpoints that use the SOAP api behind the scenes,
+      # such as ones starting with /v1/object/, the error formatting is different
+      # @param [Hash] body - the structure containing errors
+      # @return [String] human readable error message in string format
+      def parse_legacy_error(body)
+        message = ""
+        if body['Errors']
+          errors = body['Errors'].map do |error|
+            "Error #{error['Code']}: #{error['Message']}"
+          end
+          message += errors.join(', ')
+        end
+        message
       end
 
       # @param [Faraday::Request] req - Faraday::Request builder
       # @param [String] username
       # @param [String] password
       def set_auth_request_headers!(req, username, password)
-        req.url '/rest/v1/connections'
+        if use_modern_rest?
+          req.url '/v1/connections'
+        else
+          req.url '/rest/v1/connections'
+        end
         req.headers['apiAccessKeyId'] = username
         req.headers['apiSecretAccessKey'] = password
         req.headers['Content-Type'] = 'application/json'
@@ -143,7 +180,16 @@ module Zuora
       # @param [Boolean] sandbox - Use the sandbox url?
       # @return [String] url
       def api_url(sandbox)
-        sandbox ? Zuora::Rest::SANDBOX_URL : Zuora::Rest::API_URL
+        if use_modern_rest?
+          sandbox ? Zuora::Rest::NEWEST_SANDBOX_URL : Zuora::Rest::NEWEST_API_URL
+        else
+          sandbox ? Zuora::Rest::SANDBOX_URL : Zuora::Rest::API_URL
+        end
+      end
+
+      # @return [Boolean]
+      def use_modern_rest?
+        @modern_endpoint == true
       end
     end
   end
